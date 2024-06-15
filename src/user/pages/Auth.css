@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.authentication__logo{
+  width: 90%;
+}
+
 .authentication {
   width: 90%;
   max-width: 25rem;
@@ -12,4 +16,13 @@
 
 .authentication form {
   margin-bottom: 1rem;
+}
+
+.noshow{
+  display: none;
+}
+
+a {
+text-decoration: none;
+color:#ff5715;
 }

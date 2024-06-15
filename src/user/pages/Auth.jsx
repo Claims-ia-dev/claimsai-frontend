@@ -10,6 +10,7 @@ import {
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
+import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
 const Auth = () => {
@@ -62,15 +63,15 @@ const Auth = () => {
 
   return (
     <Card className="authentication">
-      <h2>Login Required</h2>
-      <hr />
+      <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
+      <br />
       <form onSubmit={authSubmitHandler}>
         {!isLoginMode && (
           <Input
             element="input"
             id="name"
             type="text"
-            label="Your Name"
+            placeholder="Your Name"
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a name."
             onInput={inputHandler}
@@ -80,7 +81,7 @@ const Auth = () => {
           element="input"
           id="email"
           type="email"
-          label="E-Mail"
+          placeholder="E-Mail"
           validators={[VALIDATOR_EMAIL()]}
           errorText="Please enter a valid email address."
           onInput={inputHandler}
@@ -89,18 +90,21 @@ const Auth = () => {
           element="input"
           id="password"
           type="password"
-          label="Password"
+          placeholder="Password"
           validators={[VALIDATOR_MINLENGTH(5)]}
           errorText="Please enter a valid password, at least 5 characters."
           onInput={inputHandler}
-        />
+        /> 
+        <a href=''>Forgot you password?</a> <br/><br/>
         <Button type="submit" disabled={!formState.isValid}>
-          {isLoginMode ? 'LOGIN' : 'SIGNUP'}
+          {isLoginMode ? 'Login' : 'Signup'}
         </Button>
       </form>
-      <Button inverse onClick={switchModeHandler}>
-        SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
-      </Button>
+     
+      <p>Not a member yet?<a href=''> Choose a plan</a> and get started now!</p> <br/>
+      <button className='noshow'inverse onClick={switchModeHandler}>
+        Switch to  {isLoginMode ? 'Signup' : 'Login'}
+      </button>
     </Card>
   );
 };
