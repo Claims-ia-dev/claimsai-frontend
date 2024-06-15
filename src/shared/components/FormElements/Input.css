@@ -15,12 +15,12 @@
 
 .form-control input,
 .form-control textarea {
-  width: 100%;
+  width: 100%;  
   font: inherit;
-  border: 1px solid #d9d9d9;
+  border: 2px solid #d9d9d9;
   border-radius: 5px;
   background: #f8f8f8;
-  padding: 0.15rem 0.25rem;
+  padding: .6rem 0.25rem;
 }
 
 .form-control input:focus,

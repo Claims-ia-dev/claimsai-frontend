@@ -1,20 +1,20 @@
-import React, { useState, useContext } from 'react';
-
+import React, { useContext } from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
+import ResetInstructions from './ResetInstructions';
 import Button from '../../shared/components/FormElements/Button';
+import { useNavigate } from 'react-router-dom';
 import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
-const Auth = () => {
-  const auth = useContext(AuthContext);
-  const [isLoginMode, setIsLoginMode] = useState(true);
+const PasswordReset = () => {
+
+  const navigate = useNavigate();
 
   const [formState, inputHandler] = useForm(
     {
@@ -22,28 +22,29 @@ const Auth = () => {
         value: '',
         isValid: false
       },
-      password: {
-        value: '',
-        isValid: false
-      }
+    
     },
     false
   );
 
+ 
 
-
-  const authSubmitHandler = event => {
+  const SubmitHandler = event => {
+    <ResetInstructions items={formState.email}/>
     event.preventDefault();
     console.log(formState.inputs);
-    auth.login();
+    
+  
   };
 
   return (
     <Card className="authentication">
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
-      <form onSubmit={authSubmitHandler}>
-      
+      <form onSubmit={SubmitHandler}>
+        
+      <p>To reset your password, enter the email address you use to log in</p> 
+            
         <Input
           element="input"
           id="email"
@@ -53,25 +54,16 @@ const Auth = () => {
           errorText="Please enter a valid email address."
           onInput={inputHandler}
         />
-        <Input
-          element="input"
-          id="password"
-          type="password"
-          placeholder="Password"
-          validators={[VALIDATOR_MINLENGTH(5)]}
-          errorText="Please enter a valid password, at least 5 characters."
-          onInput={inputHandler}
-        /> 
-        <a href='/password-reset'>Forgot you password?</a> <br/><br/>
+       
         <Button type="submit" disabled={!formState.isValid}>
-          {isLoginMode ? 'Login' : 'Signup'}
+          Get reset link
         </Button>
       </form>
      
-      <p>Not a member yet?<a href='#'> Choose a plan</a> and get started now!</p> <br/>
+      <p>Never mind!<a href='/'> Take me back to login</a></p> <br/>
      
     </Card>
   );
 };
 
-export default Auth;
+export default PasswordReset;

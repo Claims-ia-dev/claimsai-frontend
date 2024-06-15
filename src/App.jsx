@@ -2,14 +2,14 @@ import React, { useState, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Redirect,
-  Switch
+  Navigate,
+  Routes
 } from 'react-router-dom';
-
 
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
+import PasswordReset from './user/pages/PasswordReset';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -26,34 +26,22 @@ const App = () => {
 
   if (isLoggedIn) {
     routes = (
-      <Switch>
-        <Route path="/" exact>
-          {/* <User/> */}
-        </Route>
-        {/* <Route path="/:userId/claims" exact>
-          <UserClaims />
-        </Route> 
-        <Route path="/claims/new" exact>
-          <NewClaim />
-        </Route>
-        <Route path="/claims/:claimId">
-          <UpdateClaim />
-        </Route>*/}
-        <Redirect to="/" />
-      </Switch>
+      <Routes>
+        <Route path="/" element = {<Auth/>}/>       
+        
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     );
   } else {
     routes = (
-      <Switch>
-        <Route path="/" exact>
-          <Auth />
-        </Route>
+      <Routes>
+        <Route path="/" element={<Auth />}/>             
        
-        <Route path="/auth">
-          <Auth />
-        </Route>
-        <Redirect to="/auth" />
-      </Switch>
+        <Route path="/auth" element={<Auth />}/>
+
+        <Route path="/password-reset" element= {<PasswordReset />}/>
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     );
   }
 
