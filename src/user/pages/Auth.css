@@ -12,15 +12,15 @@
   max-width: 25rem;
   margin: 7rem auto;
   text-align: center;
+  
+  background-color: #f2f2f2;
+  box-shadow: none;
 }
 
 .authentication form {
   margin-bottom: 1rem;
 }
 
-.noshow{
-  display: none;
-}
 
 a {
 text-decoration: none;

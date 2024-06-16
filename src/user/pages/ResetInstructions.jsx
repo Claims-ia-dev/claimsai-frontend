@@ -1,22 +1,27 @@
 import React, { useContext } from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Button from '../../shared/components/FormElements/Button';
+import { useLocation } from 'react-router-dom';
 import {
   VALIDATOR_EMAIL
 } from '../../shared/util/validators';
 import EmailVector from '../../images/emailvector.svg';
-import './Auth.css';
+import './ResetInstructions.css';
 
-const ResetInstructions = (props) => {
-  
+
+const ResetInstructions = () => {
+  const location = useLocation();
+  const { email } = location.state || {};
+
   return (
-    <Card className="authentication">
-      <img className="authentication__logo" src={EmailVector} alt="ClaimsIA" />
-      <br />
-    
-        
-      <p>Check your  inbox  for instructions from us on how to reset your password</p> <br/>
-     
+    <Card className="instructions">
+        <div className='instructions__header'>
+        <img className='instructions__image' src={EmailVector} alt="Email icon"/></div>
+      {email ? (
+        <p>Check your email: <strong>{email}</strong> inbox for instructions from us on how to reset your password.</p>
+      ) : (
+        <p>No email provided. Please go back and enter your email address.</p>
+      )}
     </Card>
   );
 };

@@ -1,0 +1,39 @@
+.claim-item {
+  margin: 1rem 0;
+}
+
+.claim-item__content {
+  padding: 0;
+}
+
+.claim-item__info {
+  padding: 1rem;
+  text-align: center;
+}
+
+.claim-item__info h2,
+.claim-item__info h3,
+.claim-item__info p {
+  margin: 0 0 0.5rem 0;
+}
+
+.claim-item__actions {
+  padding: 1rem;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+
+.claim-item__modal-content {
+  padding: 0;
+}
+
+.claim-item__modal-actions {
+  text-align: right;
+}
+
+.claim-item__actions button,
+.claim-item__actions a {
+  margin: 0.5rem;
+}
+
+

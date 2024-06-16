@@ -1,0 +1,28 @@
+.instructions__header {
+    color: white;
+    text-align: center;
+  }
+  
+  .instructions__image{
+    width: 30%;
+  }
+  
+  .instructions {
+    width: 90%;
+    max-width: 25rem;
+    margin: 7rem auto;
+    text-align: center;
+    background-color: #f2f2f2;
+    box-shadow: none;
+  }
+  
+   
+  
+  a {
+  text-decoration: none;
+  color:#ff5715;
+  }
+  
+  p{
+    font-weight: bold;
+  }

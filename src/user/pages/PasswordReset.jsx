@@ -33,6 +33,10 @@ const PasswordReset = () => {
     <ResetInstructions items={formState.email}/>
     event.preventDefault();
     console.log(formState.inputs);
+     // Call the reset password function here
+     // navigate to the desired route
+     navigate('/reset-instructions', { state: { email: formState.inputs.email.value } });
+
     
   
   };
