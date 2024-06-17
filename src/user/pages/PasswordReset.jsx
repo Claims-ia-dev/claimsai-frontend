@@ -8,11 +8,12 @@ import {
   VALIDATOR_EMAIL
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
-import { AuthContext } from '../../shared/context/auth-context';
 import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
 const PasswordReset = () => {
+ /* * It provides a form for users to enter their email address and receive reset instructions.
+  */
 
   const navigate = useNavigate();
 
@@ -33,7 +34,8 @@ const PasswordReset = () => {
     <ResetInstructions items={formState.email}/>
     event.preventDefault();
     console.log(formState.inputs);
-     // Call the reset password function here
+     // To call the reset password function here
+     
      // navigate to the desired route
      navigate('/reset-instructions', { state: { email: formState.inputs.email.value } });
 

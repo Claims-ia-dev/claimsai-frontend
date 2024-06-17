@@ -4,16 +4,16 @@ import { AuthContext } from '../../context/auth-context';
 import './NavLinks.css';
 
 const NavLinks = props => {
-  const auth = useContext(AuthContext);
+  const auth = useContext(AuthContext); //to see if the user is logged in
 
   return (
-    <ul className="nav-links">
+    <ul className="nav-links"> 
       <li>
         <NavLink to="/" end >
         Manage my subscription
         </NavLink>
       </li>
-      {auth.isLoggedIn && (
+      {auth.isLoggedIn && ( //shows link if the user is logged in
         <li>
           <NavLink to="/u1/claims">My claims</NavLink>
         </li>
@@ -25,8 +25,7 @@ const NavLinks = props => {
       )}
       {!auth.isLoggedIn && (
         <li>
-          <button onClick={auth.login}>Log in</button>
-          {/* <NavLink to="/auth">Log in</NavLink> */}
+          <button onClick={auth.login}>Log in</button>          
         </li>
       )}
       {auth.isLoggedIn && (

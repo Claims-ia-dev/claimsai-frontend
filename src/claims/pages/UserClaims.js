@@ -25,7 +25,7 @@ const DUMMY_CLAIMS = [
 ];
 const UserClaims = () => {
   const userId = useParams().userId;
-  const loadedClaims = DUMMY_CLAIMS.filter(claim => claim.creator === userId);
+  const loadedClaims = DUMMY_CLAIMS.filter(claim => claim.creator === userId); //to change for a get api from backend 
   return <ClaimList items={loadedClaims} />;
 };
 

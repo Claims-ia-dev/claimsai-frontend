@@ -12,10 +12,14 @@ import { AuthContext } from '../../shared/context/auth-context';
 import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
-const Auth = () => {
+const Auth = () => { //handles user aauthentication
   const auth = useContext(AuthContext);
-  const [isLoginMode, setIsLoginMode] = useState(true);
 
+  /**
+   * Initialize the form state with email and password inputs
+   * 
+   * The useForm hook returns an array with three elements: formState, inputHandler, and setFormData.
+   */
   const [formState, inputHandler] = useForm(
     {
       email: {
@@ -33,7 +37,7 @@ const Auth = () => {
 
 
   const authSubmitHandler = event => {
-    event.preventDefault();
+    event.preventDefault(); //this should connect to the backend 
     console.log(formState.inputs);
     auth.login();
   };
@@ -42,8 +46,8 @@ const Auth = () => {
     <Card className="authentication">
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
-      <form onSubmit={authSubmitHandler}>
-      
+      <form onSubmit={authSubmitHandler}> 
+    {/**Renders input fields for email and password */}
         <Input
           element="input"
           id="email"
@@ -58,16 +62,19 @@ const Auth = () => {
           id="password"
           type="password"
           placeholder="Password"
-          validators={[VALIDATOR_MINLENGTH(5)]}
+          validators={[VALIDATOR_MINLENGTH(5)]} //to change validators
           errorText="Please enter a valid password, at least 5 characters."
           onInput={inputHandler}
         /> 
-        <a href='/password-reset'>Forgot you password?</a> <br/><br/>
+        {/* goes to another route if the password is forgotten */}
+        <a href='/password-reset'>Forgot you password?</a> <br/><br/> 
+
         <Button type="submit" disabled={!formState.isValid}>
-          {isLoginMode ? 'Login' : 'Signup'}
+          Login
         </Button>
       </form>
      
+     {/**if not a member yet to send to another link */}
       <p>Not a member yet?<a href='#'> Choose a plan</a> and get started now!</p> <br/>
      
     </Card>

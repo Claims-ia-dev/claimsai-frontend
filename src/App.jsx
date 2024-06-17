@@ -17,28 +17,42 @@ import UserClaims from './claims/pages/UserClaims';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  
+  /**
+   * The login function sets the isLoggedIn state to true indicating user has logged in.
+   */
   const login = useCallback(() => {
     setIsLoggedIn(true);
   }, []);
 
+  /**
+   * The login function sets the isLoggedIn state to false indicating user has not logged in.
+   */
   const logout = useCallback(() => {
     setIsLoggedIn(false);
   }, []);
 
   let routes;
 
+   /**
+   * If the user is logged in, render the authenticated routes.
+   */
+
   if (isLoggedIn) {
     routes = (
       <Routes>
         <Route path="/" element = {<Auth/>}/>   
          
-        <Route path="/u1/claims/new" element={<UserClaims />} /> {/*change u1 to :uid */}
+        {/* <Route path="/" element={<UserClaims />} />  */}
         <Route path="/claims/new" element={<NewClaim />} />    
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );
   } else {
+     /**
+     * If the user is not logged in, render the unauthenticated routes.
+     */
     routes = (
       <Routes>
         <Route path="/" element={<Auth />}/>             
@@ -47,7 +61,7 @@ const App = () => {
 
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />
-        <Route path="/claims/new" element={<NewClaim />} />     
+        <Route path="/claims/new" element={<NewClaim />} />    {/** provisionally here */}  
        
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

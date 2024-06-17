@@ -32,10 +32,14 @@ const DUMMY_CLAIMS = [
   }
 ];
 
+//Called to edit claim
 const UpdateClaim = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); //initializes isLoading to true
+  
+  //gets the claimid from the url parameters
   const claimId = useParams().claimId;
 
+   // Initialize the form state with roomname, roomtype, and roomservice fields
   const [formState, inputHandler, setFormData] = useForm(
     {
       roomname: {
@@ -54,9 +58,12 @@ const UpdateClaim = () => {
     false
   );
 
+  // Find the claim with the corresponding ID from the DUMMY_CLAIMS array
   const identifiedClaim = DUMMY_CLAIMS.find(c => c.id === claimId);
 
+  // Use the useEffect hook to update the form state when the component mounts
   useEffect(() => {
+     // If a claim is found, update the form state with the claim data
     if (identifiedClaim) {
       setFormData(
         {
@@ -79,12 +86,12 @@ const UpdateClaim = () => {
     setIsLoading(false);
   }, [setFormData, identifiedClaim]);
 
-  const claimUpdateSubmitHandler = event => {
+  const claimUpdateSubmitHandler = event => { //handler to update claim (to add api endpoint for updates)
     event.preventDefault();
     console.log(formState.inputs);
   };
 
-  if (!identifiedClaim) {
+  if (!identifiedClaim) { //In case the claim is not found
     return (
       <div className="center">
         <Card>
@@ -102,14 +109,13 @@ const UpdateClaim = () => {
     );
   }
 
-  const selectHandler = (event) => {
-    const selectedValue = event.target.value;
-    inputHandler("roomtype", selectedValue, true);
+   //handler for room type selection 
+  const  typeSelectHandler = (event) => {
+    const typeSelectedValue = event.target.value;
+     //updates the roomtype field with the selected value
+    inputHandler("roomtype", typeSelectedValue, true);
   };
-
  
-
-  
 
   return (
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>
@@ -130,7 +136,7 @@ const UpdateClaim = () => {
           initialValue={formState.inputs.roomtype.value}
           initialValid={true}
           errorText="Please select the type of room"
-          onChange={selectHandler}
+          onChange={typeSelectHandler}
         >
           <option value="">Select the type of room</option>
           <option value="1">Bedroom</option>
@@ -142,7 +148,7 @@ const UpdateClaim = () => {
           {/* change this to the types of rooms available*/}
         </select>
 
-
+      {/* to change for select field and backend data */}
       <Input
         id="roomservice"
         element="textarea"

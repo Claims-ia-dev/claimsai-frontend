@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import './UserItem.css';
 
-const UserItem = props => {
+const UserItem = props => { //represents a user with  his id, name and claimscount
   return (
+    //link text is the user's name  and the link url is dependant on the id of the user
     <li className="user-item">
       <Card className="user-item__content">
         <Link to={`/${props.id}/claims`}>         
