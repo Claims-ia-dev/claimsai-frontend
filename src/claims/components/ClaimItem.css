@@ -1,14 +1,25 @@
 .claim-item {
   margin: 1rem 0;
+  display: block;
+  border: 1px solid #FF5715;
 }
 
 .claim-item__content {
   padding: 0;
+  display: flex;
+  justify-content:space-around;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
 }
 
 .claim-item__info {
-  padding: 1rem;
+  padding: 0;
+  margin: 0 0 0 33%;
+  
   text-align: center;
+  color: #FF5715;
 }
 
 .claim-item__info h2,
@@ -18,9 +29,8 @@
 }
 
 .claim-item__actions {
-  padding: 1rem;
+  padding: 0;
   text-align: center;
-  border-top: 1px solid #ccc;
 }
 
 .claim-item__modal-content {
@@ -36,4 +46,11 @@
   margin: 0.5rem;
 }
 
+.claim-item__button {
+  background-color: white;
+  border: 0;
+}
 
+.claim-item__button:hover{
+  cursor: pointer;
+}

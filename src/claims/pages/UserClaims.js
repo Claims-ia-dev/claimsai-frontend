@@ -5,7 +5,7 @@ import ClaimList from '../components/ClaimList';
 
 const DUMMY_CLAIMS = [
   {
-    id: 'c1',
+    id: 'e1',
     roomname: 'Room 1',
     roomtype: '2',
     roomservice: 'cleaning',
@@ -14,7 +14,7 @@ const DUMMY_CLAIMS = [
     // customer: 'cu1'
   },
   {
-    id: 'c2',
+    id: 'e2',
     roomname: 'Room 2',
     roomtype: '3',
     roomservice: 'painting',

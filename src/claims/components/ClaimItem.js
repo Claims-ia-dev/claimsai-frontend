@@ -3,6 +3,8 @@ import Card from '../../shared/components/UIElements/Card';
 import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
 import { AuthContext } from '../../shared/context/auth-context';
+import EditImg from  '../../images/edit.svg';
+import DeleteImg from  '../../images/delete.svg';
 import './ClaimItem.css';
 
 //ClaimItem component that receives props usually from ClaimList to show each of the rooms that has a claim created
@@ -57,20 +59,20 @@ const ClaimItem = props => {
       <li className="claim-item">
         <Card className="claim-item__content">          
           <div className="claim-item__info">
-            <h2>{props.roomname}</h2>
-            <h3>{props.roomtype}</h3>
-            <p>{props.roomservice}</p>
+            <h4>{props.roomname}</h4>
           </div>
 
           {/* section for user actions */}
           <div className="claim-item__actions">
             {/* edit button-> will go to the route of the claim id to edit */}
-              <Button to={`/claims/${props.id}`}>EDIT</Button>
+              <button className="claim-item__button" to={`/claims/${props.id}`}>
+               <a> <img src={EditImg} alt="Edit button" /></a>
+              </button>
          
               {/* delete button */}
-              <Button danger onClick={showDeleteWarningHandler}>
-                DELETE
-              </Button>
+              <button className="claim-item__button" danger onClick={showDeleteWarningHandler}>
+              <a><img src={DeleteImg} alt="Delete button" /></a>
+              </button>
           
           </div>
         </Card>

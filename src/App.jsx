@@ -43,7 +43,7 @@ const App = () => {
       <Routes>
         <Route path="/" element = {<Auth/>}/>   
          
-        {/* <Route path="/" element={<UserClaims />} />  */}
+         <Route path="/:userId/claims/" element={<UserClaims />} /> 
         <Route path="/claims/new" element={<NewClaim />} />    
         
         <Route path="*" element={<Navigate to="/" />} />

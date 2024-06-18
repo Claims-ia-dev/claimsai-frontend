@@ -1,7 +1,51 @@
-.claim-list {
+.claim-list-display{
+  margin: 0 10%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  height: 80vh;
+}
+.claim-list-items {
   list-style: none;
-  margin: 1rem auto;
-  padding: 0;
-  width: 90%;
-  max-width: 40rem;
+  width: 100%;
+  margin: 10%;
+  padding: 0%;
+  align-items: center;
+}
+
+.claim-list-buttons{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.claim-list-button{
+  font: inherit;
+  padding: 0.5rem 1.5rem;
+  margin: 0.5rem;
+  width: 50%;
+  border: 1px solid #156fff;
+  border-radius: 4px; 
+  cursor: pointer;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.filled-blue{
+  color: white;
+  background: #156fff;
+}
+
+.filled-white{
+  background: white;
+  color: #156fff;
 }

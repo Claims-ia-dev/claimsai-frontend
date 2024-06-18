@@ -8,6 +8,7 @@
   cursor: pointer;
   margin-right: 1rem;
   text-decoration: none;
+  font-weight: bold;
   display: inline-block;
 }
 
@@ -46,9 +47,9 @@
 .button:disabled,
 .button:hover:disabled,
 .button:active:disabled {
-  background: rgba(21, 111, 255, 0.5);
+  background: #156fff;
   color: #ffffff;
-  border-color: rgba(21, 111, 255, 0.5);
+  border-color: #156fff;
   cursor: not-allowed;
 }
 
@@ -59,3 +60,4 @@
 .button--big {
   font-size: 1.5rem;
 }
+

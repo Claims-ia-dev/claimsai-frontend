@@ -13,7 +13,7 @@ import './ClaimForm.css';
 
 const DUMMY_CLAIMS = [
   {
-    id: 'c1',
+    id: 'e1',
     roomname: 'Room 1',
     roomtype: '2',
     roomservice: 'cleaning',
@@ -22,7 +22,7 @@ const DUMMY_CLAIMS = [
     // customer: 'cu1'
   },
   {
-    id: 'c2',
+    id: 'e2',
     roomname: 'Room 2',
     roomtype: '3',
     roomservice: 'painting',
@@ -59,7 +59,7 @@ const UpdateClaim = () => {
   );
 
   // Find the claim with the corresponding ID from the DUMMY_CLAIMS array
-  const identifiedClaim = DUMMY_CLAIMS.find(c => c.id === claimId);
+  const identifiedClaim = DUMMY_CLAIMS.find(e => e.id === claimId);
 
   // Use the useEffect hook to update the form state when the component mounts
   useEffect(() => {
