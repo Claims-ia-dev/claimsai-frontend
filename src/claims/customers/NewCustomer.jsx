@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
+  VALIDATOR_EMAIL,
+  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
@@ -49,7 +51,11 @@ const NewCustomer = () => {
       email: {
         value: '',
         isValid: false
-      }
+      },
+      claimnumber: {
+        value: "",
+        isValid: true,
+      },
     },
     false
   );
@@ -86,7 +92,7 @@ const NewCustomer = () => {
         id="phonenumber"
         element="input"
         placeholder="Phone Number"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_MINLENGTH(10)]}
         errorText="Please enter a valid phone number."
         onInput={inputHandler}
       /> </div>
@@ -129,7 +135,7 @@ const NewCustomer = () => {
         id="zip"
         element="input"
         placeholder="Zip/Postal Code"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a zip or postal code."
         onInput={inputHandler}
       />
@@ -144,15 +150,26 @@ const NewCustomer = () => {
         onInput={inputHandler}
       /></div>
 
-
+      <div className='split'>
       <Input 
         id="email"
         element="input"
         placeholder="Email"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_EMAIL()]}
         errorText="Please enter a valid email."
         onInput={inputHandler}
       />
+
+      <Input
+        id="claimnumber"
+        element="input"
+        type="text"
+        placeholder="Claim number"
+        validators={[VALIDATOR_REQUIRE()]}
+        errorText="Please enter a valid claim number."
+        onInput={inputHandler}
+      />
+      </div>
       </div>
       
 

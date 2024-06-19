@@ -15,6 +15,7 @@ import NewClaim from './claims/pages/NewClaim';
 import UserClaims from './claims/pages/UserClaims';
 import NewCustomer from './claims/customers/NewCustomer';
 import UpdateClaim from './claims/pages/UpdateClaim';
+import ChangePassword from './user/pages/ChangePassword';
 import EstimateCategoryClaims from './claims/categoryclaims/pages/EstimateCategoryClaims'
 
 const App = () => {
@@ -44,7 +45,7 @@ const App = () => {
   if (isLoggedIn) {
     routes = (
       <Routes>
-        <Route path="/" element = {<Auth/>}/>            
+        <Route path="/" element = {<NewCustomer/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
         <Route path="/claims/new" element={<NewClaim />} />
         <Route path="/claims/newCustomer" element={<NewCustomer />} />  
@@ -66,6 +67,7 @@ const App = () => {
 
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />
+        <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/claims/new" element={<NewClaim />} />    {/** provisionally here */}  
        
         <Route path="*" element={<Navigate to="/" />} />

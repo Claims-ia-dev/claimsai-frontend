@@ -5,6 +5,7 @@ const VALIDATOR_TYPE_MIN = 'MIN';
 const VALIDATOR_TYPE_MAX = 'MAX';
 const VALIDATOR_TYPE_EMAIL = 'EMAIL';
 const VALIDATOR_TYPE_FILE = 'FILE';
+const VALIDATOR_TYPE_PASSWORD = 'PASSWORD';
 
 /**
  * The VALIDATOR_REQUIRE function returns a validator object with type 'REQUIRE'.
@@ -19,6 +20,13 @@ export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
  * This validator checks if the input value is a file.
  */
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
+
+/**
+ * The VALIDATOR_PASSWORD function returns a validator object with type 'PASSWORD'.
+ * 
+ * This validator checks if the input value is a strong password (at least 8 characters, including uppercase, lowercase, and digit).
+ */
+export const VALIDATOR_PASSWORD = () => ({ type: VALIDATOR_TYPE_PASSWORD });
 
 /**
  * The VALIDATOR_MINLENGTH function returns a validator object with type 'MINLENGTH'.
@@ -127,6 +135,14 @@ export const validate = (value, validators) => {
      */
     if (validator.type === VALIDATOR_TYPE_EMAIL) {
       isValid = isValid && /^\S+@\S+\.\S+$/.test(value);
+    }
+    /**
+     * Check if the validator type is 'PASSWORD'.
+     * 
+     * If so, check if the input value is a strong password.
+     */
+    if (validator.type === VALIDATOR_TYPE_PASSWORD) {
+      isValid = isValid && /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/.test(value);
     }
   }
   return isValid;

@@ -6,8 +6,8 @@
 .form-control input,
 .form-control textarea {
   display: block;
-  color: #666666
- }
+  color: #666666;
+}
 
 .form-control label {
   font-weight: bold;
@@ -16,12 +16,12 @@
 
 .form-control input,
 .form-control textarea {
-  width: 100%;  
+  width: 100%;
   font: inherit;
   border: 2px solid #d9d9d9;
   border-radius: 5px;
   background: #ffffff;
-  padding: .6rem 0.25rem;
+  padding: 0.6rem 0.25rem;
 }
 
 .form-control input:focus,
@@ -40,4 +40,28 @@
 .form-control--invalid textarea {
   border-color: red;
   background: #ffd1d1;
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input {
+  padding-right: 30px; /* add some padding to make room for the icon */
+}
+
+.input-container .showPass {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  bottom: 0;
+  margin: auto;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  color: #d2d2d2;
 }

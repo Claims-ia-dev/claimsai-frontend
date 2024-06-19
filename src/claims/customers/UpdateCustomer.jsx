@@ -7,6 +7,7 @@ import Card from "../../shared/components/UIElements/Card";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH,
+  VALIDATOR_EMAIL,
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import UpdateClaim from "../pages/UpdateClaim";
@@ -138,6 +139,10 @@ const UpdateCustomer = () => {
             value: "",
             isValid: true,
           },
+          claimnumber: {
+            value: "",
+            isValid: true,
+          },
         },
         true
       );
@@ -191,8 +196,8 @@ const UpdateCustomer = () => {
             id="phonenumber"
             element="textarea"
             label="Description"
-            validators={[VALIDATOR_MINLENGTH(5)]}
-            errorText="Please enter a phone number (min. 5 characters)."
+            validators={[VALIDATOR_MINLENGTH(10)]}
+            errorText="Please enter a phone number (min. 10 numnbers)."
             onInput={inputHandler}
             initialValue={formState.inputs.phonenumber.value}
             initialValid={formState.inputs.phonenumber.isValid}
@@ -215,7 +220,7 @@ const UpdateCustomer = () => {
             id="city"
             element="textarea"
             label="Description"
-            validators={[VALIDATOR_MINLENGTH(5)]}
+            validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid city (min. 5 characters)."
             onInput={inputHandler}
             initialValue={formState.inputs.city.value}
@@ -256,16 +261,29 @@ const UpdateCustomer = () => {
             initialValid={formState.inputs.insurance.isValid}
           />
         </div>
+        <div className="split">
         <Input
           id="email"
           element="textarea"
           label="Description"
-          validators={[VALIDATOR_MINLENGTH(5)]}
+          validators={[VALIDATOR_EMAIL()]}
           errorText="Please enter a valid email (min. 5 characters)."
           onInput={inputHandler}
           initialValue={formState.inputs.email.value}
           initialValid={formState.inputs.email.isValid}
         />
+         <Input
+            id="claimnumber"
+            element="input"
+            type="text"
+            placeholder="Claim number"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid claim number."
+            onInput={inputHandler}
+            initialValue={formState.inputs.claimnumber.value}
+            initialValid={formState.inputs.claimnumber.isValid}
+          />
+        </div>
       </div>
       <Button type="submit" disabled={!formState.isValid}>
         UPDATE ESTIMATE
