@@ -17,6 +17,7 @@ import NewCustomer from './claims/customers/NewCustomer';
 import UpdateClaim from './claims/pages/UpdateClaim';
 import ChangePassword from './user/pages/ChangePassword';
 import EstimateCategoryClaims from './claims/categoryclaims/pages/EstimateCategoryClaims'
+import WorkTeam from './user/pages/WorkTeam';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -46,6 +47,7 @@ const App = () => {
     routes = (
       <Routes>
         <Route path="/" element = {<NewCustomer/>}/>            
+        <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
         <Route path="/claims/new" element={<NewClaim />} />
         <Route path="/claims/newCustomer" element={<NewCustomer />} />  

@@ -35,7 +35,6 @@ const Auth = () => { //handles user aauthentication
     false
   );
 
-const [showPassword, setShowPassword] = useState(false);
 
 
   const authSubmitHandler = event => {
@@ -62,7 +61,7 @@ const [showPassword, setShowPassword] = useState(false);
         <Input
           element="input"
           id="password"
-          type={showPassword ? 'text' : 'password'}
+          type= 'password'
           placeholder="Password"
           validators={[VALIDATOR_PASSWORD()]} 
           errorText="Please enter a valid password (at least 8 characters, including uppercase, lowercase, and digit)."

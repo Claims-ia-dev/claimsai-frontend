@@ -9,7 +9,7 @@ const NavLinks = props => {
   return (
     <ul className="nav-links"> 
       <li>
-        <NavLink to="/" end >
+        <NavLink to="/u1/workteam" end >
         Manage my subscription
         </NavLink>
       </li>

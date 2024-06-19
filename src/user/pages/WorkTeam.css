@@ -1,0 +1,47 @@
+  
+  .workteam {
+    width: 90%;
+    max-width: 60rem;
+    margin: 7rem auto;
+    text-align: center;
+    display: flex;
+    box-shadow: none;
+  } 
+  
+  .workteam hr{
+    color: #d2d2d2
+  }
+  
+  .workteam-member{
+    width: 50%;
+   
+
+  }
+  
+  .workteam-form {
+    list-style: none;
+    margin: 0 auto;
+    padding: 5% 1rem;
+    width: 50%;
+    border-radius: 25px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .workteam-form__inputs{
+    padding: 5% 10%;
+
+  }
+
+  
+  a {
+  text-decoration: none;
+  color:#ff5715;
+  }
+  
+  p{
+    font-weight: bold;
+  }
+  

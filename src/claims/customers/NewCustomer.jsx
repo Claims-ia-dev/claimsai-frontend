@@ -75,8 +75,9 @@ const NewCustomer = () => {
   <>
   
     <form className="customer-form" onSubmit={claimSubmitHandler}>
-      <p className=''>To begin creating an estimate, please enter customer information. </p>
-      <div className='customer-form__inputs'>
+      {/* instructions */}
+      <p className=''>To begin creating an estimate, please enter customer information. </p> 
+      <div className='customer-form__inputs'> 
       <div  className='split'>
       <Input
         id="customername"
