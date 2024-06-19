@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -6,11 +7,14 @@ import {
   VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
-import NewClaim from '../pages/NewClaim';
-import './ClaimForm.css';
+import './CustomerForm.css';
+
+
 
 const NewCustomer = () => {
 
+  
+  const navigate = useNavigate(); //to go to a diferent route
   // Initialize the form state with customer fields
   const [formState, inputHandler] = useForm(
     {
@@ -54,15 +58,20 @@ const NewCustomer = () => {
   const claimSubmitHandler = event => {
     event.preventDefault(); //prevents default behavior so it doesn't reload and tries to send data
     console.log(formState.inputs); 
-    <NewClaim/> //to send customer data
+    // navigate to the desired route
+    navigate('/claims/new');
+
+    //to send customer data to the route that takes you to NewClaim
   };
 
   
   return (
   <>
   
-    <form className="claim-form" onSubmit={claimSubmitHandler}>
+    <form className="customer-form" onSubmit={claimSubmitHandler}>
       <p className=''>To begin creating an estimate, please enter customer information. </p>
+      <div className='customer-form__inputs'>
+      <div  className='split'>
       <Input
         id="customername"
         element="input"
@@ -80,7 +89,9 @@ const NewCustomer = () => {
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid phone number."
         onInput={inputHandler}
-      />
+      /> </div>
+
+      
          <Input
         id="address"
         element="input"
@@ -90,6 +101,8 @@ const NewCustomer = () => {
         errorText="Please enter a valid address."
         onInput={inputHandler}
       />
+
+      <div className='split'> 
 
       <Input 
         id="city"
@@ -108,7 +121,9 @@ const NewCustomer = () => {
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid State/Province."
         onInput={inputHandler}
-      />
+      /></div>
+
+      <div className='split'> 
 
       <Input 
         id="zip"
@@ -127,7 +142,8 @@ const NewCustomer = () => {
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid insurance."
         onInput={inputHandler}
-      />
+      /></div>
+
 
       <Input 
         id="email"
@@ -137,7 +153,7 @@ const NewCustomer = () => {
         errorText="Please enter a valid email."
         onInput={inputHandler}
       />
-      
+      </div>
       
 
       <Button type="submit" disabled={!formState.isValid}>

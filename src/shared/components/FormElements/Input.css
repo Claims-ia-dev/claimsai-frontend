@@ -6,6 +6,7 @@
 .form-control input,
 .form-control textarea {
   display: block;
+  color: #666666
  }
 
 .form-control label {
@@ -19,15 +20,15 @@
   font: inherit;
   border: 2px solid #d9d9d9;
   border-radius: 5px;
-  background: #f8f8f8;
+  background: #ffffff;
   padding: .6rem 0.25rem;
 }
 
 .form-control input:focus,
 .form-control textarea:focus {
   outline: none;
-  background: #ebebeb;
-  border-color: #510077;
+  background: #ffffff;
+  border-color: #156fff;
 }
 
 .form-control--invalid label,

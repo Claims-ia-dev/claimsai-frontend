@@ -1,0 +1,44 @@
+.customer-form {
+    list-style: none;
+    margin: 0 auto;
+    padding: 5% 1rem;
+    width: 90%;
+    max-width: 40rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+    border-radius: 25px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .customer-form__inputs{
+    padding: 5% 10%;
+
+  }
+
+
+
+  .customer-form *{
+    width: 100% ;
+    margin: 0 0;
+  }
+   
+  .customer-form > p {
+    width: 100%;
+    text-align: center;
+  }
+
+  .split{
+    display: flex;
+    justify-content: space-between; 
+  }
+
+  .customer-form > button {
+    width: 70%;
+    text-align: center;
+  }
+
+  .split>*:first-child{
+    margin-right: 1rem;
+  }

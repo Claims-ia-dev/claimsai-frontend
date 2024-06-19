@@ -47,9 +47,9 @@
 .button:disabled,
 .button:hover:disabled,
 .button:active:disabled {
-  background: #156fff;
+  background: #7DA7EB;
   color: #ffffff;
-  border-color: #156fff;
+  border-color: #7DA7EB;
   cursor: not-allowed;
 }
 

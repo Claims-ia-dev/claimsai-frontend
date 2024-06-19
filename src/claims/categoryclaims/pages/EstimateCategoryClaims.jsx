@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import CategoryClaimList from '../components/CategoryClaimList';
+import AnswerQuestions from './AnswerQuestions';
 
 const DUMMY_CATEGORY_CLAIMS = [ //dummy category claims to retrieve from backend
   {
@@ -23,7 +24,10 @@ const DUMMY_CATEGORY_CLAIMS = [ //dummy category claims to retrieve from backend
 const EstimateCategoryClaims = () => {
   const estimateId = useParams().estimateId;//estimate id to retrieve from url
   const loadedClaims = DUMMY_CATEGORY_CLAIMS.filter(categoryClaim => categoryClaim.estimate === estimateId); //to change for a get api from backend for the category claims sorted by service type
-  return <CategoryClaimList items={loadedClaims} />; //lists the category claims
+  return <>  
+  {/* <CategoryClaimList items={loadedClaims} /> */}
+  <AnswerQuestions/>
+  </>; //lists the category claims
 };
 
 export default EstimateCategoryClaims;

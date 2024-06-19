@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
-import Card from "../../shared/components/UIElements/Card";
-import { AuthContext } from "../../shared/context/auth-context";
+import Card from "../../../shared/components/UIElements/Card";
+import { AuthContext } from "../../../shared/context/auth-context";
 import "../../components/ClaimItem.css"; //to make one css for category claims
 
 //CategorylaimItem component that receives props usually from CategoryClaimList to show each of the questions for the estimate
+//this presents each question individually
 const CategoryClaimItem = (props) => {
   //Gets the authentication context (Sees if it's login or not)
   const auth = useContext(AuthContext);

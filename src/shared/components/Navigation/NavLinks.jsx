@@ -20,7 +20,12 @@ const NavLinks = props => {
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/claims/new">Add claim</NavLink>
+          <NavLink to="/claims/newCustomer">Add estimate</NavLink>
+        </li>
+      )}
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/claims/e1/EstimateCategoryClaims">Category claims</NavLink>
         </li>
       )}
       {!auth.isLoggedIn && (

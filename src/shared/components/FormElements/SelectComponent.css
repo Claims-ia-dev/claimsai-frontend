@@ -1,0 +1,51 @@
+
+.select-control {
+  margin: 1rem 5%;
+  position: relative;
+}
+
+.select-control select{
+  appearance: none;
+  width: 100%;
+  font: inherit;
+  border: 2px solid #d9d9d9;
+  border-radius: 5px;
+  background: #ffffff;
+  padding: .6rem 2.5rem .6rem 0.25rem ;
+
+  display: block;
+  color: #666666;
+}
+.select-control .fa-chevron-down {
+  position: absolute;
+  right:0.5rem ;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  color: #d9d9d9;
+  pointer-events: none;
+}
+
+.select-control label {
+  display: block;
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+
+.select-control select:focus {
+  outline: none;
+  background: #ffffff;
+  border-color: #156fff;
+}
+
+.select-control--invalid label,
+.select-control--invalid p {
+  color: red;
+}
+
+.select-control--invalid select {
+  border-color: red;
+  background: #ffd1d1;
+}

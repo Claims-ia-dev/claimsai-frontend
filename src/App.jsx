@@ -13,6 +13,9 @@ import PasswordReset from './user/pages/PasswordReset';
 import ResetInstructions from './user/pages/ResetInstructions';
 import NewClaim from './claims/pages/NewClaim';
 import UserClaims from './claims/pages/UserClaims';
+import NewCustomer from './claims/customers/NewCustomer';
+import UpdateClaim from './claims/pages/UpdateClaim';
+import EstimateCategoryClaims from './claims/categoryclaims/pages/EstimateCategoryClaims'
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,10 +44,12 @@ const App = () => {
   if (isLoggedIn) {
     routes = (
       <Routes>
-        <Route path="/" element = {<Auth/>}/>   
-         
-         <Route path="/:userId/claims/" element={<UserClaims />} /> 
-        <Route path="/claims/new" element={<NewClaim />} />    
+        <Route path="/" element = {<Auth/>}/>            
+        <Route path="/:userId/claims/" element={<UserClaims />} /> 
+        <Route path="/claims/new" element={<NewClaim />} />
+        <Route path="/claims/newCustomer" element={<NewCustomer />} />  
+        <Route path="/claims/:estimateId" element={<UpdateClaim />} />  
+        <Route path="/claims/:estimateId/EstimateCategoryClaims" element={<EstimateCategoryClaims />} />  
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

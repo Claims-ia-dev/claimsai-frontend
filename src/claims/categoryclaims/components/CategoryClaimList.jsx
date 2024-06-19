@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../../shared/components/UIElements/Card';
+import Card from '../../../shared/components/UIElements/Card';
 import CategoryClaimItem from './CategoryClaimItem';
 
 const CategoryClaimList = props => { //Component that receives props expected from EstimateCategoryClaims 
