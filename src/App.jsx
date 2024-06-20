@@ -16,8 +16,9 @@ import UserClaims from './claims/pages/UserClaims';
 import NewCustomer from './claims/customers/NewCustomer';
 import UpdateClaim from './claims/pages/UpdateClaim';
 import ChangePassword from './user/pages/ChangePassword';
-import EstimateCategoryClaims from './claims/categoryclaims/pages/EstimateCategoryClaims'
 import WorkTeam from './user/pages/WorkTeam';
+import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
+import ProjectReceipt from './claims/pages/ProjectReceipt';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,10 +50,11 @@ const App = () => {
         <Route path="/" element = {<NewCustomer/>}/>            
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
+        <Route path="/:userId/projectreceipt/" element={<ProjectReceipt />} /> 
         <Route path="/claims/new" element={<NewClaim />} />
         <Route path="/claims/newCustomer" element={<NewCustomer />} />  
         <Route path="/claims/:estimateId" element={<UpdateClaim />} />  
-        <Route path="/claims/:estimateId/EstimateCategoryClaims" element={<EstimateCategoryClaims />} />  
+        <Route path="/claims/:estimateId/EstimateCategoryClaims" element={<AnswerQuestions />} />  
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

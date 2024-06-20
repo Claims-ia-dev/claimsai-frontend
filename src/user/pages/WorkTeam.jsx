@@ -70,6 +70,7 @@ const loadedMembers = DUMMY_MEMBERS.filter(member => member.membership === membe
   return (
     <Card className="workteam">
       <div className="workteam-member">
+        <p>The following shows the number of users who are part of your work team</p>
         <MemberList items={loadedMembers}/>
 
       </div>
@@ -81,6 +82,7 @@ const loadedMembers = DUMMY_MEMBERS.filter(member => member.membership === membe
         <br />
         {/**Renders input*/}
         <div className="div workteam-form__inputs">
+          <div className="split">
         <Input
           element="input"
           id="name"
@@ -99,6 +101,7 @@ const loadedMembers = DUMMY_MEMBERS.filter(member => member.membership === membe
           errorText="Please enter a valid last name"
           onInput={inputHandler}
         />
+        </div>
         <Input
           element="input"
           id="email"

@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import MemberItem from './MemberItem';
+import './MemberList.css';
 
 const MemberList = props => { //Component that receives props expected from UserClaims 
   if (props.items.length === 0) { //checks if the array of claims is empty

@@ -5,6 +5,7 @@ import Modal from '../../shared/components/UIElements/Modal';
 import { AuthContext } from '../../shared/context/auth-context';
 import EditImg from  '../../images/edit.svg';
 import DeleteImg from  '../../images/delete.svg';
+import './MemberItem.css';
 
 
 //ClaimItem component that receives props usually from ClaimList to show each of the rooms that has a claim created

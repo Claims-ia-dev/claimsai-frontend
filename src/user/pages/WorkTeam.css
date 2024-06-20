@@ -1,27 +1,30 @@
   
   .workteam {
     width: 90%;
+    height: fit-content;
     max-width: 60rem;
     margin: 7rem auto;
     text-align: center;
     display: flex;
     box-shadow: none;
+    padding: 5% ;
+    align-items: baseline;
   } 
   
-  .workteam hr{
+  hr {
     color: #d2d2d2
   }
   
   .workteam-member{
-    width: 50%;
-   
+    width: 50%; 
+    list-style: none;
 
   }
   
   .workteam-form {
     list-style: none;
     margin: 0 auto;
-    padding: 5% 1rem;
+    padding: 5% ;
     width: 50%;
     border-radius: 25px;
     background: white;
@@ -31,11 +34,23 @@
   }
 
   .workteam-form__inputs{
-    padding: 5% 10%;
+    padding: 1rem 0;
 
   }
 
-  
+ 
+
+  .workteam-form__inputs div.split, .workteam-form__inputs div.form-control{
+    padding: 0;
+    margin: 0;
+  }  
+
+ 
+
+  .workteam-form__inputs .split>*:first-child{
+    margin-right: .5rem;
+  }
+
   a {
   text-decoration: none;
   color:#ff5715;
@@ -43,5 +58,13 @@
   
   p{
     font-weight: bold;
+    text-align: left;
   }
   
+  .workteam-form__inputs .split{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    justify-content: space-between; 
+  }
