@@ -19,6 +19,7 @@ import ChangePassword from './user/pages/ChangePassword';
 import WorkTeam from './user/pages/WorkTeam';
 import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
+import AutoRenewal from './payment/AutoRenewal';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,6 +50,7 @@ const App = () => {
       <Routes>
         <Route path="/" element = {<NewCustomer/>}/>            
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
+        <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
         <Route path="/:userId/projectreceipt/" element={<ProjectReceipt />} /> 
         <Route path="/claims/new" element={<NewClaim />} />

@@ -9,8 +9,13 @@ const NavLinks = props => {
   return (
     <ul className="nav-links"> 
       <li>
+        <NavLink to="/u1/subscription" end >
+          Manage my subscription
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/u1/workteam" end >
-        Manage my subscription
+          My workteam
         </NavLink>
       </li>
       {auth.isLoggedIn && ( //shows link if the user is logged in
