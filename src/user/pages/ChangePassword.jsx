@@ -4,16 +4,14 @@ import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
-  VALIDATOR_PASSWORD,
+  VALIDATOR_PASSWORD, VALIDATOR_EQUAL
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
-import { AuthContext } from '../../shared/context/auth-context';
-import Modal from '../../shared/components/UIElements/Modal';
 import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
 const ChangePassword = () => { //handles user aauthentication
-  const auth = useContext(AuthContext);
+  
 const navigate= useNavigate();
   /**
    * Initialize the form state with email and password inputs
@@ -65,18 +63,16 @@ const navigate= useNavigate();
           id="confirmpassword"
           type="password"
           placeholder="Confirm New Password"
-          validators={[VALIDATOR_PASSWORD()]} 
-          errorText="Please enter a valid password (at least 8 characters, including uppercase, lowercase, and digit)."
+          validators={[VALIDATOR_PASSWORD(), VALIDATOR_EQUAL(formState.inputs.newpassword.value)]}
+          errorText="Make sure passwords match and are strong enough"
           onInput={inputHandler}
         /> 
         {/* goes to another route if the password is forgotten */}
 
-        <Button type="submit" disabled={!formState.isValid|| formState.inputs.newpassword.value !== formState.inputs.confirmpassword.value}>
+        <Button type="submit" disabled={!formState.isValid}>
           Reset Password
         </Button>
-        {formState.inputs.newpassword.value !== formState.inputs.confirmpassword.value && (
-  <p style={{ color: 'red' }}>Please make sure the password is the same in both fields</p>
-)}
+       
       </form>
      
      {/**if not a member yet to send to another link */}

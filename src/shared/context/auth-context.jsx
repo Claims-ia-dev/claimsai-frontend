@@ -1,15 +1,31 @@
-import { createContext } from 'react';
+import { createContext, useState } from 'react';
 
-/**
- * Create an AuthContext with default values.
- * 
- * The context has three properties:
- *  - isLoggedIn: a boolean indicating whether the user is logged in
- *  - login: a function to log the user in
- *  - logout: a function to log the user out
- */
-export const AuthContext = createContext({
+const AuthContext = createContext({
   isLoggedIn: false,
+  role: null,
   login: () => {},
   logout: () => {}
 });
+
+const AuthProvider = ({ children }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState(null);
+
+  const login = (role) => {
+    setIsLoggedIn(true);
+    setRole(role);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    setRole(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ isLoggedIn, role, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export { AuthProvider, AuthContext };

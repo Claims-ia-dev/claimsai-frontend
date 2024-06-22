@@ -20,6 +20,7 @@ import WorkTeam from './user/pages/WorkTeam';
 import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
+import Register from './user/pages/Register';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -70,6 +71,7 @@ const App = () => {
         <Route path="/" element={<Auth />}/>             
        
         <Route path="/auth" element={<Auth />}/>
+        <Route path="/register" element={<Register />}/>
 
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />

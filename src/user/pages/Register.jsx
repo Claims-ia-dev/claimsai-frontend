@@ -4,40 +4,44 @@ import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_EMAIL,
+  VALIDATOR_EQUAL,
   VALIDATOR_PASSWORD,
+  VALIDATOR_REQUIRE,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
-const Auth = () => { //handles user authentication
+const Register = () => {
   const auth = useContext(AuthContext);
 
-  /**
-   * Initialize the form state with email and password inputs
-   * 
-   * The useForm hook returns an array with three elements: formState, inputHandler, and setFormData.
-   */
   const [formState, inputHandler] = useForm(
     {
+      name: {
+        value: '',
+        isValid: false,
+      },
       email: {
         value: '',
-        isValid: false
+        isValid: false,
       },
       password: {
         value: '',
-        isValid: false
-      }
+        isValid: false,
+      },
+      confirmPassword: {
+        value: '',
+        isValid: false,
+      },
     },
     false
   );
 
-
-
-  const authSubmitHandler = event => {
-    event.preventDefault(); //this should connect to the backend 
+  const registerSubmitHandler = event => {
+    event.preventDefault();
     console.log(formState.inputs);
+    // Call the registration API endpoint here
     auth.login();
   };
 
@@ -45,8 +49,16 @@ const Auth = () => { //handles user authentication
     <Card className="authentication">
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
-      <form onSubmit={authSubmitHandler}> 
-    {/**Renders input fields for email and password */}
+      <form onSubmit={registerSubmitHandler}>
+        <Input
+          element="input"
+          id="name"
+          type="text"
+          placeholder="Full Name"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid name."
+          onInput={inputHandler}
+        />
         <Input
           element="input"
           id="email"
@@ -59,27 +71,28 @@ const Auth = () => { //handles user authentication
         <Input
           element="input"
           id="password"
-          type= 'password'
+          type="password"
           placeholder="Password"
-          validators={[VALIDATOR_PASSWORD()]} 
+          validators={[VALIDATOR_PASSWORD()]}
           errorText="Please enter a valid password (at least 8 characters, including uppercase, lowercase, and digit)."
           onInput={inputHandler}
-          />
-       
-         
-        {/* goes to another route if the password is forgotten */}
-        <a href='/password-reset'>Forgot you password?</a> <br/><br/> 
-
+        />
+        <Input
+          element="input"
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          validators={[VALIDATOR_PASSWORD(), VALIDATOR_EQUAL(formState.inputs.password.value)]}
+          errorText="Make sure passwords match and are strong enough"
+          onInput={inputHandler}
+        />
         <Button type="submit" disabled={!formState.isValid}>
-          Login
+          Register
         </Button>
       </form>
-     
-     {/**if not a member yet to send to another link */}
-      <p>Not a member yet?<a href='/register'> Choose a plan</a> and get started now!</p> <br/>
-     
+      <p>Already a member?<a href='/auth'> Login</a> instead!</p>
     </Card>
   );
 };
 
-export default Auth;
+export default Register;

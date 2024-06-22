@@ -8,6 +8,7 @@ import {
   VALIDATOR_REQUIRE,
   VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
+import SelectComponent from '../../shared/components/FormElements/SelectComponent';
 import { useForm } from '../../shared/hooks/form-hook';
 import './ClaimForm.css';
 
@@ -50,6 +51,25 @@ const DUMMY_CLAIMS = [
 
 //Called to edit claim
 const UpdateClaim = () => {
+
+  const roomTypes = [
+    { value: "1", label: "Bedroom" },
+    { value: "2", label: "Bathroom" },
+    { value: "3", label: "Living room" },
+    { value: "4", label: "Kitchen" },
+    { value: "5", label: "Garage" },
+    { value: "6", label: "Other" },
+    // Add options from  backend API
+  ];
+
+  const serviceTypes = [
+    { value: "1", label: "Painting" },
+    { value: "2", label: "Cleaning" },
+    { value: "3", label: "Building" },
+    { value: "4", label: "Other" },
+    // Add options from  backend API
+  ];
+
   const [isLoading, setIsLoading] = useState(true); //initializes isLoading to true
   
   //gets the claimid from the url parameters
@@ -66,7 +86,7 @@ const UpdateClaim = () => {
         value: '',
         isValid: false
       },
-      roomservice: {
+      servicetype: {
         value: '',
         isValid: false
       }
@@ -91,8 +111,8 @@ const UpdateClaim = () => {
             value: identifiedClaim.roomtype,
             isValid: true
           },
-          roomservice: {
-            value: identifiedClaim.roomservice,
+          servicetype: {
+            value: identifiedClaim.servicetype,
             isValid: true
           }
         },
@@ -125,13 +145,23 @@ const UpdateClaim = () => {
     );
   }
 
-   //handler for room type selection 
-  const  typeSelectHandler = (event) => {
-    const typeSelectedValue = event.target.value;
-     //updates the roomtype field with the selected value
-    inputHandler("roomtype", typeSelectedValue, true);
+   //handler for room type selection
+   const roomSelectHandler = (event) => {
+    //gets the selected value
+    const roomSelectedValue = event.target.value;
+    //fills the roomtype field with the selected value
+    inputHandler("roomtype", roomSelectedValue, true);
   };
- 
+
+  //handler for service type selection
+  const serviceSelectHandler = (event) => {
+    //gets the selected value
+    const serviceSelectedValue = event.target.value;
+    //fills the servicetype field with the selected value
+    inputHandler("servicetype", serviceSelectedValue, true);
+  };
+
+
 
   return (
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>
@@ -146,35 +176,29 @@ const UpdateClaim = () => {
         initialValue={formState.inputs.roomname.value}
         initialValid={formState.inputs.roomname.isValid}
       />
-      <select
+
+      
+        <SelectComponent
           id="roomtype"
-          label="Room Type"          
+          label="Select the type of room"
           initialValue={formState.inputs.roomtype.value}
           initialValid={true}
           errorText="Please select the type of room"
-          onChange={typeSelectHandler}
-        >
-          <option value="">Select the type of room</option>
-          <option value="1">Bedroom</option>
-          <option value="2">Bathroom</option>
-          <option value="3">Living room</option>
-          <option value="4">Kitchen</option>
-          <option value="5">Garage</option>
-          <option value="6">Other</option>
-          {/* change this to the types of rooms available*/}
-        </select>
+          onChange={roomSelectHandler}
+          options={roomTypes}
+        />
 
-      {/* to change for select field and backend data */}
-      <Input
-        id="roomservice"
-        element="textarea"
-        label="Description"
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid service (min. 5 characters)."
-        onInput={inputHandler}
-        initialValue={formState.inputs.roomservice.value}
-        initialValid={formState.inputs.roomservice.isValid}
-      />
+        <SelectComponent
+          id="servicetype"
+          label="Select the type of service"
+          initialValue={formState.inputs.servicetype.value}
+          initialValid={true}
+          errorText="Please select the type of service"
+          onChange={serviceSelectHandler}
+          options={serviceTypes}
+        />
+
+      
       <Button type="submit" disabled={!formState.isValid}>
         UPDATE CLAIM
       </Button>
