@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Button from '../../shared/components/FormElements/Button';
-
+import { Link } from 'react-router-dom';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import './ProjectReceipt.css';
+import PdfComponent from '../../shared/components/PdfComponent';
+import Logo from '../../images/LogoClaimsIA.png';
+import EditImg from  '../../images/edit.svg';
+import DeleteImg from  '../../images/delete.svg';
 
 const ProjectReceipt = () => {
   const [rooms, setRooms] = useState([
@@ -12,7 +17,6 @@ const ProjectReceipt = () => {
     { id: 3, name: 'Room 3', type: 'Terrace', category: 'Repairs', cost: 3000 },
   ]);
 
-  const [newRoom, setNewRoom] = useState({ name: '', type: '', category: '', cost: 0 });
 
   const [totalCost, setTotalCost] = useState(0);
 
@@ -33,28 +37,22 @@ const ProjectReceipt = () => {
     setRooms(rooms.filter((room) => room.id !== roomId));
   };
 
-  const handleDownloadPDF = () => {
-    const doc = new jsPDF();
-    doc.autoTable({
-      head: [['Name Room', 'Room Type', 'Category', 'Cost']],
-      body: rooms.map((room) => [room.name, room.type, room.category, `$${room.cost.toFixed(2)}`]),
-    });
-    doc.text(`The estimated amount for this project is: $${totalCost.toFixed(2)}`, 10, 10);
-    doc.save('project_receipt.pdf');
-  };
+ 
 
   return (
-    <Card className="">
-      <h2>The estimated amount for this project is:</h2>
+    <Card className="receipt">
+      <h3>The estimated amount for this project is:</h3>
       <h1>${totalCost.toFixed(2)}</h1>
 
-      <Button type="submit" onClick={handleDownloadPDF}>
-        Download PDF
-      </Button>
-
+      <div>
+      <PdfComponent rooms={rooms} totalCost={totalCost} logo={Logo} />
+    </div>
+  
+<div className="receipt-data">
+<Card className="receipt-table">
       <table>
         <thead>
-          <th>Name Room</th>
+          <th>Room Name </th>
           <th>Room Type</th>
           <th>Category</th>
           <th>Cost</th>
@@ -69,19 +67,30 @@ const ProjectReceipt = () => {
               <td>{room.category}</td>
               <td>${room.cost.toFixed(2)}</td>
               <td>
-                <Button type="submit" onClick={() => handleDeleteRoom(room.id)}>
-                  Delete
-                </Button>
+                {/* edit button-> will go to the route of the claim id to edit */}
+              <button className="receipt-action__button" to={`/`}>
+               <a> <img src={EditImg} alt="Edit button" /></a>
+              </button>         
+              {/* delete button */}
+              <button className="receipt-action__button" danger  onClick={() => handleDeleteRoom(room.id)}>
+              <a><img src={DeleteImg} alt="Delete button" /></a>
+              </button>
+              
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+</Card>
+     <Card className="receipt-total">
+      <div >
+      <p>Total</p> <h3>${totalCost.toFixed(2)}</h3>
+      </div>
+     </Card>
+     </div>
+ 
+      <Link className="receipt-button filled-white" to="/claims/new">Add new room</Link> 
 
-     
-
-      <Button type="submit">New estimate</Button>
-      <Button type="submit">Log out</Button>
     </Card>
   );
 };

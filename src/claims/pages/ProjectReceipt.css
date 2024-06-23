@@ -1,0 +1,140 @@
+.receipt__header {
+    color: white;
+    text-align: center;
+  }
+  
+ .receipt {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    max-width: 55rem;
+    margin: 7rem auto;
+    text-align: center;
+    align-items: center;
+    background-color: #f2f2f2;
+    box-shadow: none;
+  }
+  
+  .receipt table {
+    margin-bottom: 1rem;
+  }
+
+  .receipt h1{
+    font-size: 4rem;
+    background: radial-gradient(50% 50% at 50% 50%, #00FF38 0%, rgba(255, 255, 255, 0) 100%);
+    ;
+  }
+
+ .receipt h1, .receipt h3 {
+    margin: 1%;
+    padding: 0%;
+ } 
+
+ .receipt-button{
+    font: inherit;
+    padding: 0.5rem 3rem;
+    margin: 0.5rem;
+    width: max-content;    
+    border-radius: 4px; 
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+ .filled-white{
+    background: white;
+    align-self: flex-start;
+    color: #156fff;
+    border: 2px solid #156fff;
+  }
+  
+  
+  
+ 
+  .receipt-data{
+    margin: 2%;
+    border-radius: 15px;
+    table-layout:auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .receipt-table{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+  }
+
+
+  .receipt-data table {
+    border: none;
+    width: 100%;
+    margin: 0;
+    border-spacing: 0;
+  
+  }
+
+  .receipt-data th{
+    min-width: fit-content;
+  }
+
+  .receipt-data td{
+    padding-right: 3rem;
+    min-width: fit-content;
+    font-weight: normal;
+    border-top: 1px solid #666;
+    border-right: 1px solid #666;
+  }
+
+  .receipt-data td:last-child{
+    border-right: none;
+    align-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .receipt-data table *{
+    background-color: white;
+    color: black;
+    text-align: left ;
+    
+  }
+  
+  .receipt-total{
+    margin: 2%;
+    padding: 1%;
+    align-self: flex-end;
+    border-radius: 15px;
+    width: 40%;   
+    
+  }
+
+  .receipt-total div{    
+    border-bottom: 2px solid #666;
+    display: flex;    
+    padding: 0;
+    margin: 1%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .receipt-total div *{
+    padding: 0;
+    margin: 0;
+  }
+
+  .receipt-action__button {
+    background-color: white;
+    border: none;
+  }
+  
+  .receipt-action__button:hover{
+    cursor: pointer;
+  }

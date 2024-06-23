@@ -1,0 +1,18 @@
+.pdf-button{
+    background: white;
+    border-color: red;
+    color: black;
+  }
+
+  .receipt-button{
+    font: inherit;
+    padding: 0.5rem 3rem;
+    margin: 0.5rem;
+    width: max-content;    
+    border-radius: 4px; 
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+  }

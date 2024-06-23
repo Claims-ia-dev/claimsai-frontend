@@ -60,7 +60,7 @@ const MainNavigation = props => {
         
         <div className='main-navigation__left'>
           {/*Displays username ( to make dynamic) */}
-        <h3 >Hi, Username!</h3>
+        <h3 >Hi, {props.username}!</h3>
         <button
           className=" main-navigation__menu-btn"
           onClick={openDrawerHandler}

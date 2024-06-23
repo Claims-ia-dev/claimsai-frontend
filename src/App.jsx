@@ -88,7 +88,7 @@ const App = () => {
       value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
     >
       <Router>
-        <MainNavigation />
+        <MainNavigation  username={'karla'}/>
         <main>{routes}</main>
       </Router>
     </AuthContext.Provider>
