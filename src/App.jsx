@@ -21,6 +21,7 @@ import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
+import TestComponent from './shared/util/TestComponent';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -49,7 +50,7 @@ const App = () => {
   if (isLoggedIn) {
     routes = (
       <Routes>
-        <Route path="/" element = {<NewCustomer/>}/>            
+        <Route path="/" element = {<TestComponent/>}/>            
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 

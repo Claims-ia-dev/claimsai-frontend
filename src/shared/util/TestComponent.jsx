@@ -1,6 +1,6 @@
-// TestComponent.jsx
+
 import React, { useState, useEffect } from 'react';
-import { getCategoryClaims, getMySubscription, /* other get APIs */ } from './api';
+import { getCategoryClaims, getMySubscription } from './api';
 
 const TestComponent = () => {
   const [results, setResults] = useState({});
@@ -10,12 +10,12 @@ const TestComponent = () => {
       try {
         const getCategoryClaimsResponse = await getCategoryClaims();
         const getMySubscriptionResponse = await getMySubscription();
-        // Get APIs to call here...
+      
 
         setResults({
           getCategoryClaims: getCategoryClaimsResponse,
           getMySubscription: getMySubscriptionResponse,
-          // More results here...
+        
         });
       } catch (error) {
         console.error(error);

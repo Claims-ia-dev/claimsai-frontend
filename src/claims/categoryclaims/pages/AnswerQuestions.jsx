@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import './AnswerQuestions.css';
 import Card from "../../../shared/components/UIElements/Card";
-import { getCategoryClaims } from '../../../shared/util/api'; 
+
 
 const AnswerQuestions = () => {
 
   const [categoryClaims, setCategoryClaims] = useState([]);
 
-  useEffect(() => {
-    const fetchCategoryClaims = async () => {
-      const data = await getCategoryClaims(); // Call the function
-      setCategoryClaims(data);
-    };
-    fetchCategoryClaims();
-  }, []);
+
 
   const [questions, setQuestions] = useState([
     {
