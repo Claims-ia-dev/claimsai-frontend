@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './AnswerQuestions.css';
 import Card from "../../../shared/components/UIElements/Card";
+import { getCategoryClaims } from '../../../shared/util/api'; 
 
 const AnswerQuestions = () => {
+
+  const [categoryClaims, setCategoryClaims] = useState([]);
+
+  useEffect(() => {
+    const fetchCategoryClaims = async () => {
+      const data = await getCategoryClaims(); // Call the function
+      setCategoryClaims(data);
+    };
+    fetchCategoryClaims();
+  }, []);
+
   const [questions, setQuestions] = useState([
     {
       text: "Is the damage caused by a natural disaster?",
@@ -54,7 +66,13 @@ const AnswerQuestions = () => {
     );
   };
 
-  return (
+  return (<>
+     <div>
+      {/* Render the category claims here */}
+      {categoryClaims.map((claim) => (
+        <div key={claim.id}>{claim.name}</div>
+      ))}
+    </div>
    
       <table className="questions-table">
         <thead>          
@@ -79,6 +97,7 @@ const AnswerQuestions = () => {
         ))}
         </tbody>
       </table>
+      </>
     
   );
 };
