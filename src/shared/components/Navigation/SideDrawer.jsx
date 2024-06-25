@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
@@ -13,6 +13,7 @@ import './SideDrawer.css';
  * is a callback function that is called when the side drawer is clicked.
  */
 const SideDrawer = props => {
+  const nodeRef = useRef(null);
     /**
    * The content variable holds the JSX element that will be rendered 
    * inside the side drawer. It includes a CSSTransition component 
@@ -33,7 +34,7 @@ const SideDrawer = props => {
     >
       
        {/* * The aside element is the container element for the side drawer content.*/ }
-      <aside className="side-drawer" onClick={props.onClick}>{props.children}</aside>
+      <aside ref={nodeRef} className="side-drawer" onClick={props.onClick}>{props.children}</aside>
     </CSSTransition>
   );
 

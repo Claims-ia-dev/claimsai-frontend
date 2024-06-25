@@ -6,9 +6,9 @@ import Button from '../shared/components/FormElements/Button';
 import PaymentMethodCard from './PaymentMethodCard';
 
 const AutoRenewal = () => {
-    const stripe = new Stripe('sk_test_IKYCHOAmUhC7IPTdaoVtO58D', {
-        apiVersion: '2022-11-15',
-      });
+    // const stripe = new Stripe('sk_test_IKYCHOAmUhC7IPTdaoVtO58D', {
+    //     apiVersion: '2022-11-15',
+    //   });
 
   const [paymentMethods, setPaymentMethods] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);

@@ -22,24 +22,12 @@ import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
 import TestComponent from './shared/util/TestComponent';
+import { useAuth } from './shared/hooks/auth-hook';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
-  /**
-   * The login function sets the isLoggedIn state to true indicating user has logged in.
-   */
-  const login = useCallback(() => {
-    setIsLoggedIn(true);
-  }, []);
+  const { token, login, logout, userId } = useAuth();
 
-  /**
-   * The login function sets the isLoggedIn state to false indicating user has not logged in.
-   */
-  const logout = useCallback(() => {
-    setIsLoggedIn(false);
-  }, []);
 
   let routes;
 
@@ -47,10 +35,10 @@ const App = () => {
    * If the user is logged in, render the authenticated routes.
    */
 
-  if (isLoggedIn) {
+  if (token) {
     routes = (
       <Routes>
-        <Route path="/" element = {<TestComponent/>}/>            
+        <Route path="/" element = {<NewClaim/>}/>            
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
@@ -86,13 +74,19 @@ const App = () => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
-    >
-      <Router>
-        <MainNavigation  username={'karla'}/>
-        <main>{routes}</main>
-      </Router>
-    </AuthContext.Provider>
+    value={{
+      isLoggedIn: !!token,
+      token: token,
+      userId: userId,
+      login: login,
+      logout: logout
+    }}
+  >
+    <Router>
+      <MainNavigation />
+      <main>{routes}</main>
+    </Router>
+  </AuthContext.Provider>
   );
 };
 

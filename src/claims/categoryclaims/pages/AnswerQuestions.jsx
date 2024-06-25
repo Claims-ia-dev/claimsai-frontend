@@ -8,7 +8,6 @@ const AnswerQuestions = () => {
   const [categoryClaims, setCategoryClaims] = useState([]);
 
 
-
   const [questions, setQuestions] = useState([
     {
       text: "Is the damage caused by a natural disaster?",
