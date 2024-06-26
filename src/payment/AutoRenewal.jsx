@@ -16,74 +16,13 @@ const AutoRenewal = () => {
   const [pricePlan, setPricePlan] = useState(9.99); // placeholder value
 
 
-  // stripe.customers.create({
-  //   email: 'karla@gmail.com',
-  //   name: 'Karla Urrea',
-  // }).then(customer => {
-   
-  //   console.log('customer'+customer.id); 
-  // });
   
-  // useEffect(() => {
-  //   // fetch payment methods from stripe
-  //   stripe.paymentMethods.list({
-  //     customer: 'cus_QKkTBGTLqJoIeo', // test customer ID
-  //     type: 'card',
-  //   }).then(response => {
-  //     setPaymentMethods(response.data);
-  //   });
-  // }, []);
-
-  // const handleSelectPaymentMethod = (paymentMethod) => {
-  //   setSelectedPaymentMethod(paymentMethod);
-  // };
 
   const handleAddNewPaymentMethod = () => {
     // handle adding a new payment method (e.g., redirect to stripe payment form)
   };
 
-  // const testCards = [];
-
-  // useEffect(() => {
-  //   stripe.tokens.create({
-  //     card: {
-  //       number: '4242424242424242',
-  //       exp_month: 12,
-  //       exp_year: 2024,
-  //       cvc: '123',
-  //     },
-  //     customer: 'cus_QKkTBGTLqJoIeo',
-  //   }).then(response => {
-        
-  //     console.dir('object'+ response.id, { depth: null });
-  //     const tokenid=response.id;
  
-  //     //  token to create a payment method
-  //     stripe.paymentMethods.create({
-  //       type: 'card',
-  //       card: {
-  //           token: tokenid, // Pass the token ID
-           
-  //         },
-  //       billing_details: {
-  //           name: 'John Doe',
-  //           email: 'johndoe@example.com',
-  //           address: {
-  //             city: 'Anytown',
-  //             country: 'US',
-  //             line1: '123 Main St',
-  //             line2: '',
-  //             state: 'CA',
-  //             postal_code: '12345'
-  //           }}
-  //     }).then(paymentMethod => {
-  //       testCards.push(paymentMethod);
-  //     });
-  //   });
-  
-  
-  // }, []);
-
   return (
     <Card>
       <h2>Auto Renewal</h2>

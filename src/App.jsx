@@ -23,10 +23,11 @@ import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
 import TestComponent from './shared/util/TestComponent';
 import { useAuth } from './shared/hooks/auth-hook';
+import SubscriptionPlan from './payment/SubscriptionPlan';
 
 const App = () => {
 
-  const { token, login, logout, userId } = useAuth();
+  const { token, login, logout, userId, username } = useAuth();
 
 
   let routes;
@@ -38,7 +39,8 @@ const App = () => {
   if (token) {
     routes = (
       <Routes>
-        <Route path="/" element = {<NewClaim/>}/>            
+        <Route path="/" element = {<TestComponent/>}/>    
+        <Route path="/subscription" element={<SubscriptionPlan />}/>        
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
@@ -61,6 +63,7 @@ const App = () => {
        
         <Route path="/auth" element={<Auth />}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/subscription" element={<SubscriptionPlan />}/>
 
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />
@@ -78,6 +81,7 @@ const App = () => {
       isLoggedIn: !!token,
       token: token,
       userId: userId,
+      username: username,
       login: login,
       logout: logout
     }}

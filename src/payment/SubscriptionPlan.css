@@ -1,0 +1,74 @@
+/* subscription-plan.css */
+.subscriptions{
+    width: 90%;
+    max-width: 65rem;
+    margin: 7rem auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 3rem;
+    
+}
+
+.subscriptions h4{
+    color: #156fff;
+}
+
+.plan_card
+ {
+  /* Make the plan_card
+   width around 20rem */
+  width: 20rem;
+  height: 30rem;
+  margin: 1rem;
+  padding:2rem;
+  border: 2px solid #156fff; /* Blue border */
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.subscriptions__cards{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    
+}
+.plan_card
+ h2 {
+  margin-top: 0;
+}
+.plan_card
+ span {
+ margin:0;
+ padding: 0;
+ display: flex;
+ align-items: baseline;
+ align-content: center;
+}
+.plan_card
+ p {
+  font-weight: normal;
+}
+.plan_card
+ ul {
+    list-style:url('../images/bulletpoint.svg') ; 
+     
+    display: flex; 
+    flex-direction: column;
+    align-items: baseline;
+ 
+  height: 35%;
+}
+
+.plan_card
+ li {
+  margin-bottom: 0.5rem;
+}
+
+
+
+

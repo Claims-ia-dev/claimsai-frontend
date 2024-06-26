@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../../../images/LogoClaimsIA.svg';
 import MainHeader from './MainHeader';
@@ -6,6 +6,7 @@ import NavLinks from './NavLinks';
 import SideDrawer from './SideDrawer';
 import Backdrop from '../UIElements/Backdrop';
 import './MainNavigation.css';
+import { AuthContext } from '../../context/auth-context';
 
 /**
  * The MainNavigation component is the top-level navigation component 
@@ -17,7 +18,10 @@ const MainNavigation = props => {
     /**
    * State variable to track whether the side drawer is open or not.
    * Initially set to false, indicating the drawer is closed.
+   * 
    */
+    const auth = useContext(AuthContext);
+//const auth = useContext(AuthContext);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
   const openDrawerHandler = () => { //opens sideDrawer
@@ -60,7 +64,7 @@ const MainNavigation = props => {
         
         <div className='main-navigation__left'>
           {/*Displays username ( to make dynamic) */}
-        <h3 >Hi, {props.username}!</h3>
+        <h3 >Hi, {auth.username}!</h3>
         <button
           className=" main-navigation__menu-btn"
           onClick={openDrawerHandler}

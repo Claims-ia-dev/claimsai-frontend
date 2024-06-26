@@ -1,9 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import './AnswerQuestions.css';
 import Card from "../../../shared/components/UIElements/Card";
-
+import { AuthContext } from "../../../shared/context/auth-context";
+import { useHttpClient } from "../../../shared/hooks/http-hook";
 
 const AnswerQuestions = () => {
+  const auth = useContext(AuthContext);
+  
+  const [data, setData] = useState(null);
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+
+  const getData = async () => {
+    try {
+      const responseData = await sendRequest(
+        '/api/categoryclaims/categoryclaims', // api endpoint
+        'GET',
+        null,
+        {
+        }, auth.token
+      );
+      setData(responseData);
+      console.log(responseData);
+      // display the results here
+    } catch (err) {}
+  };
 
   const [categoryClaims, setCategoryClaims] = useState([]);
 
@@ -62,12 +83,17 @@ const AnswerQuestions = () => {
   return (<>
      <div>
       {/* Render the category claims here */}
+
+
       {categoryClaims.map((claim) => (
         <div key={claim.id}>{claim.name}</div>
       ))}
+
+      
     </div>
    
-      <table className="questions-table">
+      <table className="questions-table"> {/* Display the received data */}
+     
         <thead>          
             <th className="question-column"> Question</th>
             <th className="toggle-column">Select</th>          

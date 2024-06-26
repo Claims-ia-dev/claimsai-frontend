@@ -7,18 +7,23 @@ export const useHttpClient = () => {
   const activeHttpRequests = useRef([]);
 
   const sendRequest = useCallback(
-    async (url, method = 'GET', body = null, headers = {}) => {
+    async (url, method = 'GET', body = null, headers = {}, token=null) => {
       setIsLoading(true);
       const httpAbortCtrl = new AbortController();
       activeHttpRequests.current.push(httpAbortCtrl);
 
       try {
+        const authHeaders = {
+          ...headers,
+          Authorization: token ? `Bearer ${token}` : undefined,
+        };
         const response = await fetch(url, {
           method,
           body,
-          headers,
+          headers: authHeaders, 
           signal: httpAbortCtrl.signal
         });
+     
 
         const responseData = await response.json();
 

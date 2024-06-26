@@ -18,6 +18,11 @@ const NavLinks = props => {
           My workteam
         </NavLink>
       </li>
+      <li>
+        <NavLink to="/subscription" end >
+          Subscription Plan
+        </NavLink>
+      </li>
       {auth.isLoggedIn && ( //shows link if the user is logged in
         <li>
           <NavLink to="/u1/claims">My claims</NavLink>

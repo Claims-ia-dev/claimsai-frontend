@@ -46,19 +46,30 @@ const Auth = () => { //handles user authentication
   const authSubmitHandler = async event => {
     event.preventDefault();
     try {
-      const responseData = await sendRequest(
-        'https://dashboard.xclaims.ai:3003/api/auth/login',
-        'POST',
-        JSON.stringify({
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value
-        }),
-        {
-          'Content-Type': 'application/json'
-        }
+    const formData = new URLSearchParams();
+    formData.append('email', formState.inputs.email.value);
+    formData.append('password', formState.inputs.password.value);
+
+    const responseData = await sendRequest(
+      '/api/auth/login',
+      'POST',
+      formData.toString(),
+      {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+      // const responseData = await sendRequest(
+      //   '/api/auth/login',
+      //   'POST',
+      //   JSON.stringify({
+      //     email: formState.inputs.email.value,
+      //     password: formState.inputs.password.value
+      //   }),
+      //   {
+      //     'Content-Type': 'application/json'
+      //   }
       );
       console.log(responseData);
-      auth.login(responseData.user.id, responseData.token);
+      auth.login(responseData.user.id, responseData.token, responseData.user.first_name);
     } catch (err) {}
   };
 

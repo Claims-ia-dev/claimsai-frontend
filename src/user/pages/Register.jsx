@@ -10,15 +10,19 @@ import {
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Logo from '../../images/LogoClaimsIA.svg';
 import './Auth.css';
 
 const Register = () => {
-  const auth = useContext(AuthContext);
+  const auth = useContext(AuthContext); 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler] = useForm(
     {
-      name: {
+      first_name: {
         value: '',
         isValid: false,
       },
@@ -38,21 +42,38 @@ const Register = () => {
     false
   );
 
-  const registerSubmitHandler = event => {
+  const registerSubmitHandler = async event => {
     event.preventDefault();
-    console.log(formState.inputs);
-    // Call the registration API endpoint here
-    auth.login();
+    try {    
+      const formData = new URLSearchParams();
+        formData.append('email', formState.inputs.email.value);
+        formData.append('first_name', formState.inputs.first_name.value);
+        formData.append('password', formState.inputs.password.value);        
+        
+        const responseData = await sendRequest(
+          '/api/auth/signup',
+          'POST',
+          formData.toString(),
+          {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+      );
+
+        auth.login(responseData.userId, responseData.token, responseData.user.first_name);
+      } catch (err) {}
   };
 
   return (
+    <>  <ErrorModal error={error} onClear={clearError} />
+   
     <Card className="authentication">
+    {isLoading && <LoadingSpinner asOverlay />}
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
       <form onSubmit={registerSubmitHandler}>
         <Input
           element="input"
-          id="name"
+          id="first_name"
           type="text"
           placeholder="Full Name"
           validators={[VALIDATOR_REQUIRE()]}
@@ -91,7 +112,7 @@ const Register = () => {
         </Button>
       </form>
       <p>Already a member?<a href='/auth'> Login</a> instead!</p>
-    </Card>
+    </Card> </>
   );
 };
 
