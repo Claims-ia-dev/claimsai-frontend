@@ -34,8 +34,8 @@ const AnswerQuestions = (props) => {
       );
       setData(responseData);
       setQuestions(responseData.map((item) => ({ 
-        text: item.description, 
-        id: item.id, 
+        description: item.description, 
+        code: item.code, 
         answer: false 
       })));
      
@@ -68,7 +68,7 @@ const AnswerQuestions = (props) => {
     };
   
     const questionsAnswers = questions.map((question) => ({
-      id: question.id,
+      code: question.code,
       answer: question.answer,
     }));
   
@@ -101,10 +101,10 @@ const AnswerQuestions = (props) => {
   };
 
 
-  const handleAnswerChange = (questionId, answer) => {
+  const handleAnswerChange = (questionCode, answer) => {
     setQuestions((prevQuestions) =>
       prevQuestions.map((question) =>
-        question.id === questionId ? { ...question, answer } : question
+        question.code === questionCode ? { ...question, answer } : question
       )
     );
   };
@@ -120,13 +120,13 @@ const AnswerQuestions = (props) => {
         <tbody>
         {questions.map((question, index) => (
           <tr key={index}>
-            <td className="question-column">{question.text}</td>
+            <td className="question-column">{question.description}</td>
             <td className="toggle-column">
               <label className="switch">
                 <input
                   type="checkbox"
                   checked={question.answer}
-                  onChange={(event) => handleAnswerChange(question.id, event.target.checked)}
+                  onChange={(event) => handleAnswerChange(question.code, event.target.checked)}
                 />
                 <span className="slider round"></span>
               </label>
