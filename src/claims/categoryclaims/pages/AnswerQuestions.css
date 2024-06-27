@@ -87,7 +87,14 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
+.full_description_text{
+font-weight: normal;
+}
 
+.questions_actions{
+  text-align: center;
+  padding: 2rem;
+}
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
@@ -96,3 +103,5 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+

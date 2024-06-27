@@ -19,7 +19,7 @@ const AnswerQuestions = (props) => {
   const [data, setData] = useState(null);
   const [questions, setQuestions] = useState([]);
 
-  useEffect(() => {
+  useEffect(() => { // retrieves questions from categoryclaims
     getData();
   }, []); // Call getData when the component mounts
   const getData = async () => {
@@ -34,7 +34,8 @@ const AnswerQuestions = (props) => {
       );
       setData(responseData);
       setQuestions(responseData.map((item) => ({ 
-        description: item.description, 
+        description: item.claims_description, 
+        full_description:item.full_description,
         code: item.code, 
         answer: false 
       })));
@@ -59,24 +60,25 @@ const AnswerQuestions = (props) => {
       zip: customerData?.zip.value,
       insurance: customerData?.insurance.value,
       email: customerData?.email.value,
-    };
+    };  
+    
+    const questionsAnswers = questions.map((question) => ({
+      code: question.code,
+      answer: question.answer,
+    }));
     
     const room_details = {
       room_name: roomData?.roomname.value,
       room_type: roomData?.roomtype.value,
       service_type: roomData?.servicetype.value,
+      category_claims: questionsAnswers  
     };
-  
-    const questionsAnswers = questions.map((question) => ({
-      code: question.code,
-      answer: question.answer,
-    }));
+
   
     const dataToSend = {
       userId: auth.userId,
       customer_info: customerInfo,
-      room_details: room_details,
-      questions: questionsAnswers,
+      room_details:room_details  
     };
 
     console.log(dataToSend);
@@ -120,7 +122,7 @@ const AnswerQuestions = (props) => {
         <tbody>
         {questions.map((question, index) => (
           <tr key={index}>
-            <td className="question-column">{question.description}</td>
+            <td className="question-column">{question.description} <p className="full_description_text">{question.full_description}</p></td>
             <td className="toggle-column">
               <label className="switch">
                 <input
@@ -133,9 +135,15 @@ const AnswerQuestions = (props) => {
             </td>
           </tr>
         ))}
-        </tbody>
+        </tbody> 
+       
       </table>
-      <Button onClick={handleSubmit}>Submit selections</Button>
+     <div className="questions_actions">
+        <Button inverse >
+              Cancel
+         </Button>
+         <Button onClick={handleSubmit}>Next</Button>
+         </div>
       </>
     
   );
