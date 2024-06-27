@@ -39,7 +39,7 @@ const App = () => {
   if (token) {
     routes = (
       <Routes>
-        <Route path="/" element = {<TestComponent/>}/>    
+        <Route path="/" element = {<NewCustomer/>}/>    
         <Route path="/subscription" element={<SubscriptionPlan />}/>        
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
@@ -68,8 +68,7 @@ const App = () => {
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/claims/new" element={<NewClaim />} />    {/** provisionally here */}  
-       
+        
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );
@@ -87,7 +86,8 @@ const App = () => {
     }}
   >
     <Router>
-      <MainNavigation />
+    {token && <MainNavigation />} {/* Only render MainNavigation if token is present */}
+
       <main>{routes}</main>
     </Router>
   </AuthContext.Provider>

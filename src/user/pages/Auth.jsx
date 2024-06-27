@@ -111,8 +111,8 @@ const Auth = () => { //handles user authentication
       </form>
      
      {/**if not a member yet to send to another link */}
-      <p>Not a member yet?<a href='/register'> Choose a plan</a> and get started now!</p> <br/>
-     
+      <p>Not a member yet?<a href='/subscription'> Choose a plan</a> and get started now!</p> <br/>
+      <a href='/register'> Register</a>
     </Card></>
   );
 };

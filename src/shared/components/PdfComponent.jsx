@@ -1,4 +1,3 @@
-// PdfComponent.js
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -10,31 +9,29 @@ const PdfComponent = ({ rooms, totalCost, logo }) => {
     doc.internal.pageSize.width = 210; // set fixed width
     doc.internal.pageSize.height = 297; // set fixed height
 
-    let xPos=20;
-    let yPos = 10;
-    let cellWidthSize=40;
+    const margin = 20;
+    const logoWidth = 60;
+    const logoHeight = logoWidth/4;
+    const tableWidth = 180;
 
     // Logo
-    doc.addImage(logo, 'PNG', xPos+50, yPos, 100, 30);
-    yPos += 0;
-
+    doc.addImage(logo, 'PNG', margin, margin, logoWidth, logoHeight);
+    doc.setFontSize(12);
     // Address and number
-    doc.text('696 Marsat Coutr \nSuite B \nChula Vista\n CA 91911\n619-482-1131', xPos, yPos, { align: 'left' });
-    yPos += 60;
-
-   
+    doc.text('696 Marsat Court\nSuite B\nChula Vista, CA 91911\n619-482-1131', margin, margin+logoHeight+10, { align: 'left' });
 
     // Table
+    const tableData = rooms.map((room) => [room.name, room.type, room.category, `$${room.cost.toFixed(2)}`]);
     doc.autoTable({
       head: [['Name Room', 'Room Type', 'Category', 'Cost']],
-      body: rooms.map((room) => [room.name, room.type, room.category, `$${room.cost.toFixed(2)}`]),
-      startY: yPos,
+      body: tableData,
+      startY: margin + 50,
       theme: 'grid',
       columnStyles: {
-        0: { cellWidth: cellWidthSize },
-        1: { cellWidth: cellWidthSize },
-        2: { cellWidth: cellWidthSize },
-        3: { cellWidth: cellWidthSize, halign: 'right' },
+        0: { cellWidth: tableWidth / 4 },
+        1: { cellWidth: tableWidth / 4 },
+        2: { cellWidth: tableWidth / 4 },
+        3: { cellWidth: tableWidth / 4, halign: 'right' },
       },
       headerStyles: {
         fillColor: [255, 255, 255],
@@ -47,17 +44,15 @@ const PdfComponent = ({ rooms, totalCost, logo }) => {
         fontSize: 12,
       },
     });
-    yPos += doc.autoTable.previous.finalY;
 
     // Total Cost
-    doc.text('The estimated amount for this project is: $' + totalCost.toFixed(2), xPos, yPos, { align: 'left' });
-    yPos += 20;
+    doc.text(`The estimated amount for this project is: $${totalCost.toFixed(2)}`, margin, doc.autoTable.previous.finalY + 20, { align: 'left' });
 
     doc.save('project_receipt.pdf');
   };
 
   return (
-    <button className='receipt-button pdf-button' onClick={handleDownloadPDF}>
+    <button className="receipt-button pdf-button" onClick={handleDownloadPDF}>
       Download PDF
     </button>
   );
