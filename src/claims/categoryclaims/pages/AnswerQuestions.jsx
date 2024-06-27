@@ -1,76 +1,105 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import './AnswerQuestions.css';
 import Card from "../../../shared/components/UIElements/Card";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
+import Button from "../../../shared/components/FormElements/Button";
+import { useLocation } from 'react-router-dom';
 
-const AnswerQuestions = () => {
+const AnswerQuestions = (props) => {
+
+  ;
+  const location = useLocation();
+  const customerData = location.state?.customerData;
+  const roomData = location.state?.roomData;
+  //  console.log(customerData );
+  //  console.log(roomData);
   const auth = useContext(AuthContext);
   
   const [data, setData] = useState(null);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [questions, setQuestions] = useState([]);
 
-
+  useEffect(() => {
+    getData();
+  }, []); // Call getData when the component mounts
   const getData = async () => {
-    try {
+    try { 
+    console.log(auth.token);
       const responseData = await sendRequest(
         '/api/categoryclaims/categoryclaims', // api endpoint
         'GET',
         null,
-        {
-        }, auth.token
+        {}, 
+        auth.token
       );
       setData(responseData);
+      setQuestions(responseData.map((item) => ({ 
+        text: item.description, 
+        id: item.id, 
+        answer: false 
+      })));
+     
       console.log(responseData);
       // display the results here
     } catch (err) {}
   };
 
-  const [categoryClaims, setCategoryClaims] = useState([]);
 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const [questions, setQuestions] = useState([
-    {
-      text: "Is the damage caused by a natural disaster?",
-      id: 1,
-      answer: false,
-    },
-    {
-      text: "Was the damage caused by a third party?",
-      id: 2,
-      answer: false,
-    },
-    {
-      text: "Do you have a police report for the incident?",
-      id: 3,
-      answer: false,
-    },
-    {
-      text: "Is the damage related to a pre-existing condition?",
-      id: 4,
-      answer: false,
-    },
-    {
-      text: "Have you made any previous claims for similar damage?",
-      id: 5,
-      answer: false,
-    },
-    {
-      text: "Do you have any witnesses to the incident?",
-      id: 6,
-      answer: false,
-    },
-    {
-      text: "Is the damage caused by a maintenance issue?",
-      id: 7,
-      answer: false,
-    },
-    {
-      text: "Do you have any evidence of the damage (e.g. photos, videos)?",
-      id: 8,
-      answer: false,
-    },
-  ]);
+  const handleSubmit = async (event) => { 
+    event.preventDefault();   
+  
+    const customerInfo = {
+      customer_name: customerData?.customername.value,
+      phone_number: customerData?.phonenumber.value,
+      address: customerData?.address.value,
+      city: customerData?.city.value,
+      state: customerData?.state.value,
+      zip: customerData?.zip.value,
+      insurance: customerData?.insurance.value,
+      email: customerData?.email.value,
+    };
+    
+    const room_details = {
+      room_name: roomData?.roomname.value,
+      room_type: roomData?.roomtype.value,
+      service_type: roomData?.servicetype.value,
+    };
+  
+    const questionsAnswers = questions.map((question) => ({
+      id: question.id,
+      answer: question.answer,
+    }));
+  
+    const dataToSend = {
+      userId: auth.userId,
+      customer_info: customerInfo,
+      room_details: room_details,
+      questions: questionsAnswers,
+    };
+
+    console.log(dataToSend);
+  
+    // try {
+    //   const responseData = await sendRequest(
+    //     '/api/estimates/create', // api endpoint
+    //     'POST',
+    //     JSON.stringify(dataToSend),
+    //     {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     auth.token
+    //   );  
+    //   // Handle the response data
+    //   console.log(responseData);
+    // } catch (err) {
+    //   // Handle the error
+    //   console.error(err);
+    // }
+
+  };
+
 
   const handleAnswerChange = (questionId, answer) => {
     setQuestions((prevQuestions) =>
@@ -81,17 +110,7 @@ const AnswerQuestions = () => {
   };
 
   return (<>
-     <div>
-      {/* Render the category claims here */}
-
-
-      {categoryClaims.map((claim) => (
-        <div key={claim.id}>{claim.name}</div>
-      ))}
-
-      
-    </div>
-   
+       
       <table className="questions-table"> {/* Display the received data */}
      
         <thead>          
@@ -116,6 +135,7 @@ const AnswerQuestions = () => {
         ))}
         </tbody>
       </table>
+      <Button onClick={handleSubmit}>Submit selections</Button>
       </>
     
   );

@@ -65,7 +65,7 @@ const NewCustomer = () => {
     event.preventDefault(); //prevents default behavior so it doesn't reload and tries to send data
     console.log(formState.inputs); 
     // navigate to the desired route
-    navigate('/claims/new');
+    navigate('/claims/new' , { state: { customerData: formState.inputs } });
 
     //to send customer data to the route that takes you to NewClaim
   };

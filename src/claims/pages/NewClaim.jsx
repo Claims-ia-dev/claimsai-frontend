@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -7,10 +7,12 @@ import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import "./ClaimForm.css";
 
-const NewClaim = () => {
+const NewClaim = (props) => {
   const navigate = useNavigate(); //to go to a diferent route
 
- 
+  const location = useLocation();
+  const customerData = location.state?.customerData;
+
   const roomTypes = [
     { value: "1", label: "Bedroom" },
     { value: "2", label: "Bathroom" },
@@ -50,9 +52,11 @@ const NewClaim = () => {
 
   //handler for form submission (to add post api )
   const claimSubmitHandler = (event) => {
-    event.preventDefault(); //prevents default behavior so it doesn't reload and tries to send data
+    event.preventDefault();
     console.log(formState.inputs);
-    navigate("/claims/e1/EstimateCategoryClaims");
+   
+    navigate("/claims/e1/EstimateCategoryClaims", { state: { customerData , roomData:formState.inputs }});
+
   };
 
   //handler for room type selection
