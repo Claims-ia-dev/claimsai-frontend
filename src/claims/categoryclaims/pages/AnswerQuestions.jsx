@@ -24,12 +24,18 @@ const AnswerQuestions = (props) => {
   }, []); // Call getData when the component mounts
   const getData = async () => {
     try { 
+      const formData = new URLSearchParams();
+      formData.append('service_type', roomData?.servicetype.value);
+
     console.log(auth.token);
       const responseData = await sendRequest(
         '/api/categoryclaims/categoryclaims', // api endpoint
         'GET',
-        null,
-        {}, 
+        roomData?.servicetype.value? formData : null,
+
+        {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
         auth.token
       );
       setData(responseData);
