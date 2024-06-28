@@ -32,7 +32,6 @@ const AnswerQuestions = (props) => {
         '/api/categoryclaims/categoryclaims', // api endpoint
         'GET',
         roomData?.servicetype.value? formData : null,
-
         {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
