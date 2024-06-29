@@ -5,6 +5,7 @@ import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_EQUAL,
+  VALIDATOR_MINLENGTH,
   VALIDATOR_PASSWORD,
   VALIDATOR_REQUIRE,
 } from '../../shared/util/validators';
@@ -14,7 +15,7 @@ import { useHttpClient } from '../../shared/hooks/http-hook';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Logo from '../../images/LogoClaimsIA.svg';
-import './Auth.css';
+import './Register.css';
 
 const Register = () => {
   const auth = useContext(AuthContext); 
@@ -26,7 +27,43 @@ const Register = () => {
         value: '',
         isValid: false,
       },
+      last_name: {
+        value: '',
+        isValid: false,
+      },
+      company_name: {
+        value: '',
+        isValid: false,
+      },
+      phone: {
+        value: '',
+        isValid: false,
+      },
+      street: {
+        value: '',
+        isValid: false,
+      },
+      city: {
+        value: '',
+        isValid: false,
+      },
+      country: {
+        value: '',
+        isValid: false,
+      },
+      state: {
+        value: '',
+        isValid: false,
+      },
+      zip_code: {
+        value: '',
+        isValid: false,
+      },
       email: {
+        value: '',
+        isValid: false,
+      },
+      confirm_email: {
         value: '',
         isValid: false,
       },
@@ -34,7 +71,7 @@ const Register = () => {
         value: '',
         isValid: false,
       },
-      confirmPassword: {
+      confirm_password: {
         value: '',
         isValid: false,
       },
@@ -46,8 +83,16 @@ const Register = () => {
     event.preventDefault();
     try {    
       const formData = new URLSearchParams();
-        formData.append('email', formState.inputs.email.value);
         formData.append('first_name', formState.inputs.first_name.value);
+        formData.append('last_name', formState.inputs.last_name.value);
+        formData.append('company_name', formState.inputs.company_name.value);
+        formData.append('phone', formState.inputs.phone.value);
+        formData.append('street', formState.inputs.street.value);
+        formData.append('city', formState.inputs.city.value);
+        formData.append('country', formState.inputs.country.value);
+        formData.append('state', formState.inputs.state.value);
+        formData.append('zip_code', formState.inputs.zip_code.value);
+        formData.append('email', formState.inputs.email.value);
         formData.append('password', formState.inputs.password.value);        
         
         const responseData = await sendRequest(
@@ -58,8 +103,9 @@ const Register = () => {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       );
+      console.log(responseData)
 
-        auth.login(responseData.userId, responseData.token, responseData.user.first_name);
+       auth.login(responseData.userId, responseData.token, responseData.user);
       } catch (err) {}
   };
 
@@ -75,7 +121,78 @@ const Register = () => {
           element="input"
           id="first_name"
           type="text"
-          placeholder="Full Name"
+          placeholder="First Name"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid name."
+          onInput={inputHandler}
+        />
+             <Input
+          element="input"
+          id="last_name"
+          type="text"
+          placeholder="Last Name"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid last name."
+          onInput={inputHandler}
+        />    <Input
+          element="input"
+          id="phone"
+          type="text"
+          placeholder="Telephone number"
+          validators={[VALIDATOR_MINLENGTH(10)]}
+          errorText="Please enter a phone number."
+          onInput={inputHandler}
+        />
+             <Input
+          element="input"
+          id="company_name"
+          type="text"
+          placeholder="Company Name"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid company name."
+          onInput={inputHandler}
+        />
+         <Input
+          element="input"
+          id="street"
+          type="text"
+          placeholder="Street"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid street."
+          onInput={inputHandler}
+        />
+         <Input
+          element="input"
+          id="city"
+          type="text"
+          placeholder="city"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid city."
+          onInput={inputHandler}
+        />
+         <Input
+          element="input"
+          id="country"
+          type="text"
+          placeholder="Country"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid country."
+          onInput={inputHandler}
+        />
+         <Input
+          element="input"
+          id="state"
+          type="text"
+          placeholder="State"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid state."
+          onInput={inputHandler}
+        />
+         <Input
+          element="input"
+          id="zip_code"
+          type="text"
+          placeholder="Zip/ Postal code"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid name."
           onInput={inputHandler}
@@ -89,6 +206,15 @@ const Register = () => {
           errorText="Please enter a valid email address."
           onInput={inputHandler}
         />
+         <Input
+          element="input"
+          id="confirm_email"
+          type="email"
+          placeholder="Confirm E-Mail Address"
+          validators={[VALIDATOR_EMAIL(), VALIDATOR_EQUAL(formState.inputs.email.value)]}
+          errorText="Please make sure the email matches and it is valid email address."
+          onInput={inputHandler}
+        />
         <Input
           element="input"
           id="password"
@@ -100,7 +226,7 @@ const Register = () => {
         />
         <Input
           element="input"
-          id="confirmPassword"
+          id="confirm_password"
           type="password"
           placeholder="Confirm Password"
           validators={[VALIDATOR_PASSWORD(), VALIDATOR_EQUAL(formState.inputs.password.value)]}

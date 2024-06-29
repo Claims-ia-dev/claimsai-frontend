@@ -27,7 +27,11 @@ import SubscriptionPlan from './payment/SubscriptionPlan';
 
 const App = () => {
 
-  const { token, login, logout, userId, username } = useAuth();
+  const { token, login, logout, userId, userinfo } = useAuth();
+  console.log("user");
+  console.log(userinfo);
+  const userrole=userinfo?.user_type;
+  
 
 
   let routes;
@@ -80,7 +84,7 @@ const App = () => {
       isLoggedIn: !!token,
       token: token,
       userId: userId,
-      username: username,
+      userinfo: userinfo,
       login: login,
       logout: logout
     }}

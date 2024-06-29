@@ -64,7 +64,8 @@ const MainNavigation = props => {
         
         <div className='main-navigation__left'>
           {/*Displays username ( to make dynamic) */}
-        <h3 >Hi, {auth.username}!</h3>
+          
+        <h3 >Hi, {auth.userinfo?.first_name}!</h3>
         <button
           className=" main-navigation__menu-btn"
           onClick={openDrawerHandler}

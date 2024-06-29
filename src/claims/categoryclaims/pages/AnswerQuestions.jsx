@@ -25,15 +25,16 @@ const AnswerQuestions = (props) => {
   const getData = async () => {
     try { 
       const formData = new URLSearchParams();
-      formData.append('service_type', roomData?.servicetype.value);
-
+      formData.append('service', roomData?.servicetype.value);
+      const requestBody = roomData?.servicetype.value ? formData.toString() : null;
+       console.log(requestBody);
     console.log(auth.token);
       const responseData = await sendRequest(
-        '/api/categoryclaims/categoryclaims', // api endpoint
+        `/api/categoryclaims/category?${requestBody}`,
+        // `/api/categoryclaims/categoryclaims`, // api endpoint
         'GET',
-        roomData?.servicetype.value? formData : null,
+        null,
         {
-          'Content-Type': 'application/x-www-form-urlencoded'
         },
         auth.token
       );
@@ -72,12 +73,12 @@ const AnswerQuestions = (props) => {
       answer: question.answer,
     }));
     
-    const room_details = {
+    const room_details = [{
       room_name: roomData?.roomname.value,
       room_type: roomData?.roomtype.value,
       service_type: roomData?.servicetype.value,
       category_claims: questionsAnswers  
-    };
+    }];
 
   
     const dataToSend = {
@@ -147,7 +148,7 @@ const AnswerQuestions = (props) => {
         <Button inverse >
               Cancel
          </Button>
-         <Button onClick={handleSubmit}>Next</Button>
+         <Button onClick={handleSubmit}>Finish</Button>
          </div>
       </>
     

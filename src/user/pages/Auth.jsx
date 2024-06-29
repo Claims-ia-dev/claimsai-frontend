@@ -69,13 +69,36 @@ const Auth = () => { //handles user authentication
       //   }
       );
       console.log(responseData);
-      auth.login(responseData.user.id, responseData.token, responseData.user.first_name);
-    } catch (err) {}
+      auth.login(responseData.user.id, responseData.token, responseData.user);
+    } catch (err) {
+      // // if (err.code === 'unverified_email') {
+      //   error.message = 'Please verify your email address. If you haven\'t received the verification email, you can resend it.';
+      //   //error.resendEmail = true;
+      // } else {
+      console.log(err);
+      // }
+    }
+  };
+
+  const resendVerificationEmail = async () => {
+    try {
+     
+      // const responseData = await sendRequest('/api/auth/resend-verification-email', 'POST');
+      // console.log(responseData);
+       console("Email sent");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
   <>
-    <ErrorModal error={error} onClear={clearError} />
+    <ErrorModal error={error} onClear={clearError}>
+    {/* resendEmail={error.resendEmail}  */}
+      {/* {error.resendEmail && (
+          <Button onClick={resendVerificationEmail}>Resend Verification Email</Button>
+        )} */}
+    </ErrorModal>
     <Card className="authentication">
     {isLoading && <LoadingSpinner asOverlay />}
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
