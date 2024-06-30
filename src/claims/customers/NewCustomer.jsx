@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect, useContext}from "react";
 import { useNavigate } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
@@ -9,12 +9,13 @@ import {
   VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import { useClaim } from '../../shared/hooks/claim-hook';
 import './CustomerForm.css';
-
-
 
 const NewCustomer = () => {
 
+  const auth = useContext(AuthContext);
   
   const navigate = useNavigate(); //to go to a diferent route
   // Initialize the form state with customer fields
@@ -59,13 +60,27 @@ const NewCustomer = () => {
     },
     false
   );
+  const { claim, updateClaim } = useClaim(); //claim context to see or modify a claim
+
+  
+  useEffect(() => {
+    console.log('Updated claim:', claim); // Log the updated state here
+  }, [claim]); // Run this effect whenever the claim state changes
 
   //handler to send data to new claim and connect to database from there to make a a new "estimate" (set as estimate in database)
   const claimSubmitHandler = event => {
     event.preventDefault(); //prevents default behavior so it doesn't reload and tries to send data
     console.log(formState.inputs); 
+    //creating new Claim
+    const newCustomerInfo = {
+      userId: auth.userId,
+      customerInfo:  formState.inputs,
+    }
+
+    updateClaim(newCustomerInfo);
+   
     // navigate to the desired route
-    navigate('/claims/new' , { state: { customerData: formState.inputs } });
+    navigate('/claims/new');
 
     //to send customer data to the route that takes you to NewClaim
   };

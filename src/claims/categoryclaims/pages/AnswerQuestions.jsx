@@ -5,17 +5,19 @@ import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import Button from "../../../shared/components/FormElements/Button";
 import { useLocation } from 'react-router-dom';
+import { useClaim } from "../../../shared/hooks/claim-hook";
+import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const AnswerQuestions = (props) => {
 
   ;
   const location = useLocation();
-  const customerData = location.state?.customerData;
   const roomData = location.state?.roomData;
   //  console.log(customerData );
   //  console.log(roomData);
   const auth = useContext(AuthContext);
-  
+  const { claim, addRoomDetail } = useClaim();
   const [data, setData] = useState(null);
   const [questions, setQuestions] = useState([]);
 
@@ -51,43 +53,33 @@ const AnswerQuestions = (props) => {
     } catch (err) {}
   };
 
-
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+
 
   const handleSubmit = async (event) => { 
     event.preventDefault();   
-  
-    const customerInfo = {
-      customer_name: customerData?.customername.value,
-      phone_number: customerData?.phonenumber.value,
-      address: customerData?.address.value,
-      city: customerData?.city.value,
-      state: customerData?.state.value,
-      zip: customerData?.zip.value,
-      insurance: customerData?.insurance.value,
-      email: customerData?.email.value,
-    };  
-    
     const questionsAnswers = questions.map((question) => ({
       code: question.code,
       answer: question.answer,
     }));
-    
-    const room_details = [{
+
+    const newRoomDetail = {
       room_name: roomData?.roomname.value,
       room_type: roomData?.roomtype.value,
       service_type: roomData?.servicetype.value,
       category_claims: questionsAnswers  
-    }];
+    };
+    addRoomDetail(newRoomDetail);  
 
   
-    const dataToSend = {
-      userId: auth.userId,
-      customer_info: customerInfo,
-      room_details:room_details  
-    };
+    // const dataToSend = {
+    //   userId: auth.userId,
+    //   customer_info: customerInfo,
+    //   room_details:room_details  
+    // };
 
-    console.log(dataToSend);
+    console.log(claim);
   
     // try {
     //   const responseData = await sendRequest(
@@ -148,6 +140,7 @@ const AnswerQuestions = (props) => {
         <Button inverse >
               Cancel
          </Button>
+         <Link to="/claims/new">Add room</Link>
          <Button onClick={handleSubmit}>Finish</Button>
          </div>
       </>

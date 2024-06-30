@@ -81,12 +81,15 @@ const NewClaim = (props) => {
     false
   );
 
+
+
   //handler for form submission (to add post api )
   const claimSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
+    
    
-    navigate("/claims/e1/EstimateCategoryClaims", { state: { customerData , roomData:formState.inputs }});
+    navigate("/claims/e1/EstimateCategoryClaims", { state: {  roomData:formState.inputs }});
 
   };
 

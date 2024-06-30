@@ -24,6 +24,7 @@ import Register from './user/pages/Register';
 import TestComponent from './shared/util/TestComponent';
 import { useAuth } from './shared/hooks/auth-hook';
 import SubscriptionPlan from './payment/SubscriptionPlan';
+import { ClaimProvider } from './shared/hooks/claim-hook';
 
 const App = () => {
 
@@ -79,7 +80,9 @@ const App = () => {
   }
 
   return (
+    
     <AuthContext.Provider
+    
     value={{
       isLoggedIn: !!token,
       token: token,
@@ -88,12 +91,12 @@ const App = () => {
       login: login,
       logout: logout
     }}
-  >
+  ><ClaimProvider>
     <Router>
     {token && <MainNavigation />} {/* Only render MainNavigation if token is present */}
 
       <main>{routes}</main>
-    </Router>
+    </Router></ClaimProvider>
   </AuthContext.Provider>
   );
 };
