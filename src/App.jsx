@@ -23,6 +23,7 @@ import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
 import TestComponent from './shared/util/TestComponent';
 import { useAuth } from './shared/hooks/auth-hook';
+import Checkout from './payment/Checkout';
 import SubscriptionPlan from './payment/SubscriptionPlan';
 import { ClaimProvider } from './shared/hooks/claim-hook';
 
@@ -46,6 +47,7 @@ const App = () => {
       <Routes>
         <Route path="/" element = {<NewCustomer/>}/>    
         <Route path="/subscription" element={<SubscriptionPlan />}/>        
+        <Route path="/checkout" element={<Checkout />}/>        
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 

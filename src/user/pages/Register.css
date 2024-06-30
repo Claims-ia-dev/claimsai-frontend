@@ -1,36 +1,68 @@
-.authentication__header {
-    color: white;
-    text-align: center;
-  }
+.registration__header {
+  color: white;
+  text-align: center;
+}
+
+.registration__logo {
+  width: 90%;
+}
+
+.registration {
+  width: 90%;
+  max-width: 85rem;
+  margin: 1rem auto;
+  text-align: center;
+  background-color: white;
+  box-shadow: none;
+}
+
+.registration form {
+ 
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.registration .section {
+  width: 100%;
+  margin: 2rem;
+}
+
+.registration p {
+  text-align: center;
+  align-self: center;
+}
+
+.registration .split {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.registration div{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.split > *:first-child {
+  margin-right: 1rem;
+} 
+
+.button{
+  margin: 1rem;
+}
+
+a {
   
-  .authentication__logo{
-    width: 90%;
-  }
-  
-  .authentication {
-    width: 90%;
-    max-width: 25rem;
-    margin: 7rem auto;
-    text-align: center;
-    
-    background-color: #f2f2f2;
-    box-shadow: none;
-  }
-  
-  .authentication form {
-    margin-bottom: 1rem;
-  }
-  
-  
-  a {
   text-decoration: none;
-  color:#ff5715;
-  }
-  
-  p{
-    font-weight: bold;
-  }
-  
-  
-  
-  
+  color: #ff5715;
+}
+
+p {
+  font-weight: bold;
+}

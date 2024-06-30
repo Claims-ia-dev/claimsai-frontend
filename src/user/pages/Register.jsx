@@ -112,11 +112,13 @@ const Register = () => {
   return (
     <>  <ErrorModal error={error} onClear={clearError} />
    
-    <Card className="authentication">
+    <Card className="registration">
     {isLoading && <LoadingSpinner asOverlay />}
-      <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
+      <p className='intro'>Welcome to claims.ai to be able to use our artificial intelligence services, you need to create an account with us</p>
       <br />
-      <form onSubmit={registerSubmitHandler}>
+      <form className='registration' onSubmit={registerSubmitHandler}>
+        <div className='section'>
+        <div className='split'>
         <Input
           element="input"
           id="first_name"
@@ -134,7 +136,10 @@ const Register = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid last name."
           onInput={inputHandler}
-        />    <Input
+        /> 
+        </div>
+        <div className='split'>
+         <Input
           element="input"
           id="phone"
           type="text"
@@ -151,7 +156,7 @@ const Register = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid company name."
           onInput={inputHandler}
-        />
+        /></div>
          <Input
           element="input"
           id="street"
@@ -161,6 +166,7 @@ const Register = () => {
           errorText="Please enter a valid street."
           onInput={inputHandler}
         />
+        <div className='split'>
          <Input
           element="input"
           id="city"
@@ -178,7 +184,8 @@ const Register = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid country."
           onInput={inputHandler}
-        />
+        /></div>
+        <div className='split'>
          <Input
           element="input"
           id="state"
@@ -196,7 +203,8 @@ const Register = () => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid name."
           onInput={inputHandler}
-        />
+        /></div></div>
+        <div className='section'>
         <Input
           element="input"
           id="email"
@@ -233,9 +241,12 @@ const Register = () => {
           errorText="Make sure passwords match and are strong enough"
           onInput={inputHandler}
         />
+        <div>
         <Button type="submit" disabled={!formState.isValid}>
-          Register
+          Create Account
         </Button>
+        </div>
+        </div>
       </form>
       <p>Already a member?<a href='/auth'> Login</a> instead!</p>
     </Card> </>

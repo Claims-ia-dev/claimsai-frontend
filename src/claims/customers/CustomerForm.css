@@ -27,6 +27,10 @@
   .customer-form > p {
     width: 100%;
     text-align: center;
+  } 
+   .customer-form > button {
+    width: 70%;
+    text-align: center;
   }
 
   .split{
@@ -34,10 +38,7 @@
     justify-content: space-between; 
   }
 
-  .customer-form > button {
-    width: 70%;
-    text-align: center;
-  }
+
 
   .split>*:first-child{
     margin-right: 1rem;

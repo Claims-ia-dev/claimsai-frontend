@@ -35,14 +35,19 @@ function SubscriptionPlan() {
     const userId = auth.userId;
     const requestBody = {price, customerId: userId };
     sendRequest(
-      "api/v1/create-subscription-checkout-session", //provisionalmente
+      "api/users/create-checkout-session", 
       "POST",
-      JSON.stringify(requestBody),
+      null,
+      // JSON.stringify(requestBody),
       {
-        "Content-Type": "application/json",
+        mode: 'no-cors',
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
       auth.token
     )
+    
      .then((response) => {
         const sessionUrl = response.session.url;
         window.location = sessionUrl;
