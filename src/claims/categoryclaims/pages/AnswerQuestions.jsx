@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import './AnswerQuestions.css';
+import { useNavigate } from 'react-router-dom';
 import Card from "../../../shared/components/UIElements/Card";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -10,14 +11,14 @@ import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner
 import { Link } from "react-router-dom";
 
 const AnswerQuestions = (props) => {
-
-  ;
+  
   const location = useLocation();
   const roomData = location.state?.roomData;
   //  console.log(customerData );
   //  console.log(roomData);
   const auth = useContext(AuthContext);
   const { claim, addRoomDetail } = useClaim();
+  const navigate = useNavigate(); 
   const [data, setData] = useState(null);
   const [questions, setQuestions] = useState([]);
 
@@ -55,9 +56,13 @@ const AnswerQuestions = (props) => {
 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  useEffect(() => {
+    console.log('initial claim state'); // initial claim state
+    console.log(claim); // initial claim state
+  }, []);
 
 
-  const handleSubmit = async (event) => { 
+  const handleSubmitRoom = async (event) => { 
     event.preventDefault();   
     const questionsAnswers = questions.map((question) => ({
       code: question.code,
@@ -70,35 +75,61 @@ const AnswerQuestions = (props) => {
       service_type: roomData?.servicetype.value,
       category_claims: questionsAnswers  
     };
+    console.log('room details to update');
+    console.log(newRoomDetail);
     addRoomDetail(newRoomDetail);  
-
   
-    // const dataToSend = {
-    //   userId: auth.userId,
-    //   customer_info: customerInfo,
-    //   room_details:room_details  
-    // };
 
+
+    console.log("ater adding room claim");
     console.log(claim);
-  
-    // try {
-    //   const responseData = await sendRequest(
-    //     '/api/estimates/create', // api endpoint
-    //     'POST',
-    //     JSON.stringify(dataToSend),
-    //     {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     auth.token
-    //   );  
-    //   // Handle the response data
-    //   console.log(responseData);
-    // } catch (err) {
-    //   // Handle the error
-    //   console.error(err);
-    // }
+    navigate('/claims/new');
+  };
+
+  const handleSubmitProject = async (event) => { 
+    event.preventDefault();   
+    const questionsAnswers = questions.map((question) => ({
+      code: question.code,
+      answer: question.answer,
+    }));
+
+    const newRoomDetail = {
+      room_name: roomData?.roomname.value,
+      room_type: roomData?.roomtype.value,
+      service_type: roomData?.servicetype.value,
+      category_claims: questionsAnswers  
+    };
+    console.log('room details to update');
+    console.log(newRoomDetail);
+   await addRoomDetail(newRoomDetail);    
+   const updatedClaim = { ...claim, room_details: [...claim.room_details, newRoomDetail] };
+ 
+   console.log('final claim state');
+   console.log(await updatedClaim);
+   console.log(JSON.stringify(await updatedClaim));
+
+   try {
+    const response = await sendRequest(
+      `/api/estimates/create`,
+      'POST',
+      JSON.stringify(updatedClaim),
+      {
+        'Content-Type': 'application/json'
+      },
+      auth.token)    
+
+    if (response.ok) {
+      navigate('/claims/submitted')
+    } else {
+      console.error('Error submitting claim:', response);
+    }
+  } catch (err) {
+    console.error('Error submitting claim:', err);
+  }
 
   };
+
+  
 
 
   const handleAnswerChange = (questionCode, answer) => {
@@ -136,12 +167,10 @@ const AnswerQuestions = (props) => {
         </tbody> 
        
       </table>
-     <div className="questions_actions">
-        <Button inverse >
-              Cancel
-         </Button>
-         <Link to="/claims/new">Add room</Link>
-         <Button onClick={handleSubmit}>Finish</Button>
+     <div className="questions_actions">        
+         <Link to="/claims/new"></Link>
+         <Button onClick={handleSubmitRoom}>Add room</Button>
+         <Button onClick={handleSubmitProject}>Finish Project</Button>
          </div>
       </>
     

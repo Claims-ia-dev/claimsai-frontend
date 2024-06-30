@@ -17,23 +17,22 @@ const NewClaim = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const location = useLocation();
-  const customerData = location.state?.customerData;
   
   const [serviceTypes, setServiceTypes] = useState([]);
 
   const roomTypes = [
-    { value: "1", label: "Bathroom" },
-    { value: "2", label: "Bedroom" },
-    { value: "3", label: "Closet" },
-    { value: "4", label: "Dining room" },
-    { value: "5", label: "Entry" },
-    { value: "6", label: "Family room" },
-    { value: "6", label: "Foyer" },
-    { value: "6", label: "Garage" },
-    { value: "6", label: "General" },
-    { value: "6", label: "Hallway" },
-    { value: "6", label: "Kitchen" },
-    { value: "6", label: "Laundry room" },
+    { value: "Bathroom", label: "Bathroom" },
+    { value: "Bedroom", label: "Bedroom" },
+    { value: "Closet", label: "Closet" },
+    { value: "Dining room", label: "Dining room" },
+    { value: "Entry", label: "Entry" },
+    { value: "Family room", label: "Family room" },
+    { value: "Foyer", label: "Foyer" },
+    { value: "Garage", label: "Garage" },
+    { value: "General", label: "General" },
+    { value: "Hallway", label: "Hallway" },
+    { value: "Kitchen", label: "Kitchen" },
+    { value: "Laundry room", label: "Laundry room" },
     // Add options from  backend API
   ];
 
@@ -87,8 +86,7 @@ const NewClaim = (props) => {
   const claimSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
-    
-   
+       
     navigate("/claims/e1/EstimateCategoryClaims", { state: {  roomData:formState.inputs }});
 
   };

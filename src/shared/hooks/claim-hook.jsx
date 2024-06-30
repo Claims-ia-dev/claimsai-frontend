@@ -1,51 +1,44 @@
-import React, {createContext, useState, useContext, useEffect, useCallback}from "react";
-const ClaimContext = React.createContext();
+import { createContext, useReducer, useState, useContext } from 'react';
+
 const initialState = {
-    userId: '',
-    customerInfo: {},
-    roomDetails: [{
-      roomName: '',
-      roomType: '',
-      serviceType: '',
-      categoryClaims: []
-    }]
-  };
+  userId: '',
+  customer_info: {},
+  room_details: []
+};
 
+const claimReducer = (state, action) => {
+  switch (action.type) {
+    case 'UPDATE_CLAIM':
+      return { ...state, ...action.payload };
+    case 'ADD_ROOM_DETAIL':
+      return { ...state, room_details: [...state.room_details, action.payload] };
+    default:
+      return state;
+  }
+};
 
-const useClaim = () => {
-  const [claim, setClaim] = useState({
-    userId: '',
-    customerInfo: {},
-    roomDetails:[{
-        roomName: '',
-        roomType: '',
-        serviceType: '',
-        categoryClaims: []
-      }]
-  });
+const ClaimContext = createContext();
+
+const ClaimProvider = ({ children }) => {
+  const [claim, dispatch] = useReducer(claimReducer, initialState);
 
   const updateClaim = (newClaim) => {
-    setClaim(newClaim);
+    dispatch({ type: 'UPDATE_CLAIM', payload: newClaim });
   };
 
   const addRoomDetail = (newRoomDetail) => {
-    setClaim((prevClaim) => ({
-      ...prevClaim,
-      roomDetails: [...prevClaim.roomDetails, newRoomDetail]
-    }));
+    dispatch({ type: 'ADD_ROOM_DETAIL', payload: newRoomDetail });
   };
-
-  return { claim, updateClaim, addRoomDetail };
-};
-
-const ClaimProvider = ({ children }) => {
-  const { claim, updateClaim, addRoomDetail } = useClaim();
 
   return (
     <ClaimContext.Provider value={{ claim, updateClaim, addRoomDetail }}>
       {children}
     </ClaimContext.Provider>
   );
+};
+
+const useClaim = () => {
+  return useContext(ClaimContext);
 };
 
 export { ClaimProvider, useClaim };

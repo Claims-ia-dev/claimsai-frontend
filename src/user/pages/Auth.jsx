@@ -57,16 +57,6 @@ const Auth = () => { //handles user authentication
       {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
-      // const responseData = await sendRequest(
-      //   '/api/auth/login',
-      //   'POST',
-      //   JSON.stringify({
-      //     email: formState.inputs.email.value,
-      //     password: formState.inputs.password.value
-      //   }),
-      //   {
-      //     'Content-Type': 'application/json'
-      //   }
       );
       console.log(responseData);
       auth.login(responseData.user.id, responseData.token, responseData.user);

@@ -21,11 +21,11 @@ const NewCustomer = () => {
   // Initialize the form state with customer fields
   const [formState, inputHandler] = useForm(
     {
-      customername: {
+      customer_name: {
         value: '',
         isValid: false
       },
-      phonenumber: {
+      phone_number: {
         value: '',
         isValid: false
       },
@@ -53,14 +53,14 @@ const NewCustomer = () => {
         value: '',
         isValid: false
       },
-      claimnumber: {
+      claim_number: {
         value: "",
         isValid: true,
       },
     },
     false
   );
-  const { claim, updateClaim } = useClaim(); //claim context to see or modify a claim
+  const { claim, updateClaim, addRoomDetail } = useClaim(); //claim context to see or modify a claim
 
   
   useEffect(() => {
@@ -70,14 +70,20 @@ const NewCustomer = () => {
   //handler to send data to new claim and connect to database from there to make a a new "estimate" (set as estimate in database)
   const claimSubmitHandler = event => {
     event.preventDefault(); //prevents default behavior so it doesn't reload and tries to send data
-    console.log(formState.inputs); 
+    console.log(Object.fromEntries(
+      Object.entries(formState.inputs).map(([key, value]) => [key, value.value])
+    ),); 
     //creating new Claim
     const newCustomerInfo = {
       userId: auth.userId,
-      customerInfo:  formState.inputs,
+      customer_info:  Object.fromEntries(
+        Object.entries(formState.inputs).map(([key, value]) => [key, value.value])
+      ),
     }
 
     updateClaim(newCustomerInfo);
+    console.log('claim after update')
+    console.log(claim);
    
     // navigate to the desired route
     navigate('/claims/new');
@@ -95,7 +101,7 @@ const NewCustomer = () => {
       <div className='customer-form__inputs'> 
       <div  className='split'>
       <Input
-        id="customername"
+        id="customer_name"
         element="input"
         type="text"
         placeholder="Customer name"
@@ -105,7 +111,7 @@ const NewCustomer = () => {
       />
 
       <Input 
-        id="phonenumber"
+        id="phone_number"
         element="input"
         placeholder="Phone Number"
         validators={[VALIDATOR_MINLENGTH(10)]}
@@ -177,7 +183,7 @@ const NewCustomer = () => {
       />
 
       <Input
-        id="claimnumber"
+        id="claim_number"
         element="input"
         type="text"
         placeholder="Claim number"
