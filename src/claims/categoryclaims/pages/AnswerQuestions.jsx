@@ -47,7 +47,7 @@ const AnswerQuestions = (props) => {
         code: item.code, 
         answer: false 
       })));
-     
+      console.log("response data retrieving questions")
       console.log(responseData);
       // display the results here
     } catch (err) {}
@@ -55,10 +55,7 @@ const AnswerQuestions = (props) => {
 
  
 
-  useEffect(() => {
-    console.log('initial claim state'); // initial claim state
-    console.log(claim); // initial claim state
-  }, []);
+ 
 
 
   const handleSubmitRoom = async (event) => { 
@@ -74,14 +71,9 @@ const AnswerQuestions = (props) => {
       service_type: roomData?.service_type.value,
       category_claims: questionsAnswers  
     };
-    console.log('room details to update');
-    console.log(newRoomDetail);
-    addRoomDetail(newRoomDetail);  
-  
+    addRoomDetail(newRoomDetail);    
 
 
-    console.log("ater adding room claim");
-    console.log(claim);
     navigate('/claims/new');
   };
 
@@ -98,14 +90,11 @@ const AnswerQuestions = (props) => {
       service_type: roomData?.service_type.value,
       category_claims: questionsAnswers  
     };
-    console.log('room details to update');
-    console.log(newRoomDetail);
    await addRoomDetail(newRoomDetail);    
    const updatedClaim = { ...claim, room_details: [...claim.room_details, newRoomDetail] };
  
-   console.log('final claim state');
+   console.log('final claim state for create estimate');
    console.log(await updatedClaim);
-   console.log(JSON.stringify(await updatedClaim));
 
    try {
     const response = await sendRequest(
@@ -118,6 +107,8 @@ const AnswerQuestions = (props) => {
       auth.token)    
 
       if (response!=null) {
+        console.log("response from backend when estimate creation");
+        console.log(response);
         const id = response[0].id; // access the id property of the first element in the response array
         console.log(id);
         setClaimId(id);

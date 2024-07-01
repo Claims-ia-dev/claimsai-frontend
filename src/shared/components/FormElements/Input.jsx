@@ -1,39 +1,50 @@
-import React, { useReducer, useEffect, useState } from 'react';
+import React, { useReducer, useEffect, useState } from "react";
 
-import { validate } from '../../util/validators';
+import { validate } from "../../util/validators";
 
 import { IoEye, IoEyeOff } from "react-icons/io5";
-import './Input.css';
+import "./Input.css";
 
 //reducer function - returns a new state based on the action and current state
 const inputReducer = (state, action) => {
-  switch (action.type) { //switch based on action
-    case 'CHANGE': //case for on change
+  switch (
+    action.type //switch based on action
+  ) {
+    case "CHANGE": //case for on change
       return {
         ...state,
         value: action.val,
-        isValid: validate(action.val, action.validators)
+        isValid: validate(action.val, action.validators),
       };
-    case 'TOUCH': { //case for touch
+    case "TOUCH": {
+      //case for touch
       //returns new state if is touched is true
       return {
         ...state,
-        isTouched: true
-      }
+        isTouched: true,
+      };
     }
+    case "UPDATE_INPUT": {
+      return {
+        ...state,
+        value: action.payload.value,
+        isValid: action.payload.isValid,
+      };
+    }
+
     default:
       return state; //returns current state
   }
 };
 
-const Input = props => {
+const Input = (props) => {
   //uses use reducer hook to manage the input state
   const [inputState, dispatch] = useReducer(inputReducer, {
     //initial value
-    value: props.initialValue || '',
+    value: props.initialValue || "",
     isTouched: false,
     //initial validity
-    isValid: props.initialValid || false
+    isValid: props.initialValid || false,
   });
 
   //gets id, onInput and validators from props
@@ -42,16 +53,16 @@ const Input = props => {
 
   //uses the useEffect hook to call the onInput function
   useEffect(() => {
-    onInput(id, value, isValid)
+    onInput(id, value, isValid);
   }, [id, value, isValid, onInput]);
 
   //change handler function
-  const changeHandler = event => {
+  const changeHandler = (event) => {
     //dispatches a Change action with the new value and validators
     dispatch({
-      type: 'CHANGE',
+      type: "CHANGE",
       val: event.target.value,
-      validators: props.validators
+      validators: props.validators,
     });
   };
 
@@ -59,7 +70,7 @@ const Input = props => {
   const touchHandler = () => {
     //dispatches a Touch action
     dispatch({
-      type: 'TOUCH'
+      type: "TOUCH",
     });
   };
 
@@ -72,22 +83,28 @@ const Input = props => {
   };
 
   const element =
-    props.element === 'input' ? (
+    props.element === "input" ? (
       <div className="input-container">
-      <input
-        id={props.id}
-        type={props.type === 'password'? (showPassword? 'text' : 'password') : props.type}
-        placeholder={props.placeholder}
-        onChange={changeHandler}
-        onBlur={touchHandler}
-        value={inputState.value}
-      />
-      {props.type === 'password' && (
-        <span className="showPass" onClick={togglePasswordVisibility}>
-          {showPassword? <IoEyeOff /> : <IoEye />}
-        </span>
-      )}
-    </div>
+        <input
+          id={props.id}
+          type={
+            props.type === "password"
+              ? showPassword
+                ? "text"
+                : "password"
+              : props.type
+          }
+          placeholder={props.placeholder}
+          onChange={changeHandler}
+          onBlur={touchHandler}
+          value={inputState.value}
+        />
+        {props.type === "password" && (
+          <span className="showPass" onClick={togglePasswordVisibility}>
+            {showPassword ? <IoEyeOff /> : <IoEye />}
+          </span>
+        )}
+      </div>
     ) : (
       <textarea
         id={props.id}
@@ -98,17 +115,18 @@ const Input = props => {
       />
     );
 
-    //returns the input element with the label and error message
-    return (
-      <div
-        className={`form-control ${!inputState.isValid && inputState.isTouched &&
-          'form-control--invalid'}`}
-      >
-        <label htmlFor={props.id}>{props.label}</label>
-        {element}
-        {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
-      </div>
-    );
+  //returns the input element with the label and error message
+  return (
+    <div
+      className={`form-control ${
+        !inputState.isValid && inputState.isTouched && "form-control--invalid"
+      }`}
+    >
+      <label htmlFor={props.id}>{props.label}</label>
+      {element}
+      {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
+    </div>
+  );
 };
 
 export default Input;

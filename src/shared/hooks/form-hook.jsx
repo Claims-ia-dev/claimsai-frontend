@@ -99,5 +99,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
     });
   }, []);
 
+  
+
   return [formState, inputHandler, setFormData];
 };

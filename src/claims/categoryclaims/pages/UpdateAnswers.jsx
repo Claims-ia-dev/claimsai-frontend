@@ -13,7 +13,7 @@ const UpdateAnswers = () => {
   const location = useLocation();
   const roomData = location.state?.roomData;
   const auth = useContext(AuthContext);
-  const { claim, updateRoomDetail } = useClaim();
+  const { claim,claimId, updateRoomDetail } = useClaim();
   const Idclaim = useParams().claimId;
   const roomId = useParams().roomId;
   const roomIdNumber = parseInt(roomId, 10);
@@ -99,22 +99,28 @@ const UpdateAnswers = () => {
   const updateClaim = async () => {
     try {
       console.log("room details before patch request");
-      console.log(claim.room_details);
-      const response = await sendRequest(
-        `/api/estimates/updaterooms`,
-        "PUT",
-        JSON.stringify(claim.room_details),
-        {
-          "Content-Type": "application/json",
-        },
-        auth.token
-      );
-      if (response) {
-        console.log("Claim updated successfully!");
-        navigate("/projectreceipt", { state: { Idclaim } });
-      } else {
-        console.error("Error updating claim:", response);
-      }
+      console.log( JSON.stringify({
+        estimate_id: claimId,
+        room_details: claim.room_details,
+      }));
+    //   const response = await sendRequest(
+    //     `/api/estimates/updaterooms`,
+    //     "POST",
+    //     JSON.stringify({
+    //       estimate_id: claimId,
+    //       room_details: claim.room_details,
+    //     }),
+    //     {
+    //       "Content-Type": "application/json",
+    //     },
+    //     auth.token
+    //   );
+    //   if (response) {
+    //     console.log("Claim updated successfully!");
+       navigate("/projectreceipt", { state: { Idclaim } });
+    //   } else {
+    //     console.error("Error updating claim:", response);
+    //   }
     } catch (err) {
       console.error("Error updating claim:", err);
     }
@@ -139,13 +145,11 @@ const UpdateAnswers = () => {
     await updateRoomDetail(roomIdNumber, updates);
     setIsUpdated(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    
   };
 
   useEffect(() => {
     if (isUpdated) {
-        updateClaim();
+      updateClaim();
     }
   }, [isUpdated]);
 
@@ -180,12 +184,12 @@ const UpdateAnswers = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+     
       <div>
         <Button className="center" onClick={handleSubmit}>
           Update Room
         </Button>
-      </div>
+      </div> </table>
     </Card>
   );
 };

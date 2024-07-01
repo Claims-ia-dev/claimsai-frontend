@@ -175,15 +175,15 @@ const UpdateClaim = () => {
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid room name."
         onInput={inputHandler}
-        initialValue={formState.inputs.room_name.value}
-        initialValid={formState.inputs.room_name.isValid}
+        initialValue={identifiedRoom.room_name}
+        initialValid={true}
       />
 
       
         <SelectComponent
           id="room_type"
-          label="Select the type of room"
-          initialValue={formState.inputs.room_type.value}
+          label={identifiedRoom.room_type}
+          initialValue={identifiedRoom.room_type}
           initialValid={true}
           errorText="Please select the type of room"
           onChange={roomSelectHandler}
@@ -192,8 +192,10 @@ const UpdateClaim = () => {
 
         <SelectComponent
           id="service_type"
-          label="Select the type of service"
-          initialValue={formState.inputs.service_type.value}
+          label={
+            serviceTypes.find((option) => option.value === identifiedRoom.service_type)?.label
+          }
+          initialValue={identifiedRoom.service_type}
           initialValid={true}
           errorText="Please select the type of service"
           onChange={serviceSelectHandler}
