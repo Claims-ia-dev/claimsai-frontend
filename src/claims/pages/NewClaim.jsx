@@ -61,18 +61,18 @@ const NewClaim = (props) => {
     fetchServiceTypes();
   }, [sendRequest, auth.token]);
 
-  // Initialize the form state with roomname, roomtype, and servicetype fields
+  // Initialize the form state with room name, room type, and service type fields
   const [formState, inputHandler] = useForm(
     {
-      roomname: {
+      room_name: {
         value: "",
         isValid: false,
       },
-      roomtype: {
+      room_type: {
         value: "",
         isValid: false,
       },
-      servicetype: {
+      service_type: {
         value: "",
         isValid: false,
       }
@@ -87,7 +87,7 @@ const NewClaim = (props) => {
     event.preventDefault();
     console.log(formState.inputs);
        
-    navigate("/claims/e1/EstimateCategoryClaims", { state: {  roomData:formState.inputs }});
+    navigate("/claims/EstimateCategoryClaims", { state: {  roomData:formState.inputs }});
 
   };
 
@@ -95,8 +95,8 @@ const NewClaim = (props) => {
   const roomSelectHandler = (event) => {
     //gets the selected value
     const roomSelectedValue = event.target.value;
-    //fills the roomtype field with the selected value
-    inputHandler("roomtype", roomSelectedValue, true);
+    //fills the room type field with the selected value
+    inputHandler("room_type", roomSelectedValue, true);
   };
 
   //handler for service type selection
@@ -104,7 +104,7 @@ const NewClaim = (props) => {
     //gets the selected value
     const serviceSelectedValue = event.target.value;
     //fills the servicetype field with the selected value
-    inputHandler("servicetype", serviceSelectedValue, true);
+    inputHandler("service_type", serviceSelectedValue, true);
   };
 
   return (
@@ -114,7 +114,7 @@ const NewClaim = (props) => {
           Hello, before we start, please write the name of the room for a quote.{" "}
         </p>
         <Input
-          id="roomname"
+          id="room_name"
           element="input"
           type="text"
           placeholder="Room name"
@@ -124,7 +124,7 @@ const NewClaim = (props) => {
         />
 
         <SelectComponent
-          id="roomtype"
+          id="room_type"
           label="Select the type of room"
           errorText="Please select the type of room"
           onChange={roomSelectHandler}
@@ -132,7 +132,7 @@ const NewClaim = (props) => {
         />
 
         <SelectComponent
-          id="servicetype"
+          id="service_type"
           label="Select the type of service"
           errorText="Please select the type of service"
           onChange={serviceSelectHandler}

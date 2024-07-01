@@ -13,43 +13,7 @@ import { useForm } from "../../shared/hooks/form-hook";
 import UpdateClaim from "../pages/UpdateClaim";
 import "./CustomerForm.css";
 
-const DUMMY_CLAIMS = [
-  // data that the claim has
-  {
-    id: "e1",
-    customername: "karla",
-    phonenumber: "66111067755",
-    address: "Benito 23",
-    city: "Tijuana",
-    state: "BC",
-    zip: "22710",
-    insurance: "123",
-    email: "karla@gmail.com",
-    roomname: "Room 1",
-    roomtype: "2",
-    roomservice: "cleaning",
-    // selectedquestions: ['1', '2'] ,
-    creator: "u1",
-    // customer: 'cu1'
-  },
-  {
-    id: "e2",
-    customername: "beto",
-    phonenumber: "66411067755",
-    address: "Benito 24",
-    city: "Tijuana",
-    state: "BC",
-    zip: "22710",
-    insurance: "1234",
-    email: "beto@gmail.com",
-    roomname: "Room 2",
-    roomtype: "3",
-    roomservice: "painting",
-    // selectedquestions: ['2', '4'] ,
-    creator: "u1",
-    // customer: 'cu1'
-  },
-];
+
 
 //Called to edit customer data from claim
 const UpdateCustomer = () => {

@@ -23,9 +23,12 @@ import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
 import TestComponent from './shared/util/TestComponent';
 import { useAuth } from './shared/hooks/auth-hook';
-import Checkout from './payment/Checkout';
+import Cancel from './payment/Cancel';
+import Success from './payment/Success';
 import SubscriptionPlan from './payment/SubscriptionPlan';
 import { ClaimProvider } from './shared/hooks/claim-hook';
+import ValidateEmailReminder from './user/pages/ValidateEmailReminder';
+import UpdateAnswers from './claims/categoryclaims/pages/UpdateAnswers';
 
 const App = () => {
 
@@ -46,16 +49,18 @@ const App = () => {
     routes = (
       <Routes>
         <Route path="/" element = {<NewCustomer/>}/>    
-        <Route path="/subscription" element={<SubscriptionPlan />}/>        
-        <Route path="/checkout" element={<Checkout />}/>        
+        <Route path="/subscription" element={<SubscriptionPlan />}/>     
+            
+      
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
         <Route path="/:userId/claims/" element={<UserClaims />} /> 
-        <Route path="/:userId/projectreceipt/" element={<ProjectReceipt />} /> 
+        <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
         <Route path="/claims/new" element={<NewClaim />} />
         <Route path="/claims/newCustomer" element={<NewCustomer />} />  
-        <Route path="/claims/:estimateId" element={<UpdateClaim />} />  
-        <Route path="/claims/:estimateId/EstimateCategoryClaims" element={<AnswerQuestions />} />  
+        <Route path="/claims/:estimateId/rooms/:roomId" element={<UpdateClaim />} />  
+        <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
+        <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
@@ -70,6 +75,8 @@ const App = () => {
        
         <Route path="/auth" element={<Auth />}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/verify" element={<ValidateEmailReminder />}/>   
+
         <Route path="/subscription" element={<SubscriptionPlan />}/>
 
         <Route path="/password-reset" element= {<PasswordReset />}/>

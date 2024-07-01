@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -18,6 +19,7 @@ import Logo from '../../images/LogoClaimsIA.svg';
 import './Register.css';
 
 const Register = () => {
+  const navigate = useNavigate();
   const auth = useContext(AuthContext); 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -103,9 +105,8 @@ const Register = () => {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       );
-      console.log(responseData)
-
-       auth.login(responseData.userId, responseData.token, responseData.user);
+       console.log(responseData);
+       navigate('/verify', { state: { email: formState.inputs.email.value } });
       } catch (err) {}
   };
 

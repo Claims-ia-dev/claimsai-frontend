@@ -59,6 +59,8 @@ const Auth = () => { //handles user authentication
       }
       );
       console.log(responseData);
+      console.log("token");
+      console.log(responseData.token)
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {
       // // if (err.code === 'unverified_email') {

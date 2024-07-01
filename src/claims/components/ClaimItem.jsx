@@ -59,7 +59,7 @@ const ClaimItem = props => {
       <li className="claim-item">
         <Card className="claim-item__content">          
           <div className="claim-item__info">
-            <h4>{props.roomname}</h4>
+            <h4>{props.room_name}</h4>
           </div>
 
           {/* section for user actions */}

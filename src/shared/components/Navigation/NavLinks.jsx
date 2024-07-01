@@ -23,14 +23,10 @@ const NavLinks = props => {
           Subscription Plan
         </NavLink>
       </li>
-      {auth.isLoggedIn && ( //shows link if the user is logged in
-        <li>
-          <NavLink to="/u1/claims">My claims</NavLink>
-        </li>
-      )}
+   
         {auth.isLoggedIn && ( //shows link if the user is logged in
         <li>
-          <NavLink to="/u1/projectreceipt">Project receipt</NavLink>
+          <NavLink to="/projectreceipt">Project receipt</NavLink>
         </li>
       )}
       {auth.isLoggedIn && (
@@ -40,7 +36,7 @@ const NavLinks = props => {
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/claims/e1/EstimateCategoryClaims">Category claims</NavLink>
+          <NavLink to="/claims/EstimateCategoryClaims">Category claims</NavLink>
         </li>
       )}
       {!auth.isLoggedIn && (

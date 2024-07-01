@@ -1,8 +1,6 @@
 import React, {
   useState,
   useEffect,
-  useMemo,
-  useContext,
   useCallback,
 } from "react";
 import Card from "../../shared/components/UIElements/Card";
@@ -14,7 +12,6 @@ import {
 import Button from "../../shared/components/FormElements/Button";
 import Input from "../../shared/components/FormElements/Input";
 import { useForm } from "../../shared/hooks/form-hook";
-import { AuthContext } from "../../shared/context/auth-context";
 import EditImg from "../../images/edit.svg";
 
 import "./WorkTeam.css";

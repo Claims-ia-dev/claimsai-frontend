@@ -29,7 +29,7 @@ const ClaimList = props => { //Component that receives props expected from UserC
           key={claim.id}
           //Claim ID
           id={claim.id}
-          roomname={claim.roomname}
+          room_name={claim.room_name}
           // selectedquestions={claim.selectedquestions} //questions selected for the claim
           creatorId={claim.creator} //user creating this claim
           // customerId={claim.customerId} //customer of this claim
