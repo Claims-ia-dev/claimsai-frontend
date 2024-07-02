@@ -1,0 +1,7 @@
+.paycard {
+    display: flex;
+    box-shadow: 0;
+    border: 2px solic #d2d2d2;
+    margin: .5rem;
+
+}

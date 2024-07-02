@@ -29,6 +29,7 @@ import SubscriptionPlan from './payment/SubscriptionPlan';
 import { ClaimProvider } from './shared/hooks/claim-hook';
 import ValidateEmailReminder from './user/pages/ValidateEmailReminder';
 import UpdateAnswers from './claims/categoryclaims/pages/UpdateAnswers';
+import { CardProvider } from './shared/context/CardContext';
 
 const App = () => {
 
@@ -54,7 +55,6 @@ const App = () => {
       
         <Route path="/:userId/workteam" element = {<WorkTeam/>}/>            
         <Route path="/:userId/subscription" element = {<AutoRenewal/>}/>            
-        <Route path="/:userId/claims/" element={<UserClaims />} /> 
         <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
         <Route path="/claims/new" element={<NewClaim />} />
         <Route path="/claims/newCustomer" element={<NewCustomer />} />  
@@ -100,12 +100,12 @@ const App = () => {
       login: login,
       logout: logout
     }}
-  ><ClaimProvider>
+  ><ClaimProvider><CardProvider>
     <Router>
     {token && <MainNavigation />} {/* Only render MainNavigation if token is present */}
 
       <main>{routes}</main>
-    </Router></ClaimProvider>
+    </Router></CardProvider></ClaimProvider>
   </AuthContext.Provider>
   );
 };
