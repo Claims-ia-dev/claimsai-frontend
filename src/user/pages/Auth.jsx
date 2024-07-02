@@ -51,7 +51,7 @@ const Auth = () => { //handles user authentication
     formData.append('password', formState.inputs.password.value);
 
     const responseData = await sendRequest(
-      `https://dashboard.xclaims.ai:3003/api/auth/login`,
+      `https://localhost:3003/api/auth/login`,
       'POST',
       formData.toString(),
       {

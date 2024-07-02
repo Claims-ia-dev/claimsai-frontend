@@ -54,7 +54,7 @@ const ProjectReceipt = () => {
     const fetchServiceTypes = async () => {
       try {
         const responseData = await sendRequest(
-          `https://dashboard.xclaims.ai:3003/api/servicetype/services`, // API endpoint
+          `https://localhost:3003/api/servicetype/services`, // API endpoint
           "GET",
           null,
           {
@@ -85,7 +85,7 @@ const ProjectReceipt = () => {
      
       try {
         const predictResponseData = await sendRequest(
-          `https://dashboard.xclaims.ai:3003/api/estimates/predict`, // API endpoint
+          `https://localhost:3003/api/estimates/predict`, // API endpoint
           "POST",
           formData.toString(), // pass claimId as estimate_id
           {
