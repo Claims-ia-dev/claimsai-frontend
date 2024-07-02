@@ -103,7 +103,7 @@ const UpdateAnswers = () => {
       console.log(claimId);
       console.log(claim.room_details);
     //   const response = await sendRequest(
-    //     `https://localhost:3003/api/estimates/updaterooms`,
+    //     `https://dashboard.xclaims.ai:3003/api/estimates/updaterooms`,
     //     "POST",
     //     JSON.stringify({
     //       estimate_id: claimId,
