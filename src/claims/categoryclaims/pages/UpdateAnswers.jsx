@@ -29,7 +29,6 @@ const UpdateAnswers = () => {
     (room) => room.id === roomIdNumber
   );
 
-  console.log(identifiedRoom);
 
   const identifiedRoomData = identifiedRoom.category_claims;
 
@@ -42,8 +41,6 @@ const UpdateAnswers = () => {
       const requestBody = roomData?.service_type.value
         ? formData.toString()
         : null;
-      console.log(requestBody);
-      console.log(auth.token);
       const responseData = await sendRequest(
         `/api/categoryclaims/category?${requestBody}`,
         // `/api/categoryclaims/categoryclaims`, // api endpoint
@@ -73,8 +70,6 @@ const UpdateAnswers = () => {
     } catch (err) {}
   },[auth.token, roomData?.service_type.value, sendRequest]);
       
-      console.log(data);
-      console.log(answers);
 
   useEffect(() => {
     // retrieves questions from categoryclaims
@@ -104,11 +99,7 @@ const UpdateAnswers = () => {
 
   const updateClaim = useCallback( async () => {
     try {
-      console.log("room details before patch request");
-      console.log( JSON.stringify({
-        estimate_id: claimId,
-        room_details: claim.room_details,
-      }));
+      
     //   const response = await sendRequest(
     //     `/api/estimates/updaterooms`,
     //     "POST",
@@ -146,8 +137,6 @@ const UpdateAnswers = () => {
       category_claims: questionsAnswers,
     };
 
-    console.log("updates to the room");
-    console.log(updates);
     await updateRoomDetail(roomIdNumber, updates);
     setIsUpdated(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));

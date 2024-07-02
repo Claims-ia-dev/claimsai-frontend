@@ -117,7 +117,6 @@ const UpdateCustomer = () => {
   const claimUpdateSubmitHandler = (event) => {
     //handler to send data to update claim and connect to database from there
     event.preventDefault();
-    console.log(formState.inputs);
     <UpdateClaim />; //send customer data
   };
 

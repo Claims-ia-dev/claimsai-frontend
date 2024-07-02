@@ -1,4 +1,4 @@
-import React, { useEffect, useContext}from "react";
+import React, {  useContext}from "react";
 import { useNavigate } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
@@ -60,19 +60,14 @@ const NewCustomer = () => {
     },
     false
   );
-  const { claim, updateClaim } = useClaim(); //claim context to see or modify a claim
+  const { updateClaim } = useClaim(); //claim context to see or modify a claim
 
   
-  useEffect(() => {
-    console.log('Updated claim:', claim); // Log the updated state here
-  }, [claim]); // Run this effect whenever the claim state changes
-
+ 
   //handler to send data to new claim and connect to database from there to make a a new "estimate" (set as estimate in database)
   const claimSubmitHandler = event => {
     event.preventDefault(); //prevents default behavior so it doesn't reload and tries to send data
-    console.log(Object.fromEntries(
-      Object.entries(formState.inputs).map(([key, value]) => [key, value.value])
-    ),); 
+   
     //creating new Claim
     const newCustomerInfo = {
       userId: auth.userId,
@@ -82,8 +77,7 @@ const NewCustomer = () => {
     }
 
     updateClaim(newCustomerInfo);
-    console.log('claim after update')
-    console.log(claim);
+   
    
     // navigate to the desired route
     navigate('/claims/new');

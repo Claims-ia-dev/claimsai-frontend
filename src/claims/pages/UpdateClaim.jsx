@@ -51,7 +51,6 @@ const UpdateClaim = () => {
           },
           auth.token
         );
-        console.log(responseData);
         const serviceTypesOptions = responseData.map((service) => ({
           value: service.code_service,
           label: service.service,
@@ -91,10 +90,8 @@ const UpdateClaim = () => {
     false
   );
 
-  console.log("room id from param"+roomIdNumber);
-  console.log(claim.room_details);
   const identifiedRoom = claim.room_details.find(room => room.id === roomIdNumber);
-  console.log(identifiedRoom);
+
 // Use the useEffect hook to update the form state when the component mounts
   useEffect(() => {
      // If a claim is found, update the form state with the claim data
@@ -121,7 +118,6 @@ const UpdateClaim = () => {
 
   const claimUpdateSubmitHandler = event => { //handler to update claim (to add api endpoint for updates)
     event.preventDefault();
-    console.log(formState.inputs);
        
     navigate(`/claims/${Idclaim}/answers/${roomId}`, { state: {  roomData:formState.inputs }});
 

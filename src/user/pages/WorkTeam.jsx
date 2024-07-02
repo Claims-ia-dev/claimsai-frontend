@@ -45,14 +45,8 @@ const startEditHandler = useCallback(
   (member) => {
     setEditingMember(member);   
     setIsEditing(true);
-    console.log(editingMember);
    }, [setEditingMember,editingMember, setIsEditing] );
 
-   useEffect(() => {
-    if (editingMember) {
-      console.log(editingMember);
-    }
-  }, [editingMember]);
 
    const addSubmitHandler = (member, formData) => {
     // handle adding a new member

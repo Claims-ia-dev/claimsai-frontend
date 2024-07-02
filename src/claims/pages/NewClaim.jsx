@@ -54,7 +54,6 @@ const NewClaim = () => {
             signal: controller.signal,
           }
         );
-        console.log(responseData);
         const serviceTypesOptions = responseData.map((service) => ({
           value: service.code_service,
           label: service.service,

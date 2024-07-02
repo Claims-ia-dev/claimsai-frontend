@@ -37,7 +37,6 @@ const navigate= useNavigate();
 
   const SubmitHandler = event => {
     event.preventDefault(); //this should connect to the backend 
-    console.log(formState.inputs);
     navigate('/auth');
     
   };

@@ -15,9 +15,6 @@ const AutoRenewal = () => {
 
   
   const auth = useContext(AuthContext);
-  console.log(auth.userinfo.stripe_customer_id);
-
-
 
   return (
     <Card className="autorenewal">

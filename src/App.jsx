@@ -29,9 +29,7 @@ import { CardProvider } from './shared/context/CardContext';
 
 const App = () => {
   const { token, login, logout, userId, userinfo } = useAuth();
-  console.log("user");
-  console.log(userinfo);
-  
+    
   let routes;
 
    /**

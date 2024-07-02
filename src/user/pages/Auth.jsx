@@ -58,8 +58,6 @@ const Auth = () => { //handles user authentication
         'Content-Type': 'application/x-www-form-urlencoded'
       }
       );
-      console.log(responseData);
-      console.log("token");
       console.log(responseData.token)
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {

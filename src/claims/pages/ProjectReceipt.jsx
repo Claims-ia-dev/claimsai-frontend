@@ -38,9 +38,7 @@ const ProjectReceipt = () => {
 
   const handleDeleteRoom = (roomId) => {
     const roomIdNumber = parseInt(roomId, 10);
-    console.log("room id inside room details for deletion")
-    console.log(claim.room_details);
-    console.log(roomId);
+   
     deleteRoomDetail(roomIdNumber);
     setRooms(rooms.filter((room) => room.id !== roomIdNumber));
   };
@@ -93,7 +91,7 @@ const ProjectReceipt = () => {
           }
         );
         // process the response data here
-        console.log(responseData);
+       
       } catch (error) {
         console.error(error);
       }

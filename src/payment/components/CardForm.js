@@ -26,7 +26,7 @@ const CardForm = () => {
       card: elements.getElement(CardElement)
     });
 
-    console.log("[PaymentMethod]", payload);
+    //console.log("[PaymentMethod]", payload);
     addCard(payload.paymentMethod);
     
     

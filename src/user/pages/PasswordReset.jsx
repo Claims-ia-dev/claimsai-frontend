@@ -33,7 +33,6 @@ const PasswordReset = () => {
   const SubmitHandler = event => {
     <ResetInstructions items={formState.email}/>
     event.preventDefault();
-    console.log(formState.inputs);
      // To call the reset password function here
      
      // navigate to the desired route

@@ -10,8 +10,7 @@ import { useClaim } from "../../../shared/hooks/claim-hook";
 import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
 import { Link } from "react-router-dom";
 
-const AnswerQuestions = (props) => {
-  
+const AnswerQuestions = () => {  
   const location = useLocation();
   const roomData = location.state?.roomData;  
   const auth = useContext(AuthContext);
@@ -27,8 +26,8 @@ const AnswerQuestions = (props) => {
       const formData = new URLSearchParams();
       formData.append('service', roomData?.service_type.value);
       const requestBody = roomData?.service_type.value ? formData.toString() : null;
-       console.log(requestBody);
-       console.log(auth.token);
+      
+      
       const responseData = await sendRequest(
         `/api/categoryclaims/category?${requestBody}`,
         // `/api/categoryclaims/categoryclaims`, // api endpoint
@@ -45,8 +44,6 @@ const AnswerQuestions = (props) => {
         code: item.code, 
         answer: false 
       })));
-      console.log("response data retrieving questions")
-      console.log(responseData);
       // display the results here
     } catch (err) {}
   },[auth.token, roomData?.service_type.value, sendRequest]);
@@ -92,8 +89,6 @@ const AnswerQuestions = (props) => {
    await addRoomDetail(newRoomDetail);    
    const updatedClaim = { ...claim, room_details: [...claim.room_details, newRoomDetail] };
  
-   console.log('final claim state for create estimate');
-   console.log(await updatedClaim);
 
    try {
     const response = await sendRequest(
@@ -106,10 +101,9 @@ const AnswerQuestions = (props) => {
       auth.token)    
 
       if (response!=null) {
-        console.log("response from backend when estimate creation");
-        console.log(response);
+       
         const id = response[0].id; // access the id property of the first element in the response array
-        console.log(id);
+        
         setClaimId(id);
         navigate('/projectreceipt', { state: { response, id } }); // pass the id as a separate prop
       } else {

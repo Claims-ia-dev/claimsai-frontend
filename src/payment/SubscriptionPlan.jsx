@@ -48,7 +48,7 @@ function SubscriptionPlan() {
     setSelectedPlan(plan);
     const price = plan.price;
     const userId = auth.userId;
-    const requestBody = { price, customerId: userId };
+    //const requestBody = { price, customerId: userId };
     try {
       const response = await sendRequest(
         `/api/users/create-checkout-session`,
@@ -57,9 +57,7 @@ function SubscriptionPlan() {
         // {stripeApiKey: process.env.REACT_APP_STRIPE_API_KEY},
         { "Content-Type": "application/json" },
         auth.token
-      );
-      console.log('response to request')
-      console.log(response.url);    
+      );    
       window.open(response.url, '_blank');
      
     } catch (err) {

@@ -102,7 +102,6 @@ const Register = () => {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       );
-       console.log(responseData);
        navigate('/verify', { state: { email: formState.inputs.email.value } });
       } catch (err) {}
   };
