@@ -1,4 +1,5 @@
-import React, {  useContext } from 'react';
+ import axios from 'axios';
+ import React, {  useContext } from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -43,30 +44,32 @@ const Auth = () => { //handles user authentication
 
 
 
+ 
+
   const authSubmitHandler = async event => {
     event.preventDefault();
     try {
-    const formData = new URLSearchParams();
-    formData.append('email', formState.inputs.email.value);
-    formData.append('password', formState.inputs.password.value);
-
-    const responseData = await sendRequest(
-      `https://localhost:3003/api/auth/login`,
-      'POST',
-      formData.toString(),
-      {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+      const formData = new URLSearchParams();
+      formData.append('email', formState.inputs.email.value);
+      formData.append('password', formState.inputs.password.value);
+  
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      };
+  
+      const response = await axios.post(
+        `https://localhost:3003/api/auth/login`,
+        formData.toString(),
+        config
       );
-      console.log(responseData.token)
+  
+      const responseData = response.data;
+      console.log(responseData.token);
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {
-      // // if (err.code === 'unverified_email') {
-      //   error.message = 'Please verify your email address. If you haven\'t received the verification email, you can resend it.';
-      //   //error.resendEmail = true;
-      // } else {
       console.log(err);
-      // }
     }
   };
 
