@@ -95,7 +95,7 @@ const Register = () => {
         formData.append('password', formState.inputs.password.value);        
         
         const responseData = await sendRequest(
-          `https://localhost:3003/api/auth/signup`,
+          `https://dashboard.xclaims.ai:3003/api/auth/signup`,
           'POST',
           formData.toString(),
           {

@@ -43,7 +43,7 @@ const UpdateAnswers = () => {
 
       
       const responseData = await sendRequest(//gets questions sorted by service
-        `https://localhost:3003/api/categoryclaims/category?${requestBody}`,
+        `https://dashboard.xclaims.ai:3003/api/categoryclaims/category?${requestBody}`,
         // `/api/categoryclaims/categoryclaims`, // api endpoint
         "GET",
         null,

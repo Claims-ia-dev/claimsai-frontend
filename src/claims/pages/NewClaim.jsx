@@ -43,7 +43,7 @@ const NewClaim = () => {
       const controller= new AbortController();
       try {
         const responseData = await sendRequest(
-          `https://localhost:3003/api/servicetype/services`, // API endpoint
+          `https://dashboard.xclaims.ai:3003/api/servicetype/services`, // API endpoint
           'GET',
           null,
           {

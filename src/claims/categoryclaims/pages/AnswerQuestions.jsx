@@ -29,7 +29,7 @@ const AnswerQuestions = () => {
       const requestBody = roomData?.service_type.value ? formData.toString() : null;
       
       const allQuestionsData=await sendRequest(
-        `https://localhost:3003/api/categoryclaims/category`,
+        `https://dashboard.xclaims.ai:3003/api/categoryclaims/category`,
         'GET',
         null,
         {
@@ -40,7 +40,7 @@ const AnswerQuestions = () => {
       setAllQuestions(allQuestionsData);//to store all questions and the compare with the ones answered
       
       const responseData = await sendRequest(
-        `https://localhost:3003/api/categoryclaims/category?${requestBody}`,
+        `https://dashboard.xclaims.ai:3003/api/categoryclaims/category?${requestBody}`,
         'GET',
         null,
         {
@@ -113,7 +113,7 @@ const AnswerQuestions = () => {
 
    try {
     const response = await sendRequest(
-      `https://localhost:3003/api/estimates/create`,
+      `https://dashboard.xclaims.ai:3003/api/estimates/create`,
       'POST',
       JSON.stringify(updatedClaim),
       {
