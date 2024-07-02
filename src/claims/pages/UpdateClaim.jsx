@@ -43,7 +43,7 @@ const UpdateClaim = () => {
     const fetchServiceTypes = async () => {
       try {
         const responseData = await sendRequest(
-          '/api/servicetype/services', // API endpoint
+          `/api/servicetype/services`, // API endpoint
           'GET',
           null,
           {

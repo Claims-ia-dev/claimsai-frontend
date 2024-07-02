@@ -1,6 +1,5 @@
 import React, {
   useState,
-  useEffect,
   useCallback,
 } from "react";
 import Card from "../../shared/components/UIElements/Card";
@@ -45,7 +44,7 @@ const startEditHandler = useCallback(
   (member) => {
     setEditingMember(member);   
     setIsEditing(true);
-   }, [setEditingMember,editingMember, setIsEditing] );
+   }, [setEditingMember, setIsEditing] );
 
 
    const addSubmitHandler = (member, formData) => {

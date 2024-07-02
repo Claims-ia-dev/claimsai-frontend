@@ -30,7 +30,6 @@ const AnswerQuestions = () => {
       
       const responseData = await sendRequest(
         `/api/categoryclaims/category?${requestBody}`,
-        // `/api/categoryclaims/categoryclaims`, // api endpoint
         'GET',
         null,
         {

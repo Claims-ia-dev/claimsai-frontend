@@ -95,13 +95,14 @@ const Register = () => {
         formData.append('password', formState.inputs.password.value);        
         
         const responseData = await sendRequest(
-          '/api/auth/signup',
+          `/api/auth/signup`,
           'POST',
           formData.toString(),
           {
             'Content-Type': 'application/x-www-form-urlencoded'
           }
       );
+      console.log(responseData);
        navigate('/verify', { state: { email: formState.inputs.email.value } });
       } catch (err) {}
   };

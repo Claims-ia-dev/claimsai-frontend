@@ -51,7 +51,7 @@ const Auth = () => { //handles user authentication
     formData.append('password', formState.inputs.password.value);
 
     const responseData = await sendRequest(
-      '/api/auth/login',
+      `/api/auth/login`,
       'POST',
       formData.toString(),
       {
@@ -73,8 +73,8 @@ const Auth = () => { //handles user authentication
   // const resendVerificationEmail = async () => {
   //   try {
      
-  //     // const responseData = await sendRequest('/api/auth/resend-verification-email', 'POST');
-  //     // console.log(responseData);
+      // const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/auth/resend-verification-email`, 'POST');
+  // console.log(responseData);
   //      console("Email sent");
   //   } catch (err) {
   //     console.log(err);

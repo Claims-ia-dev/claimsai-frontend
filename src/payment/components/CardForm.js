@@ -1,16 +1,15 @@
-import React, {  useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { CardContext } from "../../shared/context/CardContext";
 import Button from "../../shared/components/FormElements/Button";
 import './StripeStyles.css';
 
-
-
 const CardForm = () => {
   const stripe = useStripe();
   const elements = useElements();
- // const options = useOptions();
-  const { addCard } = useContext(CardContext); 
+  const { addCard } = useContext(CardContext);
+
+  const [cardError, setCardError] = useState(null);
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -21,42 +20,41 @@ const CardForm = () => {
       return;
     }
 
+    const cardElement = elements.getElement(CardElement);
+
+    if (cardElement.isEmpty) {
+      setCardError("Please fill in your card details");
+      return;
+    }
+
+    setCardError(null);
+
     const payload = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement)
+      card: cardElement
     });
 
     //console.log("[PaymentMethod]", payload);
     addCard(payload.paymentMethod);
-    
-    
-// Send the payment method to  server
-       
 
-    
-
+    // Send the payment method to server
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
         <CardElement
-          //options={options}
-        //   onReady={() => {
-        //     console.log("CardElement [ready]");
-        //   }}
-        //   onChange={event => {
-        //     console.log("CardElement [change]", event);
-        //   }}
-        //   onBlur={() => {
-        //     console.log("CardElement [blur]");
-        //   }}
-        //   onFocus={() => {
-        //     console.log("CardElement [focus]");
-        //   }}
+          onChange={event => {
+            if (event.error) {
+              setCardError(event.error.message);
+            } else {
+              setCardError(null);
+            }
+          }}
         />
+        {cardError && <div style={{ color: "red" }}>{cardError}</div>}
       </label>
-      <Button type="submit" disabled={!stripe}>
+      <Button type="submit" disabled={!stripe || cardError}>
         Add Payment Method
       </Button>
     </form>

@@ -10,7 +10,7 @@ import { AuthContext } from "../shared/context/auth-context";
 import "./Autorenewal.css";
 
 const AutoRenewal = () => {
-  const stripePromise = loadStripe("pk_test_51OkHwgBLOHppKdDMjufNvCfjFXrO3Aj8Bqdwl0iGqoAEk3A98FKYIzF4iJtkAG8XPlAg3BOJF12wx5kg167CU3PE00qmLZYk62");
+  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
 
 
   
@@ -22,7 +22,7 @@ const AutoRenewal = () => {
         <section>
         <p>
           Your subscription will automatically renew on {auth.userinfo.subscription_end} for $
-          {}9 dollars, and will be debited from this payment method:
+          {auth.plan} dollars, and will be debited from this payment method:
         </p>    
          
       

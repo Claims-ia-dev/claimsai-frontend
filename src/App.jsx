@@ -88,7 +88,8 @@ const App = () => {
       userId: userId,
       userinfo: userinfo,
       login: login,
-      logout: logout
+      logout: logout,
+      plan: 99.0
     }}
   ><ClaimProvider><CardProvider>
     <Router>

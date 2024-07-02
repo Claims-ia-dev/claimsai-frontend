@@ -18,19 +18,19 @@ function SubscriptionPlan() {
       id: 1,
       name: "Essentials Plan",
       description: "Start with our first and most groundbreaking product",
-      price: 25,
+      price: 99,
       features: ["Instant estimates", "Early features"],
     },
     {
       id: 2,
       name: "Annual plan",
       description: "For those serious about supercharging their estimates",
-      price: 21,
+      price: 99,
       features: ["CRM Access", "Priority Support", "Extra Features"],
     },
   ];
 
-  const { sendRequest, error, isLoading } = useHttpClient(); // Use the hook
+  const { sendRequest,  isLoading } = useHttpClient(); // Use the hook
 
 
   const auth = useContext(AuthContext);
@@ -46,16 +46,14 @@ function SubscriptionPlan() {
 
   const handlePlanSelect = async (plan) => {
     setSelectedPlan(plan);
-    const price = plan.price;
-    const userId = auth.userId;
+    auth.plan=plan.price;
     //const requestBody = { price, customerId: userId };
     try {
       const response = await sendRequest(
         `/api/users/create-checkout-session`,
         "POST",
         null,
-        // {stripeApiKey: process.env.REACT_APP_STRIPE_API_KEY},
-        { "Content-Type": "application/json" },
+            { "Content-Type": "application/json" },
         auth.token
       );    
       window.open(response.url, '_blank');
