@@ -1,6 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Card from '../../shared/components/UIElements/Card';
-import { Link } from 'react-router-dom';
 import Button from '../../shared/components/FormElements/Button';
 import { useLocation } from 'react-router-dom';
 import EmailVector from '../../images/emailvector.svg';
@@ -9,7 +8,7 @@ import './ResetInstructions.css';
 
 const ResetInstructions = () => {  
   const location = useLocation();
-  const [email, setEmail] = useState(`${location.state.email }`);
+  const email = useState(`${location.state.email }`);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   // setEmail(location.state.email || {});

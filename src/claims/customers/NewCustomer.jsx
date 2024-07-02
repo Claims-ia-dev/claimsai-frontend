@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext}from "react";
+import React, { useEffect, useContext}from "react";
 import { useNavigate } from 'react-router-dom';
 
 import Input from '../../shared/components/FormElements/Input';
@@ -60,7 +60,7 @@ const NewCustomer = () => {
     },
     false
   );
-  const { claim, updateClaim, addRoomDetail } = useClaim(); //claim context to see or modify a claim
+  const { claim, updateClaim } = useClaim(); //claim context to see or modify a claim
 
   
   useEffect(() => {

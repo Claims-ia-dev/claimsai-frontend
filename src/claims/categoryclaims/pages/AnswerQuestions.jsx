@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import './AnswerQuestions.css';
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import { useNavigate } from 'react-router-dom';
-import Card from "../../../shared/components/UIElements/Card";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import Button from "../../../shared/components/FormElements/Button";
@@ -21,9 +21,11 @@ const AnswerQuestions = (props) => {
   const [questions, setQuestions] = useState([]);
  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   
- useEffect(() => { // retrieves questions from categoryclaims
+ useEffect(() => { 
+  // retrieves questions from categoryclaims
     getData();
   }, []); // Call getData when the component mounts
+
   const getData = async () => {
     try { 
       const formData = new URLSearchParams();
@@ -52,8 +54,6 @@ const AnswerQuestions = (props) => {
       // display the results here
     } catch (err) {}
   };
-
- 
 
  
 
@@ -134,9 +134,9 @@ const AnswerQuestions = (props) => {
   };
 
   return (<>
-       
+       <ErrorModal error={error} onClear={clearError} />
       <table className="questions-table"> {/* Display the received data */}
-     
+      {isLoading && <LoadingSpinner asOverlay />}
         <thead>          
             <th className="question-column"> Question</th>
             <th className="toggle-column">Select</th>          

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -12,7 +12,6 @@ import { AuthContext } from './shared/context/auth-context';
 import PasswordReset from './user/pages/PasswordReset';
 import ResetInstructions from './user/pages/ResetInstructions';
 import NewClaim from './claims/pages/NewClaim';
-import UserClaims from './claims/pages/UserClaims';
 import NewCustomer from './claims/customers/NewCustomer';
 import UpdateClaim from './claims/pages/UpdateClaim';
 import ChangePassword from './user/pages/ChangePassword';
@@ -21,10 +20,7 @@ import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
-import TestComponent from './shared/util/TestComponent';
 import { useAuth } from './shared/hooks/auth-hook';
-import Cancel from './payment/Cancel';
-import Success from './payment/Success';
 import SubscriptionPlan from './payment/SubscriptionPlan';
 import { ClaimProvider } from './shared/hooks/claim-hook';
 import ValidateEmailReminder from './user/pages/ValidateEmailReminder';

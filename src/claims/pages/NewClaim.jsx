@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext}from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -7,16 +8,16 @@ import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "./ClaimForm.css";
 
-const NewClaim = (props) => {
+const NewClaim = () => {
 
   const navigate = useNavigate(); //to go to a diferent route
 
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const location = useLocation();
   
   const [serviceTypes, setServiceTypes] = useState([]);
 
@@ -37,7 +38,9 @@ const NewClaim = (props) => {
   ];
 
   useEffect(() => {
+    
     const fetchServiceTypes = async () => {
+      const controller= new AbortController();
       try {
         const responseData = await sendRequest(
           '/api/servicetype/services', // API endpoint
@@ -46,7 +49,10 @@ const NewClaim = (props) => {
           {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          auth.token
+          auth.token,
+          {
+            signal: controller.signal,
+          }
         );
         console.log(responseData);
         const serviceTypesOptions = responseData.map((service) => ({
@@ -109,7 +115,9 @@ const NewClaim = (props) => {
 
   return (
     <>
+    <ErrorModal error={error} onClear={clearError} />
       <form className="claim-form" onSubmit={claimSubmitHandler}>
+        {isLoading && <LoadingSpinner asOverlay />}
         <p className="">
           Hello, before we start, please write the name of the room for a quote.{" "}
         </p>

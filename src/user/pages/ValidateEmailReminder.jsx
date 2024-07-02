@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useState} from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import { Link } from 'react-router-dom';
 import Button from '../../shared/components/FormElements/Button';
@@ -8,7 +8,6 @@ import './ResetInstructions.css';
 
 function ValidateEmailReminder() {
   const location = useLocation();
-  const [email, setEmail] = useState(`${location.state.email }`);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
@@ -25,8 +24,8 @@ function ValidateEmailReminder() {
     <div className='instructions__header'>
       <img className='instructions__image' src={EmailVector} alt="Email icon"/>
     </div>
-    {email ? (<>
-      <p>Check your email: {email} inbox and verify to continue. </p>
+    {location.state.email ? (<>
+      <p>Check your email: {location.state.email } inbox and verify to continue. </p>
       <Button onClick={handleSendEmail}>Resend email</Button>
       <Link to="/auth">
       <Button>Login</Button>

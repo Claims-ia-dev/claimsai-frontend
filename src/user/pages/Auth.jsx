@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, {  useContext } from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -72,16 +72,16 @@ const Auth = () => { //handles user authentication
     }
   };
 
-  const resendVerificationEmail = async () => {
-    try {
+  // const resendVerificationEmail = async () => {
+  //   try {
      
-      // const responseData = await sendRequest('/api/auth/resend-verification-email', 'POST');
-      // console.log(responseData);
-       console("Email sent");
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  //     // const responseData = await sendRequest('/api/auth/resend-verification-email', 'POST');
+  //     // console.log(responseData);
+  //      console("Email sent");
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  //};
 
   return (
   <>
@@ -126,8 +126,8 @@ const Auth = () => { //handles user authentication
       </form>
      
      {/**if not a member yet to send to another link */}
-      <p>Not a member yet?<a href='/subscription'> Choose a plan</a> and get started now!</p> <br/>
-      <a href='/register'> Register</a>
+      <p>Not a member yet?<a href='/register'> Register, Choose a plan</a> and get started now!</p> <br/>
+      
     </Card></>
   );
 };

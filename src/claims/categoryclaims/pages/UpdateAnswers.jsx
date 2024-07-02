@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./AnswerQuestions.css";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import Card from "../../../shared/components/UIElements/Card";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -155,6 +156,8 @@ const UpdateAnswers = () => {
 
   return (
     <Card className="update-answers">
+      <ErrorModal error={error} onClear={clearError} />
+       {isLoading && <LoadingSpinner asOverlay />}
       <table className="questions-table">
         <thead>
           <th className="question-column">Question</th>

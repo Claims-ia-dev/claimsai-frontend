@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import Stripe from "stripe";
+
 import Card from "../shared/components/UIElements/Card";
 import Button from "../shared/components/FormElements/Button";
 import { AuthContext } from "../shared/context/auth-context";
 import { useHttpClient } from "../shared/hooks/http-hook";
 import Success from "./Success";
 import "./SubscriptionPlan.css";
-import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 
 function SubscriptionPlan() {
   let [message, setMessage] = useState('');
@@ -86,6 +86,7 @@ function SubscriptionPlan() {
   return (
     <>
       <Card className="subscriptions">
+      {isLoading && <LoadingSpinner asOverlay />}
         <h4>Choose a plan that suits your business needs</h4>
         <h2>Ready to get started?</h2>
         <div className="subscriptions__cards">

@@ -1,13 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useForm } from "../shared/hooks/form-hook";
-import { Stripe } from "stripe";
+import React, { useState, useContext } from "react";
 import Card from "../shared/components/UIElements/Card";
 import CardList from './components/CardList'
 import CardForm from "./components/CardForm";
 import Button from "../shared/components/FormElements/Button";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import PaymentMethodCard from "./PaymentMethodCard";
 import { AuthContext } from "../shared/context/auth-context";
 import "./Autorenewal.css";
 
@@ -15,7 +12,6 @@ const AutoRenewal = () => {
   const stripePromise = loadStripe("pk_test_51OkHwgBLOHppKdDMjufNvCfjFXrO3Aj8Bqdwl0iGqoAEk3A98FKYIzF4iJtkAG8XPlAg3BOJF12wx5kg167CU3PE00qmLZYk62");
 
 
-  const [paymentMethods, setPaymentMethods] = useState([]);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [dateExpired, setDateExpired] = useState("2023-03-15"); // placeholder value
   const [pricePlan, setPricePlan] = useState(9.99); // placeholder value
@@ -32,10 +28,7 @@ const AutoRenewal = () => {
         <p>
           Your subscription will automatically renew on {dateExpired} for $
           {pricePlan} dollars, and will be debited from this payment method:
-        </p>
-    
-                
-         
+        </p>    
          
       
 

@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import './SideDrawer.css';
@@ -19,7 +18,7 @@ const SideDrawer = props => {
    * inside the side drawer. It includes a CSSTransition component 
    * that handles the slide-in animation.
    */
-  const content = (
+  return(
        
      /* The CSSTransition component is used to create a slide-in animation 
      * effect when the side drawer is opened or closed*/
@@ -32,17 +31,12 @@ const SideDrawer = props => {
       mountOnEnter 
       unmountOnExit
     >
+     
       
        {/* * The aside element is the container element for the side drawer content.*/ }
       <aside ref={nodeRef} className="side-drawer" onClick={props.onClick}>{props.children}</aside>
     </CSSTransition>
   );
-
-    /**
-   * The ReactDOM.createPortal method is used to render the side drawer 
-   * content into a DOM node with the id "drawer-hook".
-   */
-  return ReactDOM.createPortal(content, document.getElementById('drawer-hook'));
 };
 
 export default SideDrawer;

@@ -14,7 +14,7 @@ import { AuthContext } from '../../context/auth-context';
  */
 
 
-const MainNavigation = props => {
+const MainNavigation = () => {
     /**
    * State variable to track whether the side drawer is open or not.
    * Initially set to false, indicating the drawer is closed.

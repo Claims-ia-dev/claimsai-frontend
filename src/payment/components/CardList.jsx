@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { FaCcMastercard, FaCcVisa,FaCcDiscover,FaCreditCard, FaCcAmex } from 'react-icons/fa';
 
 import { CardContext } from "../../shared/context/CardContext";

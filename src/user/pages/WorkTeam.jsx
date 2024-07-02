@@ -36,7 +36,6 @@ function WorkTeam(props) {
   const loadedMembers = DUMMY_MEMBERS.filter(
     (member) => member.membership === membershipId
   ); //to change for a get api from backend
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [editingMember, setEditingMember] = useState(); // add this state to store the member being edited
   
   const [isEditing, setIsEditing] = useState(false);
@@ -86,11 +85,10 @@ const startEditHandler = useCallback(
                     <button
                       className="member-item__button"
                       onClick={() => startEditHandler(member)}
-                    >
-                      <a>
+                    >                      
                         {" "}
                         <img src={EditImg} alt="Edit button" />
-                      </a>
+                      
                     </button>
                   </div>
                 </Card>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
@@ -11,16 +11,13 @@ import {
   VALIDATOR_REQUIRE,
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
-import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
-import Logo from '../../images/LogoClaimsIA.svg';
 import './Register.css';
 
 const Register = () => {
-  const navigate = useNavigate();
-  const auth = useContext(AuthContext); 
+  const navigate = useNavigate();; 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler] = useForm(

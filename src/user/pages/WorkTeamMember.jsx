@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from '../../shared/hooks/form-hook';
 import {
   VALIDATOR_MINLENGTH,

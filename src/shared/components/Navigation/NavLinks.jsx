@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../../context/auth-context';
 import './NavLinks.css';
 
-const NavLinks = props => {
+const NavLinks = () => {
   const auth = useContext(AuthContext); //to see if the user is logged in
 
   return (
@@ -24,11 +24,7 @@ const NavLinks = props => {
         </NavLink>
       </li>
    
-        {auth.isLoggedIn && ( //shows link if the user is logged in
-        <li>
-          <NavLink to="/projectreceipt">Project receipt</NavLink>
-        </li>
-      )}
+      
       {auth.isLoggedIn && (
         <li>
           <NavLink to="/claims/newCustomer">Add estimate</NavLink>

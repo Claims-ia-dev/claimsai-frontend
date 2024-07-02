@@ -132,16 +132,11 @@ const UpdateCustomer = () => {
     );
   }
 
-  if (isLoading) {
-    return (
-      <div className="center">
-        <h2>Loading...</h2>
-      </div>
-    );
-  }
+ 
 
   return (
     <form className="customer-form" onSubmit={claimUpdateSubmitHandler}>
+       {isLoading && <LoadingSpinner asOverlay />}
       <div className="customer-form__inputs">
         <div className="split">
           <Input

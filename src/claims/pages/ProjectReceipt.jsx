@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import Card from "../../shared/components/UIElements/Card";
-import Button from "../../shared/components/FormElements/Button";
-import { Link, useLocation } from "react-router-dom";
-import jsPDF from "jspdf";
+import { Link } from "react-router-dom";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "jspdf-autotable";
 import "./ProjectReceipt.css";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PdfComponent from "../../shared/components/PdfComponent";
 import Logo from "../../images/LogoClaimsIA.png";
 import EditImg from "../../images/edit.svg";
@@ -14,7 +14,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const ProjectReceipt = () => {
-  const { claim, deleteRoomDetail, claimId, setClaimId } = useClaim();
+  const { claim, deleteRoomDetail, claimId } = useClaim();
   
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -46,6 +46,7 @@ const ProjectReceipt = () => {
   };
 
   useEffect(() => {
+    const controller = new AbortController();
     const fetchServiceTypes = async () => {
       try {
         const responseData = await sendRequest(
@@ -55,7 +56,10 @@ const ProjectReceipt = () => {
           {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          auth.token
+          auth.token,
+          {
+            signal: controller.signal,
+          }
         );
         const servicesData = responseData.map((service) => ({
           service_code: service.code_service,
@@ -69,8 +73,38 @@ const ProjectReceipt = () => {
     fetchServiceTypes();
   }, [sendRequest, auth.token]);
 
+  useEffect(() => { 
+    const controller = new AbortController();
+    const fetchEstimatePredict = async () => {
+      const formData = new URLSearchParams();
+    formData.append('estimate_id', claimId);
+     
+      try {
+        const responseData = await sendRequest(
+          "/api/estimates/predict", // API endpoint
+          "GET",
+          formData.toString(), // pass claimId as estimate_id
+          {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          auth.token,
+          {
+            signal:controller.signal,
+          }
+        );
+        // process the response data here
+        console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchEstimatePredict();
+  }, [sendRequest, auth.token, claimId]);
+
   return (
     <Card className="receipt">
+      <ErrorModal error={error} onClear={clearError} />
+       {isLoading && <LoadingSpinner asOverlay />}
       <h3>The estimated amount for this project is:</h3>
       <h1>${totalCost.toFixed(2)}</h1>
 

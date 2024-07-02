@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from "react";
+import React, {  useContext } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { CardContext } from "../../shared/context/CardContext";
 import Button from "../../shared/components/FormElements/Button";

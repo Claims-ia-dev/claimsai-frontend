@@ -6,7 +6,6 @@ import { FaChevronDown } from 'react-icons/fa';
 const SelectComponent = ({
   id,
   label,
-  errorText,
   onChange,
   options,
   defaultValue = '',

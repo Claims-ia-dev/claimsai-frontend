@@ -10,6 +10,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import Card from "../../shared/components/UIElements/Card";
 import { useClaim } from "../../shared/hooks/claim-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./ClaimForm.css";
 
 
@@ -167,6 +168,8 @@ const UpdateClaim = () => {
 
   return (
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>
+     <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
       <Input
         id="room_name"
         element="input"
