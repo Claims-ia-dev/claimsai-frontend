@@ -149,9 +149,9 @@ const ProjectReceipt = () => {
                       danger
                       onClick={() => handleDeleteRoom(room.id)}
                     >
-                      <a>
+                      
                         <img src={DeleteImg} alt="Delete button" />
-                      </a>
+                      
                     </button>
                   </td>
                 </tr>

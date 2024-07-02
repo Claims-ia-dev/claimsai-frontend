@@ -21,7 +21,6 @@ const UpdateAnswers = () => {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
   const [questions, setQuestions] = useState([]);
-  const [data, setData] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
   const { isLoading,  sendRequest } = useHttpClient();
 
@@ -49,7 +48,6 @@ const UpdateAnswers = () => {
         {},
         auth.token
       );
-      setData(responseData);
       setQuestions(
         responseData.map((item) => ({
           description: item.claims_description,
@@ -93,13 +91,15 @@ const UpdateAnswers = () => {
       if (questionIndex !== -1) {
         updatedQuestions[questionIndex].answer = answer;
       }
+      console.log(answers);
       return updatedQuestions;
     });
   };
 
   const updateClaim = useCallback( async () => {
     try {
-      
+      console.log(claimId);
+      console.log(claim.room_details);
     //   const response = await sendRequest(
     //     `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
     //     "POST",
