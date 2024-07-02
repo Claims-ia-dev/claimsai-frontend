@@ -41,9 +41,6 @@ const Auth = () => { //handles user authentication
     },
     false
   );
-
-
-
  
 
   const authSubmitHandler = async event => {
@@ -60,7 +57,7 @@ const Auth = () => { //handles user authentication
       };
   
       const response = await axios.post(
-        `https://localhost:3003/api/auth/login`,
+        `https://dashboard.xclaims.ai:3003/api/auth/login`,
         formData.toString(),
         config
       );
@@ -113,7 +110,7 @@ const Auth = () => { //handles user authentication
           type= 'password'
           placeholder="Password"
           validators={[VALIDATOR_PASSWORD()]} 
-          errorText="Please enter a valid password (at least 8 characters, including uppercase, lowercase, and digit)."
+          errorText=""
           onInput={inputHandler}
           />
        
