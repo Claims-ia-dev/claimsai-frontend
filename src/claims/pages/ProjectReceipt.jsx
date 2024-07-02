@@ -90,6 +90,7 @@ const ProjectReceipt = () => {
             signal:controller.signal,
           }
         );
+        console.log(responseData);
         // process the response data here
        
       } catch (error) {
