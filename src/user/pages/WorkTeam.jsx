@@ -13,23 +13,31 @@ const DUMMY_MEMBERS = [
   //data the claim has
   {
     memberid: 1,
-    first_name: "karla",
-    last_name: "Urrea",
-    email: "karla@gmail.com",
+    first_name: "Rodrigo",
+    last_name: "Perez",
+    email: "rodrigo@gmail.com",
     membership: "m1",
     phone: "66111067755",
   },
   {
     memberid: 2,
-    first_name: "arturo",
-    last_name: "rodriguez",
+    first_name: "Arturo",
+    last_name: "Rodriguez",
     email: "arturo@gmail.com",
+    membership: "m1",
+    phone: "6633333333",
+  },
+  {
+    memberid: 3,
+    first_name: "Gerardo",
+    last_name: "Lopez",
+    email: "gerardo@gmail.com",
     membership: "m1",
     phone: "6633333333",
   },
 ];
 
-function WorkTeam(props) {
+function WorkTeam() {
   
   const membershipId = "m1";
   const loadedMembers = DUMMY_MEMBERS.filter(
@@ -55,6 +63,10 @@ const startEditHandler = useCallback(
   const updateSubmitHandler = (member, formData) => {
     // handle updating an existing member
     console.log(formData);
+  };
+  const cancelEditHandler = () => {
+    setEditingMember(null);
+    setIsEditing(false);
   };
 
   return (
@@ -96,6 +108,7 @@ const startEditHandler = useCallback(
         member={editingMember? editingMember:""}
         onSubmit={isEditing ? updateSubmitHandler : addSubmitHandler}
         isEditing={isEditing}
+        onCancel={cancelEditHandler}
       />;     
       </div>
         
