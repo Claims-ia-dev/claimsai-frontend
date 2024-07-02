@@ -134,7 +134,7 @@ const AnswerQuestions = (props) => {
   };
 
   return (<>
-       <ErrorModal error={error} onClear={clearError} />
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
       <table className="questions-table"> {/* Display the received data */}
       {isLoading && <LoadingSpinner asOverlay />}
         <thead>          

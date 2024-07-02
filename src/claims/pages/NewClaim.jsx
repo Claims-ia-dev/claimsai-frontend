@@ -115,7 +115,7 @@ const NewClaim = () => {
 
   return (
     <>
-    <ErrorModal error={error} onClear={clearError} />
+    {/* <ErrorModal error={error} onClear={clearError} /> */}
       <form className="claim-form" onSubmit={claimSubmitHandler}>
         {isLoading && <LoadingSpinner asOverlay />}
         <p className="">

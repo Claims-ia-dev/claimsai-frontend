@@ -28,14 +28,10 @@ import UpdateAnswers from './claims/categoryclaims/pages/UpdateAnswers';
 import { CardProvider } from './shared/context/CardContext';
 
 const App = () => {
-
   const { token, login, logout, userId, userinfo } = useAuth();
   console.log("user");
   console.log(userinfo);
-  const userrole=userinfo?.user_type;
   
-
-
   let routes;
 
    /**

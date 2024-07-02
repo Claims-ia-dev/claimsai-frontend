@@ -156,7 +156,7 @@ const UpdateAnswers = () => {
 
   return (
     <Card className="update-answers">
-      <ErrorModal error={error} onClear={clearError} />
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
        {isLoading && <LoadingSpinner asOverlay />}
       <table className="questions-table">
         <thead>

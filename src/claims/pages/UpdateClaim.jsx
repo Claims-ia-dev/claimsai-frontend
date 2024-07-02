@@ -168,7 +168,7 @@ const UpdateClaim = () => {
 
   return (
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>
-     <ErrorModal error={error} onClear={clearError} />
+     {/* <ErrorModal error={error} onClear={clearError} /> */}
       {isLoading && <LoadingSpinner asOverlay />}
       <Input
         id="room_name"
