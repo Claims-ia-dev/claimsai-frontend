@@ -29,7 +29,7 @@ const AnswerQuestions = () => {
       const requestBody = roomData?.service_type.value ? formData.toString() : null;
       
       const allQuestionsData=await sendRequest(
-        `/api/categoryclaims/category`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category`,
         'GET',
         null,
         {
@@ -40,7 +40,7 @@ const AnswerQuestions = () => {
       setAllQuestions(allQuestionsData);//to store all questions and the compare with the ones answered
       
       const responseData = await sendRequest(
-        `/api/categoryclaims/category?${requestBody}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category?${requestBody}`,
         'GET',
         null,
         {
@@ -113,7 +113,7 @@ const AnswerQuestions = () => {
 
    try {
     const response = await sendRequest(
-      `/api/estimates/create`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/estimates/create`,
       'POST',
       JSON.stringify(updatedClaim),
       {

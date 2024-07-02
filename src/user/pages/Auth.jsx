@@ -51,7 +51,7 @@ const Auth = () => { //handles user authentication
     formData.append('password', formState.inputs.password.value);
 
     const responseData = await sendRequest(
-      `/api/auth/login`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/auth/login`,
       'POST',
       formData.toString(),
       {

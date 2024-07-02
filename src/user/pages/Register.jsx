@@ -95,7 +95,7 @@ const Register = () => {
         formData.append('password', formState.inputs.password.value);        
         
         const responseData = await sendRequest(
-          `/api/auth/signup`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/auth/signup`,
           'POST',
           formData.toString(),
           {

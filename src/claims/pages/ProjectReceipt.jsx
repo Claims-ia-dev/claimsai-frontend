@@ -54,7 +54,7 @@ const ProjectReceipt = () => {
     const fetchServiceTypes = async () => {
       try {
         const responseData = await sendRequest(
-          `/api/servicetype/services`, // API endpoint
+          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
           "GET",
           null,
           {
@@ -85,7 +85,7 @@ const ProjectReceipt = () => {
      
       try {
         const predictResponseData = await sendRequest(
-          `/api/estimates/predict`, // API endpoint
+          `${process.env.REACT_APP_BACKEND_URL}/api/estimates/predict`, // API endpoint
           "POST",
           formData.toString(), // pass claimId as estimate_id
           {

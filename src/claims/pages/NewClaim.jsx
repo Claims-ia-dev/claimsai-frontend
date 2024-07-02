@@ -43,7 +43,7 @@ const NewClaim = () => {
       const controller= new AbortController();
       try {
         const responseData = await sendRequest(
-          `/api/servicetype/services`, // API endpoint
+          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
           'GET',
           null,
           {

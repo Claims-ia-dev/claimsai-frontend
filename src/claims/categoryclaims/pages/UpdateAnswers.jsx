@@ -43,7 +43,7 @@ const UpdateAnswers = () => {
 
       
       const responseData = await sendRequest(//gets questions sorted by service
-        `/api/categoryclaims/category?${requestBody}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category?${requestBody}`,
         // `/api/categoryclaims/categoryclaims`, // api endpoint
         "GET",
         null,
