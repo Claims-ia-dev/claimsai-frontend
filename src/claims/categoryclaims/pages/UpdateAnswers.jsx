@@ -40,7 +40,9 @@ const UpdateAnswers = () => {
       const requestBody = roomData?.service_type.value
         ? formData.toString()
         : null;
-      const responseData = await sendRequest(
+
+      
+      const responseData = await sendRequest(//gets questions sorted by service
         `/api/categoryclaims/category?${requestBody}`,
         // `/api/categoryclaims/categoryclaims`, // api endpoint
         "GET",

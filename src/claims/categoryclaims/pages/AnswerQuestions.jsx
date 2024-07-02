@@ -17,6 +17,7 @@ const AnswerQuestions = () => {
   const { claim, addRoomDetail,  setClaimId } = useClaim();
   const navigate = useNavigate(); 
   const [questions, setQuestions] = useState([]);
+  const [allQuestions, setAllQuestions] = useState([]);
  const { isLoading, sendRequest } = useHttpClient();
   
  // Call getData when the component mounts
@@ -27,6 +28,16 @@ const AnswerQuestions = () => {
       formData.append('service', roomData?.service_type.value);
       const requestBody = roomData?.service_type.value ? formData.toString() : null;
       
+      const allQuestionsData=await sendRequest(
+        `/api/categoryclaims/category`,
+        'GET',
+        null,
+        {
+        },
+        auth.token
+      );
+
+      setAllQuestions(allQuestionsData);//to store all questions and the compare with the ones answered
       
       const responseData = await sendRequest(
         `/api/categoryclaims/category?${requestBody}`,
@@ -55,16 +66,22 @@ const AnswerQuestions = () => {
 
   const handleSubmitRoom = async (event) => { 
     event.preventDefault();   
+
     const questionsAnswers = questions.map((question) => ({
       code: question.code,
       answer: question.answer,
+    }));
+
+    const CategoriesArrayToSend = allQuestions.map((item) => ({
+      code: item.code,
+      answer: questionsAnswers.find((qa) => qa.code === item.code)? questionsAnswers.find((qa) => qa.code === item.code).answer : false,
     }));
 
     const newRoomDetail = {
       room_name: roomData?.room_name.value,
       room_type: roomData?.room_type.value,
       service_type: roomData?.service_type.value,
-      category_claims: questionsAnswers  
+      category_claims:  CategoriesArrayToSend
     };
     addRoomDetail(newRoomDetail);    
 
@@ -79,11 +96,16 @@ const AnswerQuestions = () => {
       answer: question.answer,
     }));
 
+    const CategoriesArrayToSend = allQuestions.map((item) => ({
+      code: item.code,
+      answer: questionsAnswers.find((qa) => qa.code === item.code)? questionsAnswers.find((qa) => qa.code === item.code).answer : false,
+    }));
+
     const newRoomDetail = {
       room_name: roomData?.room_name.value,
       room_type: roomData?.room_type.value,
       service_type: roomData?.service_type.value,
-      category_claims: questionsAnswers  
+      category_claims: CategoriesArrayToSend 
     };
    await addRoomDetail(newRoomDetail);    
    const updatedClaim = { ...claim, room_details: [...claim.room_details, newRoomDetail] };
@@ -100,9 +122,10 @@ const AnswerQuestions = () => {
       auth.token)    
 
       if (response!=null) {
-       
+       console.log(response);
         const id = response[0].id; // access the id property of the first element in the response array
-        
+        console.log("claim id");
+        console.log(id);
         setClaimId(id);
         navigate('/projectreceipt', { state: { response, id } }); // pass the id as a separate prop
       } else {

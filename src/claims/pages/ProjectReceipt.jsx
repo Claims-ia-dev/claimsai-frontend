@@ -14,7 +14,11 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const ProjectReceipt = () => {
-  const { claim, deleteRoomDetail, claimId } = useClaim();
+  const { claim, deleteRoomDetail, claimId, updateRoomDetail } = useClaim();
+  console.log('stored claim created');
+  console.log(claim);
+  console.log('stored claim id');
+  console.log(claimId);
   
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -22,19 +26,21 @@ const ProjectReceipt = () => {
   const [serviceTypes, setServiceTypes] = useState([]);
 
   const [rooms, setRooms] = useState(claim.room_details);
+  const [roomCosts, setRoomCosts] = useState([]);
+  const [mergedRooms, setMergedRooms] = useState([]);
 
   const [totalCost, setTotalCost] = useState(0);
 
   useEffect(() => {
     const calculateTotalCost = () => {
       let total = 0;
-      rooms.forEach((room) => {
+      mergedRooms.forEach((room) => {
         total += room.cost;
       });
       setTotalCost(total);
     };
     calculateTotalCost();
-  }, [rooms]);
+  }, [mergedRooms]);
 
   const handleDeleteRoom = (roomId) => {
     const roomIdNumber = parseInt(roomId, 10);
@@ -72,33 +78,45 @@ const ProjectReceipt = () => {
   }, [sendRequest, auth.token]);
 
   useEffect(() => { 
-    const controller = new AbortController();
     const fetchEstimatePredict = async () => {
       const formData = new URLSearchParams();
     formData.append('estimate_id', claimId);
+    console.log(formData.toString());
      
       try {
-        const responseData = await sendRequest(
+        const predictResponseData = await sendRequest(
           `/api/estimates/predict`, // API endpoint
-          "GET",
+          "POST",
           formData.toString(), // pass claimId as estimate_id
           {
             "Content-Type": "application/x-www-form-urlencoded",
           },
-          auth.token,
-          {
-            signal:controller.signal,
-          }
+          auth.token
         );
-        console.log(responseData);
+        console.log("room ids and cost")
+        console.log(predictResponseData);
+        const roomsData = Object.entries(predictResponseData).map(([cost, roomKey]) => ({
+          cost: parseFloat(cost),
+          room_key: roomKey,
+        }));
         // process the response data here
-       
+        setRoomCosts(roomsData);
       } catch (error) {
         console.error(error);
       }
     };
     fetchEstimatePredict();
   }, [sendRequest, auth.token, claimId]);
+
+  useEffect(() => {
+    if (rooms.length > 0 && roomCosts.length > 0) {
+      const mergedRooms = rooms.map((room, index) => ({
+        ...room,
+        cost: roomCosts[index].cost,
+      }));
+      setMergedRooms(mergedRooms);
+    }
+  }, [rooms, roomCosts]);
 
   return (
     <Card className="receipt">
@@ -108,7 +126,7 @@ const ProjectReceipt = () => {
       <h1>${totalCost.toFixed(2)}</h1>
 
       <div>
-        <PdfComponent rooms={rooms} totalCost={totalCost} logo={Logo} />
+        <PdfComponent rooms={mergedRooms} totalCost={totalCost} logo={Logo} />
       </div>
 
       <div className="receipt-data">
@@ -123,31 +141,31 @@ const ProjectReceipt = () => {
               <th></th>
             </thead>
             <tbody>
-              {rooms.map((room) => (
-                <tr key={room.id}>
-                  <td>{room.room_name}</td>
-                  <td>{room.room_type}</td>
+              {mergedRooms.map((r) => (
+                <tr key={r.id}>
+                  <td>{r.room_name}</td>
+                  <td>{r.room_type}</td>
                   <td>
                     {serviceTypes.find(
-                      (service) => service.service_code === room.service_type
+                      (service) => service.service_code === r.service_type
                     )
                       ? serviceTypes.find(
                           (service) =>
-                            service.service_code === room.service_type
+                            service.service_code === r.service_type
                         ).service_labels
                       : "Unknown service type"}
                   </td>
-                  {/* <td>${room.cost.toFixed(2)}</td> */}
+                  { <td>${r.cost.toFixed(2)}</td> }
                   <td>
                     
-                    <Link to={`/claims/${claimId}/rooms/${room.id}`}>
+                    <Link to={`/claims/${claimId}/rooms/${r.id}`}>
                       <img src={EditImg} alt="Edit button" />
                     </Link>
                     {/* delete button */}
                     <button
                       className="receipt-action__button"
                       danger
-                      onClick={() => handleDeleteRoom(room.id)}
+                      onClick={() => handleDeleteRoom(r.id)}
                     >
                       
                         <img src={DeleteImg} alt="Delete button" />
