@@ -96,7 +96,7 @@ const AnswerQuestions = () => {
       answer: question.answer,
     }));
 
-    const CategoriesArrayToSend = allQuestions.map((item) => ({
+      const CategoriesArrayToSend = allQuestions.map((item) => ({
       code: item.code,
       answer: questionsAnswers.find((qa) => qa.code === item.code)? questionsAnswers.find((qa) => qa.code === item.code).answer : false,
     }));

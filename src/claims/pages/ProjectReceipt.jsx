@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "jspdf-autotable";
 import "./ProjectReceipt.css";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PdfComponent from "../../shared/components/PdfComponent";
 import Logo from "../../images/LogoClaimsIA.png";
 import EditImg from "../../images/edit.svg";
@@ -14,14 +14,14 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const ProjectReceipt = () => {
-  const { claim, deleteRoomDetail, claimId, updateRoomDetail } = useClaim();
+  const { claim, deleteRoomDetail, claimId } = useClaim();
   console.log('stored claim created');
   console.log(claim);
   console.log('stored claim id');
   console.log(claimId);
   
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading,  sendRequest,  } = useHttpClient();
 
   const [serviceTypes, setServiceTypes] = useState([]);
 
@@ -113,6 +113,7 @@ const ProjectReceipt = () => {
       const mergedRooms = rooms.map((room, index) => ({
         ...room,
         cost: roomCosts[index].cost,
+        roomKey: roomCosts[index].room_key
       }));
       setMergedRooms(mergedRooms);
     }
@@ -120,7 +121,7 @@ const ProjectReceipt = () => {
 
   return (
     <Card className="receipt">
-      <ErrorModal error={error} onClear={clearError} />
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
        {isLoading && <LoadingSpinner asOverlay />}
       <h3>The estimated amount for this project is:</h3>
       <h1>${totalCost.toFixed(2)}</h1>
