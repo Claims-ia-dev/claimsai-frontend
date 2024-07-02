@@ -10,7 +10,7 @@ import { AuthContext } from "../shared/context/auth-context";
 import "./Autorenewal.css";
 
 const AutoRenewal = () => {
-  const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
+  const stripePromise = loadStripe("pk_test_51OkHwgBLOHppKdDMjufNvCfjFXrO3Aj8Bqdwl0iGqoAEk3A98FKYIzF4iJtkAG8XPlAg3BOJF12wx5kg167CU3PE00qmLZYk62");
 
 
   

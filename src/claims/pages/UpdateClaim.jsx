@@ -43,7 +43,7 @@ const UpdateClaim = () => {
     const fetchServiceTypes = async () => {
       try {
         const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
+          `https://dashboard.xclaims.ai:3003/api/servicetype/services`, // API endpoint
           'GET',
           null,
           {

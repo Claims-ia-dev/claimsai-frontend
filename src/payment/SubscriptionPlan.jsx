@@ -50,7 +50,7 @@ function SubscriptionPlan() {
     //const requestBody = { price, customerId: userId };
     try {
       const response = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/create-checkout-session`,
+        `https://dashboard.xclaims.ai:3003/api/users/create-checkout-session`,
         "POST",
         null,
             { "Content-Type": "application/json" },
