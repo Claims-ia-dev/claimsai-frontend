@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import './AnswerQuestions.css';
-import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+//import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -15,18 +15,14 @@ const AnswerQuestions = (props) => {
   const location = useLocation();
   const roomData = location.state?.roomData;  
   const auth = useContext(AuthContext);
-  const { claim, addRoomDetail, claimId, setClaimId } = useClaim();
+  const { claim, addRoomDetail,  setClaimId } = useClaim();
   const navigate = useNavigate(); 
-  const [data, setData] = useState(null);
   const [questions, setQuestions] = useState([]);
- const { isLoading, error, sendRequest, clearError } = useHttpClient();
+ const { isLoading, sendRequest } = useHttpClient();
   
- useEffect(() => { 
-  // retrieves questions from categoryclaims
-    getData();
-  }, []); // Call getData when the component mounts
+ // Call getData when the component mounts
 
-  const getData = async () => {
+  const getData = useCallback (async () => {
     try { 
       const formData = new URLSearchParams();
       formData.append('service', roomData?.service_type.value);
@@ -42,7 +38,7 @@ const AnswerQuestions = (props) => {
         },
         auth.token
       );
-      setData(responseData);
+      
       setQuestions(responseData.map((item) => ({ 
         description: item.claims_description, 
         full_description:item.full_description,
@@ -53,9 +49,12 @@ const AnswerQuestions = (props) => {
       console.log(responseData);
       // display the results here
     } catch (err) {}
-  };
+  },[auth.token, roomData?.service_type.value, sendRequest]);
 
- 
+  useEffect(() => { 
+  // retrieves questions from categoryclaims
+    getData();
+  }, [getData]);
 
 
   const handleSubmitRoom = async (event) => { 

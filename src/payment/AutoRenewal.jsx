@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import Card from "../shared/components/UIElements/Card";
 import CardList from './components/CardList'
 import CardForm from "./components/CardForm";
@@ -12,10 +13,7 @@ const AutoRenewal = () => {
   const stripePromise = loadStripe("pk_test_51OkHwgBLOHppKdDMjufNvCfjFXrO3Aj8Bqdwl0iGqoAEk3A98FKYIzF4iJtkAG8XPlAg3BOJF12wx5kg167CU3PE00qmLZYk62");
 
 
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const [dateExpired, setDateExpired] = useState("2023-03-15"); // placeholder value
-  const [pricePlan, setPricePlan] = useState(9.99); // placeholder value
-
+  
   const auth = useContext(AuthContext);
   console.log(auth.userinfo.stripe_customer_id);
 
@@ -26,8 +24,8 @@ const AutoRenewal = () => {
       <div className="cards">
         <section>
         <p>
-          Your subscription will automatically renew on {dateExpired} for $
-          {pricePlan} dollars, and will be debited from this payment method:
+          Your subscription will automatically renew on {auth.userinfo.subscription_end} for $
+          {}9 dollars, and will be debited from this payment method:
         </p>    
          
       
@@ -41,9 +39,7 @@ const AutoRenewal = () => {
        
        
         
-        {selectedPaymentMethod && (
-          <p>Selected payment method: {selectedPaymentMethod.card.brand}</p>
-        )}</section>
+        </section>
         <Button>
           Save changes
         </Button>
@@ -65,12 +61,14 @@ const AutoRenewal = () => {
         </label>
         <p>Automatic renewal</p></div>
         <p className="">
-          You have <a>3 members</a> in your team
+          You have <a href='/workteam'>3 members</a> in your team
         </p>
         </section>
+        <Link to='/workteam'>
         <Button inverse>
           Manage team
         </Button>
+        </Link>
       </div>
     </Card>
   );

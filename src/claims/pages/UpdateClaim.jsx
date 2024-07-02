@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext}from "react";
-import {useParams, useNavigate, useLocation } from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -10,7 +10,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import Card from "../../shared/components/UIElements/Card";
 import { useClaim } from "../../shared/hooks/claim-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./ClaimForm.css";
 
 
@@ -19,7 +19,7 @@ import "./ClaimForm.css";
 const UpdateClaim = () => {
   const auth = useContext(AuthContext);
   const navigate=useNavigate();
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest  } = useHttpClient();
 
   const [serviceTypes, setServiceTypes] = useState([]);
 
@@ -162,9 +162,6 @@ const UpdateClaim = () => {
     //fills the servicetype field with the selected value
     inputHandler("service_type", serviceSelectedValue, true);
   };
-
-
-
 
   return (
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>

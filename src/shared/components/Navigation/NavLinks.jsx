@@ -9,15 +9,10 @@ const NavLinks = () => {
   return (
     <ul className="nav-links"> 
       <li>
-        <NavLink to="/u1/subscription" end >
+        <NavLink to="/manageSubscription" end >
           Manage my subscription
         </NavLink>
-      </li>
-      <li>
-        <NavLink to="/u1/workteam" end >
-          My workteam
-        </NavLink>
-      </li>
+      </li>      
       <li>
         <NavLink to="/subscription" end >
           Subscription Plan

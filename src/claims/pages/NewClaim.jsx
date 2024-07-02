@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext}from "react";
 import { useNavigate } from "react-router-dom";
-import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -16,7 +16,7 @@ const NewClaim = () => {
   const navigate = useNavigate(); //to go to a diferent route
 
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   
   const [serviceTypes, setServiceTypes] = useState([]);

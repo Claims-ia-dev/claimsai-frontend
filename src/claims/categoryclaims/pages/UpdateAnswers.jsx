@@ -1,7 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "./AnswerQuestions.css";
-import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+//import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import Card from "../../../shared/components/UIElements/Card";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -23,7 +23,7 @@ const UpdateAnswers = () => {
   const [questions, setQuestions] = useState([]);
   const [data, setData] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading,  sendRequest } = useHttpClient();
 
   const identifiedRoom = claim.room_details.find(
     (room) => room.id === roomIdNumber
@@ -33,19 +33,9 @@ const UpdateAnswers = () => {
 
   const identifiedRoomData = identifiedRoom.category_claims;
 
-  useEffect(() => {
-    // retrieves questions from categoryclaims
-    if (!identifiedRoom) {
-      return;
-    }
-    const questionsStored = identifiedRoomData.map((item) => ({
-      code: item.code,
-      answer: item.answer,
-    }));
-    getData(questionsStored);
-  }, []);
 
-  const getData = async (questionsStored) => {
+
+  const getData = useCallback(async (questionsStored) => {
     try {
       const formData = new URLSearchParams();
       formData.append("service", roomData?.service_type.value);
@@ -78,10 +68,25 @@ const UpdateAnswers = () => {
         }))
       );
 
-      console.log(responseData);
+      
       // display the results here
     } catch (err) {}
-  };
+  },[auth.token, roomData?.service_type.value, sendRequest]);
+      
+      console.log(data);
+      console.log(answers);
+
+  useEffect(() => {
+    // retrieves questions from categoryclaims
+    if (!identifiedRoom) {
+      return;
+    }
+    const questionsStored = identifiedRoomData.map((item) => ({
+      code: item.code,
+      answer: item.answer,
+    }));
+    getData(questionsStored);
+  }, [identifiedRoomData, identifiedRoom, getData]);
 
   const handleAnswerChange = (questionCode, answer) => {
     setAnswers((prevAnswers) => ({ ...prevAnswers, [questionCode]: answer }));
@@ -97,7 +102,7 @@ const UpdateAnswers = () => {
     });
   };
 
-  const updateClaim = async () => {
+  const updateClaim = useCallback( async () => {
     try {
       console.log("room details before patch request");
       console.log( JSON.stringify({
@@ -125,7 +130,7 @@ const UpdateAnswers = () => {
     } catch (err) {
       console.error("Error updating claim:", err);
     }
-  };
+  },[Idclaim,claim.room_details, claimId,navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -152,7 +157,7 @@ const UpdateAnswers = () => {
     if (isUpdated) {
       updateClaim();
     }
-  }, [isUpdated]);
+  }, [isUpdated, updateClaim]);
 
   return (
     <Card className="update-answers">
