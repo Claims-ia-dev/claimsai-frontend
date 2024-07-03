@@ -88,6 +88,7 @@ const Auth = () => { //handles user authentication
           <Button onClick={resendVerificationEmail}>Resend Verification Email</Button>
         )} */}
     </ErrorModal>
+    <div className="auth-page">
     <Card className="authentication">
     {isLoading && <LoadingSpinner asOverlay />}
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
@@ -98,7 +99,7 @@ const Auth = () => { //handles user authentication
           element="input"
           id="email"
           type="email"
-          placeholder="E-Mail"
+          placeholder="Enter email"
           validators={[VALIDATOR_EMAIL()]}
           errorText="Please enter a valid email address."
           onInput={inputHandler}
@@ -107,7 +108,7 @@ const Auth = () => { //handles user authentication
           element="input"
           id="password"
           type= 'password'
-          placeholder="Password"
+          placeholder="Enter password"
           validators={[VALIDATOR_PASSWORD()]} 
           errorText=""
           onInput={inputHandler}
@@ -115,17 +116,19 @@ const Auth = () => { //handles user authentication
        
          
         {/* goes to another route if the password is forgotten */}
-        <a href='/password-reset'>Forgot you password?</a> <br/><br/> 
+        <a className="black-link" href='/password-reset'>Forgot you password?</a> <br/><br/> 
 
-        <Button type="submit" disabled={!formState.isValid}>
-          Login
+        <Button type="submit" disabled={!formState.isValid} size="wide">
+          Sign in
         </Button>
       </form>
      
      {/**if not a member yet to send to another link */}
-      <p>Not a member yet?<a href='/register'> Register, Choose a plan</a> and get started now!</p> <br/>
+      <p className="center-text">Not a member yet?<a href='/register' > Register</a> and get started now!</p> <br/>
       
-    </Card></>
+    </Card>
+    </div>
+    </>
   );
 };
 

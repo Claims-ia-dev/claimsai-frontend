@@ -110,9 +110,12 @@ const Register = () => {
   return (
     <>  <ErrorModal error={error} onClear={clearError} />
    
+   <div className='registration-page'>
     <Card className="registration">
     {isLoading && <LoadingSpinner asOverlay />}
+      <div className='titleContainer'>
       <p className='intro'>Welcome to claims.ai to be able to use our artificial intelligence services, you need to create an account with us</p>
+      </div>
       <br />
       <form className='registration' onSubmit={registerSubmitHandler}>
         <div className='section'>
@@ -169,7 +172,7 @@ const Register = () => {
           element="input"
           id="city"
           type="text"
-          placeholder="city"
+          placeholder="City"
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid city."
           onInput={inputHandler}
@@ -240,14 +243,16 @@ const Register = () => {
           onInput={inputHandler}
         />
         <div>
-        <Button type="submit" disabled={!formState.isValid}>
+        <Button type="submit" disabled={!formState.isValid} size="wide" >
           Create Account
         </Button>
         </div>
         </div>
       </form>
       <p>Already a member?<a href='/auth'> Login</a> instead!</p>
-    </Card> </>
+    </Card>
+    </div> 
+    </>
   );
 };
 

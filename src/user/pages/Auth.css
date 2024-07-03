@@ -1,26 +1,39 @@
-.authentication__header {
-  color: white;
-  text-align: center;
-}
-
 .authentication__logo{
-  width: 90%;
+  width: 100%;
 }
 
 .authentication {
-  width: 90%;
+  width: 100%;
   max-width: 25rem;
-  margin: 7rem auto;
   text-align: center;
-  
-  background-color: #f2f2f2;
+  background: #ffffff;
   box-shadow: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
 
 .authentication form {
   margin-bottom: 1rem;
 }
 
+.black-link {
+  color: black;
+  font-weight: bold;
+}
+
+.auth-page {
+  background-color: white;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+
+}
 
 
 

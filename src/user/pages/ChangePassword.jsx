@@ -42,12 +42,13 @@ const navigate= useNavigate();
   };
 
   return (
+    <div className='auth-page'>
     <Card className="authentication">
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
       <form onSubmit={SubmitHandler}> 
     {/**Renders input fields for password */}
-      <p>Enter your new password. After confirming, you will be asked to login again</p>
+      <p className="center-text">Enter your new password. After confirming, you will be asked to login again.</p>
         <Input
           element="input"
           id="newpassword"
@@ -68,16 +69,17 @@ const navigate= useNavigate();
         /> 
         {/* goes to another route if the password is forgotten */}
 
-        <Button type="submit" disabled={!formState.isValid}>
+        <Button type="submit" disabled={!formState.isValid} size="wide">
           Reset Password
         </Button>
        
       </form>
      
      {/**if not a member yet to send to another link */}
-      <p>Never mind! <a href='/auth'> Take me back to login</a></p> <br/>
+      <p className="center-text">Never mind! <a href='/auth'> Take me back to login</a></p> <br/>
      
     </Card>
+    </div>
   );
 };
 
