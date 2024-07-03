@@ -2,12 +2,20 @@
     color: white;
     text-align: center;
   }
+
+  .receipt-page {
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+  }
   
  .receipt {
-    width: 90%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    max-width: 55rem;
+    max-width: 75rem;
     margin: 7rem auto;
     text-align: center;
     align-items: center;
@@ -73,60 +81,49 @@
 
 
   .receipt-data table {
-    border: none;
     width: 100%;
-    margin: 0;
-    border-spacing: 0;
+    border-collapse: collapse;
+  }
   
+  .receipt-data th, .receipt-data td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Líneas divisorias suaves */
   }
-
-  .receipt-data th{
-    min-width: fit-content;
+  
+  .receipt-data th {
+    background-color: #f4f4f4; /* Fondo claro para los encabezados */
+    color: #333; /* Color de texto oscuro */
+    font-weight: bold;
   }
-
-  .receipt-data td{
-    padding-right: 3rem;
-    min-width: fit-content;
-    font-weight: normal;
-    border-top: 1px solid #666;
-    border-right: 1px solid #666;
-  }
-
-  .receipt-data td:last-child{
-    border-right: none;
-    align-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .receipt-data table *{
+  
+  .receipt-data td {
     background-color: white;
-    color: black;
-    text-align: left ;
-    
+    color: #666; /* Color de texto más claro */
   }
   
-  .receipt-total{
-    margin: 2%;
+  .receipt-data tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fondo alternativo para las filas */
+  }
+  
+  .receipt-total {
+    width: 100%;
+    margin: 2% auto;
     padding: 1%;
-    align-self: flex-end;
-    border-radius: 15px;
-    width: 40%;   
-    
-  }
+    margin-left: auto; /* Asegura que se mantenga a la derecha */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Añadir una sombra suave */
+}
 
-  .receipt-total div{    
+  
+  .receipt-total div {
     border-bottom: 2px solid #666;
-    display: flex;    
-    padding: 0;
-    margin: 1%;
-    flex-direction: row;
-    align-items: center;
+    display: flex;
     justify-content: space-between;
+    padding: 0.5rem 0;
   }
   
-  .receipt-total div *{
-    padding: 0;
+  .receipt-total div * {
     margin: 0;
   }
 

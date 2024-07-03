@@ -1,13 +1,23 @@
 .autorenewal {
   width: 90%;
   height: fit-content;
-  max-width: 60rem;
+  max-width: 80rem;
   margin: 7rem auto;
   text-align: center;
   display: flex;
   box-shadow: none;
   padding: 2rem;  
   align-items: stretch;
+}
+
+.autorenewal-page {
+  width: 100vw;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
 }
 
 .autorenewal .cards{

@@ -88,7 +88,7 @@ const NewCustomer = () => {
   
   return (
   <>
-  
+  <div className="customer-form-page">
     <form className="customer-form" onSubmit={claimSubmitHandler}>
       {/* instructions */}
       <p className=''>To begin creating an estimate, please enter customer information. </p> 
@@ -189,10 +189,12 @@ const NewCustomer = () => {
       </div>
       
 
-      <Button type="submit" disabled={!formState.isValid}>
+      <Button type="submit" disabled={!formState.isValid} size="wide">
         Create estimate
       </Button>
-    </form></>
+    </form>
+    </div>
+    </>
   );
 };
 

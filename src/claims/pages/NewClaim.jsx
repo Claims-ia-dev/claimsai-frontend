@@ -43,7 +43,7 @@ const NewClaim = () => {
       const controller= new AbortController();
       try {
         const responseData = await sendRequest(
-          `https://dashboard.xclaims.ai:3003/api/servicetype/services`, // API endpoint
+          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
           'GET',
           null,
           {
@@ -114,9 +114,10 @@ const NewClaim = () => {
 
   return (
     <>
+    <div className='claim-form-page'>
     {/* <ErrorModal error={error} onClear={clearError} /> */}
+    {isLoading && <LoadingSpinner asOverlay />}
       <form className="claim-form" onSubmit={claimSubmitHandler}>
-        {isLoading && <LoadingSpinner asOverlay />}
         <p className="">
           Hello, before we start, please write the name of the room for a quote.{" "}
         </p>
@@ -148,10 +149,11 @@ const NewClaim = () => {
 
        
 
-        <Button type="submit" disabled={!formState.isValid}>
+        <Button type="submit" disabled={!formState.isValid} size="wide">
           Create room
         </Button>
       </form>
+      </div>
     </>
   );
 };

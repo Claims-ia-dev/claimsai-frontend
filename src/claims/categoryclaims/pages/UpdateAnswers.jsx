@@ -43,7 +43,7 @@ const UpdateAnswers = () => {
 
       
       const responseData = await sendRequest(//gets questions sorted by service
-        `https://dashboard.xclaims.ai:3003/api/categoryclaims/category?${requestBody}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category?${requestBody}`,
         // `/api/categoryclaims/categoryclaims`, // api endpoint
         "GET",
         null,
@@ -103,7 +103,7 @@ const UpdateAnswers = () => {
       console.log(claimId);
       console.log(claim.room_details);
     //   const response = await sendRequest(
-    //     `https://dashboard.xclaims.ai:3003/api/estimates/updaterooms`,
+    //     `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
     //     "POST",
     //     JSON.stringify({
     //       estimate_id: claimId,

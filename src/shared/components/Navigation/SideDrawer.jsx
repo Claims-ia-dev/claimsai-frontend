@@ -24,19 +24,61 @@ const SideDrawer = props => {
      * effect when the side drawer is opened or closed*/
     <CSSTransition
       in={props.show}
-      timeout={200}
+      timeout={300}
       classNames="slide-in-right"
       /** mounted or unmounted when the animation 
      * is triggered. */
       mountOnEnter 
       unmountOnExit
+      nodeRef={nodeRef} /* Usar nodeRef aquí */
+
     >
      
       
        {/* * The aside element is the container element for the side drawer content.*/ }
-      <aside ref={nodeRef} className="side-drawer" onClick={props.onClick}>{props.children}</aside>
+      <aside ref={nodeRef} className="side-drawer" onClick={props.onClick}>
+      <header>
+           <h5>Menu</h5> {/* Título opcional del menú */}
+         </header>
+        {props.children}
+      </aside>
     </CSSTransition>
   );
 };
 
 export default SideDrawer;
+
+// // SideDrawer.js
+// import React, { useRef } from 'react';
+// import { CSSTransition } from 'react-transition-group';
+
+// import './SideDrawer.css';
+
+// const SideDrawer = props => {
+//   const nodeRef = useRef(null);
+  
+//   return(
+//     <CSSTransition
+//       in={props.show}
+//       timeout={300}
+//       classNames="slide-in-right"
+//       mountOnEnter 
+//       unmountOnExit
+//       nodeRef={nodeRef} /* Usar nodeRef aquí */
+//     >
+//       <aside ref={nodeRef} className="side-drawer" onClick={props.onClick}>
+//         <header>
+//           <h2>Menu</h2> {/* Título opcional del menú */}
+//         </header>
+//         <ul>
+//           <li><a href="/link1">Link 1</a></li>
+//           <li><a href="/link2">Link 2</a></li>
+//           <li><a href="/link3">Link 3</a></li>
+//         </ul>
+//       </aside>
+//     </CSSTransition>
+//   );
+// };
+
+// export default SideDrawer;
+

@@ -32,7 +32,11 @@
   align-items: center;
   top: 0;
   bottom: 0;
+}
 
+.center-text {
+  text-align: center;
+  width: 90%;
 }
 
 

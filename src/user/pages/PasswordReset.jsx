@@ -43,12 +43,13 @@ const PasswordReset = () => {
   };
 
   return (
+    <div className='auth-page'>
     <Card className="authentication">
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
       <form onSubmit={SubmitHandler}>
         
-      <p>To reset your password, enter the email address you use to log in</p> 
+      <p className="center-text">To reset your password, enter the email address you use to log in</p> 
             
         <Input
           element="input"
@@ -60,14 +61,15 @@ const PasswordReset = () => {
           onInput={inputHandler}
         />
        
-        <Button type="submit" disabled={!formState.isValid}>
+        <Button type="submit" disabled={!formState.isValid} size="wide">
           Get reset link
         </Button>
       </form>
      
-      <p>Never mind!<a href='/'> Take me back to login</a></p> <br/>
+      <p className="center-text">Never mind!<a href='/'> Take me back to login</a></p> <br/>
      
     </Card>
+    </div>
   );
 };
 

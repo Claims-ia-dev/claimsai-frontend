@@ -1,32 +1,58 @@
+.questions-page {
+  height: 100vh;
+  width: 100vw;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+}
+
+
 .questions-table {
   margin: 0 auto;
   padding: 1rem;
   width: 70%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  border-radius: 0;
+  border-radius: 10px;
   table-layout: auto;
   background: white;
   align-items: center;
+  border-collapse: separate;
+
+}
+
+.table-container {
+  max-height: 80vh; /* Ajusta este valor según tus necesidades */
+  width: 100%;
+  overflow-y: auto;
+  align-items: center;
+  margin-top: auto;
+  
 }
 
 thead {
     background-color: #156fff;
     color: white;   
+    height: 30px;
 }
 
 
 th.question-column,td.question-column{
+    padding-left: 10px;
     width: 90%;
 }
 thead th.toggle-column, td.toggle-column{
     width: 10%;
-  text-align: center;
+    text-align: center;
     
 }
 
 tr{
     font-weight: bold;
     width: 100%;
+    height: 70px;
 }
 
 tr:nth-child(2n) {
@@ -91,10 +117,20 @@ input:checked + .slider:before {
 font-weight: normal;
 }
 
-.questions_actions{
-  text-align: center;
+/* AnswerQuestions.css */
+.questions_actions {
+  display: flex;
+  justify-content: center; /* Centrar los elementos horizontalmente */
+  align-items: center; /* Centrar los elementos verticalmente */
+  gap: 1rem; /* Añadir espacio entre los elementos */
   padding: 2rem;
+  flex-direction: row; /* Asegura que los elementos estén en una fila */
 }
+
+.questions_actions button {
+  margin: 0 15rem; /* Añadir margen a los botones para mayor separación */
+}
+
 /* Rounded sliders */
 .slider.round {
   border-radius: 34px;
@@ -103,5 +139,3 @@ font-weight: normal;
 .slider.round:before {
   border-radius: 50%;
 }
-
-

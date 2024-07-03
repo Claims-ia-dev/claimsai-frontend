@@ -67,7 +67,7 @@ const MainNavigation = () => {
           
         <h3 >Hi, {auth.userinfo?.first_name}!</h3>
         <button
-          className=" main-navigation__menu-btn"
+          className="main-navigation__menu-btn"
           onClick={openDrawerHandler}
         > {/* 3 spans to create the menu icon */}
           <span />

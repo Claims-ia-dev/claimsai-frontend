@@ -1,17 +1,73 @@
+/* SideDrawer.css */
 .side-drawer {
   position: fixed;
   right: 0;
   top: 0;
   z-index: 100;
   height: 100vh;
-  width: 50%;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  width: 75%; /* Más ancho para móviles */
+  max-width: 400px; /* Máximo ancho para mantenerlo limpio */
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  transition: transform 0.3s ease-out; /* Transición más suave */
+  overflow-y: auto; /* Permite el scroll si el contenido es largo */
+}
+
+.side-drawer header {
+  padding: 1rem;
+  background: #00008B;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  border-top-left-radius: 10px;
+}
+
+.side-drawer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.side-drawer li {
+  margin: 0; /* Eliminar márgenes para mejor consistencia */
+  padding: 1rem;
+  border-bottom: 1px solid #ccc; /* Línea de separación */
+}
+
+.side-drawer li:last-child {
+  border-bottom: none; /* Eliminar la línea del último elemento */
+}
+
+.side-drawer a {
+  text-decoration: none;
+  color: #156fff;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.side-drawer a:hover,
+.side-drawer a:active {
+  color: black;
 }
 
 @media (min-width: 768px) {
   .side-drawer {
-    width: 20%;
+    width: 25%; /* Más estrecho para pantallas más grandes */
   }
+}
 
+/* Transiciones */
+.slide-in-right-enter {
+  transform: translateX(100%);
+}
+.slide-in-right-enter-active {
+  transform: translateX(0);
+}
+.slide-in-right-exit {
+  transform: translateX(0);
+}
+.slide-in-right-exit-active {
+  transform: translateX(100%);
 }

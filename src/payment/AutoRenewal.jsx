@@ -17,6 +17,7 @@ const AutoRenewal = () => {
   const auth = useContext(AuthContext);
 
   return (
+    <div className="autorenewal-page">
     <Card className="autorenewal">
       <div className="cards">
         <section>
@@ -68,6 +69,7 @@ const AutoRenewal = () => {
         </Link>
       </div>
     </Card>
+    </div>
   );
 };
 
