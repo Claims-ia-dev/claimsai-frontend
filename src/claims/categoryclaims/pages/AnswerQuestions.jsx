@@ -129,6 +129,7 @@ const AnswerQuestions = () => {
       );
 
       if (response != null) {
+        console.log("Estimate created");
         console.log(response);
         const id = response[0].id; // access the id property of the first element in the response array
         console.log("claim id");

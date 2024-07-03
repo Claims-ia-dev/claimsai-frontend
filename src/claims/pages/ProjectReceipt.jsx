@@ -10,18 +10,23 @@ import Logo from "../../images/LogoClaimsIA.png";
 import EditImg from "../../images/edit.svg";
 import DeleteImg from "../../images/delete.svg";
 import { useClaim } from "../../shared/hooks/claim-hook";
+import useEstimateData from "../../shared/hooks/estimate-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const ProjectReceipt = () => {
+  const [estimateData, updateEstimateData, updateEstimateDetail, updateDetail] = useEstimateData();
   const { claim, deleteRoomDetail, claimId } = useClaim();
+  const [estimatebyidData, setEstimatebyidData] = useState(null); //claim
+  const [estimateDetails, setEstimateDetails] = useState(null); //rooms
+  const estimateId = claimId;
   console.log('stored claim created');
   console.log(claim);
   console.log('stored claim id');
   console.log(claimId);
   
   const auth = useContext(AuthContext);
-  const { isLoading,  sendRequest,  } = useHttpClient();
+  const { isLoading,  sendRequest  } = useHttpClient();
 
   const [serviceTypes, setServiceTypes] = useState([]);
 
@@ -29,7 +34,51 @@ const ProjectReceipt = () => {
   const [roomCosts, setRoomCosts] = useState([]);
   const [mergedRooms, setMergedRooms] = useState([]);
 
-  const [totalCost, setTotalCost] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);  
+  
+
+
+  useEffect(() => {
+    const fetchEstimateById = async () => {
+      try {
+        console.log("tried");
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/api/estimates/estimatesbyid?estimate_id=${estimateId}`,
+          "GET",
+          null,
+          {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          auth.token
+        );
+        setEstimatebyidData(responseData);
+        setEstimateDetails(responseData.estimate_details);
+        updateEstimateData(responseData)
+      
+        console.log("response from get estimate by id");
+        console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchEstimateById();
+  }, [sendRequest, estimateId, auth.token]); 
+  
+  
+
+
+  useEffect(() => {
+  
+    console.log("estimate")
+    console.log(estimatebyidData);
+    console.log("estimate details")
+    console.log(estimateDetails);
+    if (estimateDetails) {
+      setRooms(estimateDetails);
+    }
+  }, [estimatebyidData, estimateDetails]);
+
+  
 
   useEffect(() => {
     const calculateTotalCost = () => {
@@ -109,6 +158,7 @@ const ProjectReceipt = () => {
   }, [sendRequest, auth.token, claimId]);
 
   useEffect(() => {
+    console.log(rooms);
     if (rooms.length > 0 && roomCosts.length > 0) {
       const mergedRooms = rooms.map((room, index) => ({
         ...room,
