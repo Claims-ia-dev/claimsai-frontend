@@ -6,6 +6,7 @@ import SelectComponent from "../../shared/components/FormElements/SelectComponen
 import Button from "../../shared/components/FormElements/Button";
 import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import useServiceTypes from "../../shared/hooks/service-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -17,9 +18,11 @@ const NewClaim = () => {
 
   const auth = useContext(AuthContext);
   const { isLoading, sendRequest } = useHttpClient();
+  const { serviceTypeOptions} = useServiceTypes();
 
   
   const [serviceTypes, setServiceTypes] = useState([]);
+ 
 
   const roomTypes = [
     { value: "Bathroom", label: "Bathroom" },
@@ -35,36 +38,8 @@ const NewClaim = () => {
     { value: "Kitchen", label: "Kitchen" },
     { value: "Laundry room", label: "Laundry room" },
     // Add options from  backend API
-  ];
-
-  useEffect(() => {
-    
-    const fetchServiceTypes = async () => {
-      const controller= new AbortController();
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
-          'GET',
-          null,
-          {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          auth.token,
-          {
-            signal: controller.signal,
-          }
-        );
-        const serviceTypesOptions = responseData.map((service) => ({
-          value: service.code_service,
-          label: service.service,
-        }));
-        setServiceTypes(serviceTypesOptions);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchServiceTypes();
-  }, [sendRequest, auth.token]);
+  ];      
+  
 
   // Initialize the form state with room name, room type, and service type fields
   const [formState, inputHandler] = useForm(
@@ -144,7 +119,7 @@ const NewClaim = () => {
           label="Select the type of service"
           errorText="Please select the type of service"
           onChange={serviceSelectHandler}
-          options={serviceTypes}
+          options={serviceTypeOptions}
         />
 
        

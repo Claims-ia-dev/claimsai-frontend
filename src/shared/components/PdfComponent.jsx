@@ -1,9 +1,12 @@
 import React from 'react';
+import useServiceTypes from '../hooks/service-hook';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import './PdfComponent.css';
 
-const PdfComponent = ({ rooms, totalCost, logo }) => {
+const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
+  const { getServiceLabel } = useServiceTypes();
+
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     doc.internal.pageSize.width = 210; // set fixed width
@@ -18,10 +21,10 @@ const PdfComponent = ({ rooms, totalCost, logo }) => {
     doc.addImage(logo, 'PNG', margin, margin, logoWidth, logoHeight);
     doc.setFontSize(12);
     // Address and number
-    doc.text('696 Marsat Court\nSuite B\nChula Vista, CA 91911\n619-482-1131', margin, margin+logoHeight+10, { align: 'left' });
+    doc.text(`${customer_info.customer_name}\n${customer_info.address}\n${customer_info.city}, ${customer_info.state} ${customer_info.zip}\n${customer_info.phone_number}`, margin, margin+logoHeight+10, { align: 'left' });
 
     // Table
-    const tableData = rooms.map((room) => [room.name, room.type, room.category, `$${room.cost.toFixed(2)}`]);
+    const tableData = rooms.map((room) => [room.description, room.room_type, getServiceLabel(room.service_type), `$${room.cost?.toFixed(2)}`]);
     doc.autoTable({
       head: [['Name Room', 'Room Type', 'Category', 'Cost']],
       body: tableData,
@@ -33,7 +36,7 @@ const PdfComponent = ({ rooms, totalCost, logo }) => {
         2: { cellWidth: tableWidth / 4 },
         3: { cellWidth: tableWidth / 4, halign: 'right' },
       },
-      headerStyles: {
+      headStyles: {
         fillColor: [255, 255, 255],
         textColor: [0, 0, 0],
         fontSize: 12,
@@ -46,7 +49,7 @@ const PdfComponent = ({ rooms, totalCost, logo }) => {
     });
 
     // Total Cost
-    doc.text(`The estimated amount for this project is: $${totalCost.toFixed(2)}`, margin, doc.autoTable.previous.finalY + 20, { align: 'left' });
+    doc.text(`The estimated amount for this project is: $${totalCost?.toFixed(2)}`, margin, doc.autoTable.previous.finalY + 20, { align: 'left' });
 
     doc.save('project_receipt.pdf');
   };
