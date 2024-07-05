@@ -7,18 +7,19 @@ import "./ProjectReceipt.css";
 //import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PdfComponent from "../../shared/components/PdfComponent";
 import useServiceTypes from '../../shared/hooks/service-hook';
-
+import { useEstimateApi } from "../../shared/hooks/useEstimateApi";
 import Logo from "../../images/LogoClaimsIA.png";
 import EditImg from "../../images/edit.svg";
 import DeleteImg from "../../images/delete.svg";
 import { useClaim } from "../../shared/hooks/claim-hook";
-import useEstimateData from "../../shared/hooks/estimate-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 
 const ProjectReceipt = () => {
-  const [updateEstimateData, deleteEstimateDetail] = useEstimateData();
-  const { claim, claimId } = useClaim();
+  
+  const [isUpdated, setIsUpdated] = useState(false);
+  const { estimateData, setEstimateData } = useEstimateApi();
+  const { claim, claimId, setEstimate } = useClaim();
   const { serviceTypeOptions, getServiceLabel } = useServiceTypes();
   const [estimatebyidData, setEstimatebyidData] = useState(null); //claim
   const [estimateDetails, setEstimateDetails] = useState(null); //rooms
@@ -33,7 +34,7 @@ const ProjectReceipt = () => {
 
   const [serviceTypes, setServiceTypes] = useState([]);
 
-  const [rooms, setRooms] = useState(claim.room_details);
+  const [rooms, setRooms] = useState(claim.estimate_details);
   const [roomCosts, setRoomCosts] = useState([]);
   const [mergedRooms, setMergedRooms] = useState([]);
 
@@ -43,6 +44,7 @@ const ProjectReceipt = () => {
   /*Getting claim by id*/
 
   useEffect(() => {
+    //GETT ESTIMATE
     const fetchEstimateById = async () => {
       try {
        // console.log("tried");
@@ -54,24 +56,24 @@ const ProjectReceipt = () => {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           auth.token
-        );
-        setEstimatebyidData(responseData);
-        setEstimateDetails(responseData.estimate_details);
-        setRooms(responseData.estimate_details)
-       
-      
+        ); 
+        
         console.log("response from get estimate by id");
         console.log(responseData);
+        setEstimate(responseData);
+        setEstimatebyidData(responseData);
+        setEstimateDetails(responseData.estimate_details);
+        setRooms(responseData.estimate_details);
+       
+      
+       
       } catch (error) {
         console.error(error);
       }
     };
     fetchEstimateById();
-  }, [sendRequest, updateEstimateData,claimId, auth.token]); 
 
-  /*Retieving costs from backend*/
-
-  useEffect(() => { 
+    //GET COSTS 
     const fetchEstimatePredict = async () => {
       const formData = new URLSearchParams();
     formData.append('estimate_id', claimId);
@@ -108,41 +110,22 @@ const ProjectReceipt = () => {
       }
     };
     fetchEstimatePredict();
+  }, [sendRequest, claimId, auth.token]); 
+
+
+  
+
+
+
+  /*Retieving costs from backend*/
+
+  useEffect(() => { 
+    
   }, [sendRequest, auth.token, claimId]);
   
   // useEffect(() => {
   //   updateEstimateData(estimatebyidData);
   // }, [estimatebyidData]);
-
-  /*Getting services */
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchServiceTypes = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
-          "GET",
-          null,
-          {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          auth.token,
-          {
-            signal: controller.signal,
-          }
-        );
-        const servicesData = responseData.map((service) => ({
-          service_code: service.code_service,
-          service_labels: service.service,
-        }));
-        setServiceTypes(servicesData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchServiceTypes();
-  }, [sendRequest, auth.token]);
 
   
 
@@ -154,20 +137,28 @@ const ProjectReceipt = () => {
     
     if (rooms.length > 0 && roomCosts.length > 0) {
       const mergedRooms = rooms.map((room) => {
-        const roomCost = roomCosts.find((cost) => cost.roomKey === room.id);
-        return { ...room, cost: roomCost.cost, id: roomCost.roomKey };
+        const costRoom = roomCosts.find((costRoom) => costRoom.room_key == room.id);
+        console.log(`costRoom.roomKey: ${costRoom?.room_key}, room.id: ${room.id}`);
+        if (costRoom) {
+          console.log(costRoom);
+          return {...room, cost: costRoom.cost, id: costRoom.room_key };
+        } else {
+          console.log("merge error");
+          console.log (costRoom);
+          console.log (room);
+          return room; // or some default value
+        }
       });
       setMergedRooms(mergedRooms);    
-      console.log("mergedRooms")
-      console.log(mergedRooms)
+      console.log("mergedRooms");
+      console.log(mergedRooms);
     }else if (roomCosts.length > 0) {
       setMergedRooms(roomCosts);
       console.error("There are no costs generated");
     }else if (rooms.length >0){
       setMergedRooms(rooms);
-    }
-    else{
-      console.error("There was no estimate created");
+    }else{
+      console.error("rooms and costs empty");
     }
   }, [rooms, roomCosts]);
 
@@ -195,7 +186,7 @@ const ProjectReceipt = () => {
       // if (response.ok) {
         setRooms(rooms.filter((room) => room.id !== roomId));
         setMergedRooms(mergedRooms.filter((room) => room.id !== roomId));
-        deleteEstimateDetail(roomId);
+    
     //  }
     } catch (error) {
       console.error(error);
@@ -226,9 +217,9 @@ const ProjectReceipt = () => {
               <th></th>
             </thead>
             <tbody>
-              {mergedRooms.map((r) => (
+              {mergedRooms.map((r) => (                
                 <tr key={r.id}>
-                  <td>{r.description}</td>
+                  <td>{r.room_name}</td>
                   <td>{r.room_type}</td>
                   <td>{getServiceLabel(r.service_type)}
                   </td>

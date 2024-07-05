@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext}from "react";
-import {useParams, useNavigate} from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -9,19 +9,32 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import Card from "../../shared/components/UIElements/Card";
 import { useClaim } from "../../shared/hooks/claim-hook";
+import { useEstimateApi } from "../../shared/hooks/useEstimateApi";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import useServiceTypes from "../../shared/hooks/service-hook";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./ClaimForm.css";
-
-
 
 //Called to edit claim
 const UpdateClaim = () => {
   const auth = useContext(AuthContext);
-  const navigate=useNavigate();
-  const { isLoading, sendRequest  } = useHttpClient();
 
-  const [serviceTypes, setServiceTypes] = useState([]);
+  const { serviceTypeOptions, getServiceLabel } = useServiceTypes();
+  const { claim, claimId, updateClaim, estimate, setEstimate } = useClaim();
+  const Idclaim=claimId;
+  const navigate = useNavigate();
+  
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+//gets the claimid and room id  from the url parameters
+
+  // const Idclaim = useParams().claimId;
+  const roomId = useParams().roomId;
+
+  // useEffect(() => {
+  //   fetchEstimateById(Idclaim);
+  //   console.log(estimateData);
+  // }, [Idclaim]);
 
   const roomTypes = [
     { value: "Bathroom", label: "Bathroom" },
@@ -39,88 +52,69 @@ const UpdateClaim = () => {
     // Add options from  backend API
   ];
 
-  useEffect(() => {
-    const fetchServiceTypes = async () => {
-      try {
-        const responseData = await sendRequest(
-          `${process.env.REACT_APP_BACKEND_URL}/api/servicetype/services`, // API endpoint
-          'GET',
-          null,
-          {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          auth.token
-        );
-        const serviceTypesOptions = responseData.map((service) => ({
-          value: service.code_service,
-          label: service.service,
-        }));
-        setServiceTypes(serviceTypesOptions);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchServiceTypes();
-  }, [sendRequest, auth.token]);
-
-   //gets the claimid from the url parameters
-  const Idclaim = useParams().claimId;
-  const roomId=useParams().roomId;
-  const roomIdNumber = parseInt(roomId, 10);
   
-  const { claim } = useClaim();
 
-
-   // Initialize the form state with room name, room type, and roomservice fields
+  // Initialize the form state with room name, room type, and roomservice fields
   const [formState, inputHandler, setFormData] = useForm(
     {
       room_name: {
-        value: '',
-        isValid: false
+        value: "",
+        isValid: false,
       },
       room_type: {
-        value: '',
-        isValid: false
+        value: "",
+        isValid: false,
       },
       service_type: {
-        value: '',
-        isValid: false
-      }
+        value: "",
+        isValid: false,
+      },
     },
     false
   );
 
-  const identifiedRoom = claim.room_details.find(room => room.id === roomIdNumber);
+  const identifiedRoom = estimate?.estimate_details.find(
+    (room) => room.id === roomId
+  );
 
-// Use the useEffect hook to update the form state when the component mounts
+  // Use the useEffect hook to update the form state when the component mounts
   useEffect(() => {
-     // If a claim is found, update the form state with the claim data
+    // If a claim is found, update the form state with the claim data
     if (identifiedRoom) {
+      console.log("cuarto identificado"+identifiedRoom);
       setFormData(
         {
           room_name: {
             value: identifiedRoom.room_name,
-            isValid: true
+            isValid: true,
           },
           room_type: {
             value: identifiedRoom.room_type,
-            isValid: true
+            isValid: true,
           },
           service_type: {
             value: identifiedRoom.service_type,
-            isValid: true
-          }
+            isValid: true,
+          },
         },
         true
       );
+    }else{
+      console.log("could not identify room")
+      console.log(estimate);
+    
     }
   }, [setFormData, identifiedRoom]);
 
-  const claimUpdateSubmitHandler = event => { //handler to update claim (to add api endpoint for updates)
+  const claimUpdateSubmitHandler = (event) => {
+    //handler to update claim (to add api endpoint for updates)
     event.preventDefault();
-       
-    navigate(`/claims/${Idclaim}/answers/${roomId}`, { state: {  roomData:formState.inputs }});
+    
+    updateClaim(estimate);
 
+    navigate(`/claims/${Idclaim}/answers/${roomId}`, {
+      state: { roomData: formState.inputs },
+    });
   };
 
   if (isLoading) {
@@ -131,7 +125,8 @@ const UpdateClaim = () => {
     );
   }
 
-  if (!identifiedRoom) { //In case the room is not found
+  if (!identifiedRoom) {
+    //In case the room is not found
     return (
       <div className="center">
         <Card>
@@ -141,10 +136,8 @@ const UpdateClaim = () => {
     );
   }
 
- 
-
-   //handler for room type selection
-   const roomSelectHandler = (event) => {
+  //handler for room type selection
+  const roomSelectHandler = (event) => {
     //gets the selected value
     const roomSelectedValue = event.target.value;
     //fills the room_type field with the selected value
@@ -160,8 +153,11 @@ const UpdateClaim = () => {
   };
 
   return (
+    <>
+    <div className='claim-form-page'>
+    {/* <ErrorModal error={error} onClear={clearError} /> */}
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>
-     {/* <ErrorModal error={error} onClear={clearError} /> */}
+      {/* <ErrorModal error={error} onClear={clearError} /> */}
       {isLoading && <LoadingSpinner asOverlay />}
       <Input
         id="room_name"
@@ -175,34 +171,30 @@ const UpdateClaim = () => {
         initialValid={true}
       />
 
-      
-        <SelectComponent
-          id="room_type"
-          label={identifiedRoom.room_type}
-          initialValue={identifiedRoom.room_type}
-          initialValid={true}
-          errorText="Please select the type of room"
-          onChange={roomSelectHandler}
-          options={roomTypes}
-        />
+      <SelectComponent
+        id="room_type"
+        label={identifiedRoom.room_type}
+        initialValue={identifiedRoom.room_type}
+        initialValid={true}
+        errorText="Please select the type of room"
+        onChange={roomSelectHandler}
+        options={roomTypes}
+      />
 
-        <SelectComponent
-          id="service_type"
-          label={
-            serviceTypes.find((option) => option.value === identifiedRoom.service_type)?.label
-          }
-          initialValue={identifiedRoom.service_type}
-          initialValid={true}
-          errorText="Please select the type of service"
-          onChange={serviceSelectHandler}
-          options={serviceTypes}
-        />
+      <SelectComponent
+        id="service_type"
+        label={getServiceLabel(identifiedRoom.service_type)}
+        initialValue={identifiedRoom.service_type}
+        initialValid={true}
+        errorText="Please select the type of service"
+        onChange={serviceSelectHandler}
+        options={serviceTypeOptions}
+      />
 
-      
       <Button type="submit" disabled={!formState.isValid}>
         UPDATE CLAIM
       </Button>
-    </form>
+    </form></div></>
   );
 };
 

@@ -24,7 +24,7 @@ const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
     doc.text(`${customer_info.customer_name}\n${customer_info.address}\n${customer_info.city}, ${customer_info.state} ${customer_info.zip}\n${customer_info.phone_number}`, margin, margin+logoHeight+10, { align: 'left' });
 
     // Table
-    const tableData = rooms.map((room) => [room.description, room.room_type, getServiceLabel(room.service_type), `$${room.cost?.toFixed(2)}`]);
+    const tableData = rooms.map((room) => [room.room_name, room.room_type, getServiceLabel(room.service_type), `$${room.cost?.toFixed(2)}`]);
     doc.autoTable({
       head: [['Name Room', 'Room Type', 'Category', 'Cost']],
       body: tableData,

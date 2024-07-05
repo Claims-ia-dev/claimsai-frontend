@@ -74,6 +74,7 @@ const NewCustomer = () => {
       customer_info:  Object.fromEntries(
         Object.entries(formState.inputs).map(([key, value]) => [key, value.value])
       ),
+      room_details: []
     }
 
     updateClaim(newCustomerInfo);

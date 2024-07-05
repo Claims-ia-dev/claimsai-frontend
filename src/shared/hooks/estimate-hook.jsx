@@ -1,43 +1,84 @@
-import { useState } from 'react';
+import { createContext, useReducer, useState, useContext } from "react";
 
-const useEstimateData = () => {
-  const [estimateData, setEstimateData] = useState({}); //stores the entire estimate i get from the backend
-
-  const updateEstimateData = (newData) => {
-    setEstimateData((prevData) => ({ ...prevData, ...newData })); //updates the entire estimateData object with new data.
-  };
-
-  const updateEstimateDetail = (estimateDetailId, newData) => { //updates a specific estimate_detail object with new data, identified by its id.
-    setEstimateData((prevData) => {
-      const estimateDetails = prevData.estimate_details.map((detail) => {
-        if (detail.id === estimateDetailId) {
-          return { ...detail, ...newData };
-        }
-        return detail;
-      });
-      return { ...prevData, estimate_details: estimateDetails };
-    });
-  };
-
-  const updateDetail = (estimateDetailId, detailId, newData) => {  //updates a specific detail object within an estimate_detail object, identified by its code.
-    setEstimateData((prevData) => {
-      const estimateDetails = prevData.estimate_details.map((detail) => {
-        if (detail.id === estimateDetailId) {
-          const details = detail.details.map((d) => {
-            if (d.code === detailId) {
-              return { ...d, ...newData };
-            }
-            return d;
-          });
-          return { ...detail, details };
-        }
-        return detail;
-      });
-      return { ...prevData, estimate_details: estimateDetails };
-    });
-  };
-
-  return [estimateData, updateEstimateData, updateEstimateDetail, updateDetail];
+const initialState = {
+  userId: "",
+  customer_info: {},
+  room_details: [],
 };
 
-export default useEstimateData;
+const estimateReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_ESTIMATE":
+      return { ...state, ...action.payload };
+    case "ADD_ROOM_DETAIL":
+      return {
+        ...state,
+        room_details: [...state.room_details, action.payload],
+      };
+    case "DELETE_ROOM_DETAIL":
+      return {
+        ...state,
+        room_details: state.room_details.filter(
+          (room) => room.id !== action.payload
+        ),
+      };
+    case "UPDATE_ROOM_DETAIL":
+      const updatedRoomDetails = state.room_details.map((room) => {
+        if (room.id === action.payload.roomId) {
+          return { ...room, ...action.payload.updatedRoomDetail };
+        }
+        return room;
+      });
+      return { ...state, room_details: updatedRoomDetails };
+    default:
+      return state;
+  }
+};
+
+const EstimateContext = createContext();
+
+const EstimateProvider = ({ children }) => {
+  const [estimate, dispatch] = useReducer(estimateReducer, initialState);
+  const [estimateId, setEstimateId] = useState(null);
+
+  const updateEstimate = (newEstimate) => {
+    dispatch({ type: "UPDATE_ESTIMATE", payload: newEstimate });
+  };
+
+  const addRoomDetail = (newRoomDetail) => {
+    dispatch({ type: "ADD_ROOM_DETAIL"});
+  };
+
+  const deleteRoomDetail = (roomId) => {
+    dispatch({ type: "DELETE_ROOM_DETAIL", payload: roomId });
+  };
+
+  const updateRoomDetail = (roomId, updatedRoomDetail) => {
+    dispatch({
+      type: "UPDATE_ROOM_DETAIL",
+      payload: { roomId, updatedRoomDetail },
+    });    
+  };
+
+  return (
+    <EstimateContext.Provider
+      value={{
+        estimate,
+        updateEstimate,
+        addRoomDetail,
+        deleteRoomDetail,
+        updateRoomDetail,
+        estimateId,
+        setEstimateId,
+      }}
+    >
+      {children}
+    </EstimateContext.Provider>
+  );
+};
+
+const useEstimate = () => {
+  return useContext(EstimateContext);
+};
+
+export  { EstimateProvider, useEstimate };

@@ -17,23 +17,23 @@ const UpdateAnswers = () => {
   const { claim,claimId, updateRoomDetail } = useClaim();
   const Idclaim = useParams().claimId;
   const roomId = useParams().roomId;
-  const roomIdNumber = parseInt(roomId, 10);
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
   const [questions, setQuestions] = useState([]);
+  const [allQuestions, setAllQuestions] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
   const { isLoading,  sendRequest } = useHttpClient();
 
-  const identifiedRoom = claim.room_details.find(
-    (room) => room.id === roomIdNumber
+  const identifiedRoom = claim.estimate_details.find(
+    (room) => room.id === roomId
   );
 
 
-  const identifiedRoomData = identifiedRoom.category_claims;
+  const identifiedRoomData = identifiedRoom.category_claims; //asnwers array
 
 
 
-  const getData = useCallback(async (questionsStored) => {
+  const getData = useCallback(async (questionsStored) => {  
     try {
       const formData = new URLSearchParams();
       formData.append("service", roomData?.service_type.value);
@@ -41,6 +41,15 @@ const UpdateAnswers = () => {
         ? formData.toString()
         : null;
 
+        const allQuestionsData = await sendRequest( //getting all questions in array
+          `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category`,
+          "GET",
+          null,
+          {},
+          auth.token
+        );
+
+        setAllQuestions(allQuestionsData); //to store all questions and then compare with the ones answered
       
       const responseData = await sendRequest(//gets questions sorted by service
         `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category?${requestBody}`,
@@ -72,14 +81,16 @@ const UpdateAnswers = () => {
       
 
   useEffect(() => {
-    // retrieves questions from categoryclaims
+    
     if (!identifiedRoom) {
+      console.log("unidentified room");
       return;
     }
     const questionsStored = identifiedRoomData.map((item) => ({
       code: item.code,
       answer: item.answer,
     }));
+    // retrieves questions from categoryclaims
     getData(questionsStored);
   }, [identifiedRoomData, identifiedRoom, getData]);
 
@@ -99,31 +110,33 @@ const UpdateAnswers = () => {
   };
 
   const updateClaim = useCallback( async () => {
+
     try {
       console.log(claimId);
-      console.log(claim.room_details);
-    //   const response = await sendRequest(
-    //     `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
-    //     "POST",
-    //     JSON.stringify({
-    //       estimate_id: claimId,
-    //       room_details: claim.room_details,
-    //     }),
-    //     {
-    //       "Content-Type": "application/json",
-    //     },
-    //     auth.token
-    //   );
-    //   if (response) {
-    //     console.log("Claim updated successfully!");
+      console.log(claim.estimate_details);
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
+        "PATCH",
+        JSON.stringify({
+          estimate_details: claim.estimate_details,
+        }),
+        {
+          "Content-Type": "application/json",
+        },
+        auth.token
+      );
+      console.log(response);
+      console.log("reques to backend done")
+      if (response) {
+        console.log("Claim updated successfully!");
        navigate("/projectreceipt", { state: { Idclaim } });
-    //   } else {
-    //     console.error("Error updating claim:", response);
-    //   }
+      } else {
+        console.error("Error updating claim:", response);
+      }
     } catch (err) {
       console.error("Error updating claim:", err);
     }
-  },[Idclaim,claim.room_details, claimId,navigate]);
+  },[Idclaim,claim.estimate_details, claimId,navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -131,15 +144,21 @@ const UpdateAnswers = () => {
       code: question.code,
       answer: question.answer,
     }));
+    const CategoriesArrayToSend = allQuestions.map((item) => ({
+      code: item.code,
+      answer: questionsAnswers.find((qa) => qa.code === item.code)
+        ? questionsAnswers.find((qa) => qa.code === item.code).answer
+        : false,
+    }));
 
     const updates = {
       room_name: roomData?.room_name.value,
       room_type: roomData?.room_type.value,
       service_type: roomData?.service_type.value,
-      category_claims: questionsAnswers,
+      category_claims: CategoriesArrayToSend,
     };
 
-    await updateRoomDetail(roomIdNumber, updates);
+    await updateRoomDetail(roomId, updates);
     setIsUpdated(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
   };
@@ -151,10 +170,14 @@ const UpdateAnswers = () => {
   }, [isUpdated, updateClaim]);
 
   return (
-    <Card className="update-answers">
+    <>
+    <div className="questions-page">
+    <div className="table-container">
+    
       {/* <ErrorModal error={error} onClear={clearError} /> */}
-       {isLoading && <LoadingSpinner asOverlay />}
+       
       <table className="questions-table">
+        {isLoading && <LoadingSpinner asOverlay />}
         <thead>
           <th className="question-column">Question</th>
           <th className="toggle-column">Select</th>
@@ -182,14 +205,15 @@ const UpdateAnswers = () => {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody></table>
+        </div>
      
       <div>
         <Button className="center" onClick={handleSubmit}>
           Update Room
         </Button>
-      </div> </table>
-    </Card>
+      </div> 
+    </div></>
   );
 };
 

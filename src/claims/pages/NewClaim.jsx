@@ -21,7 +21,6 @@ const NewClaim = () => {
   const { serviceTypeOptions} = useServiceTypes();
 
   
-  const [serviceTypes, setServiceTypes] = useState([]);
  
 
   const roomTypes = [
