@@ -89,6 +89,7 @@
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid #ddd; /* Líneas divisorias suaves */
+    text-transform: capitalize;
   }
   
   .receipt-data th {

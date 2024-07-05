@@ -5,7 +5,7 @@ import 'jspdf-autotable';
 import './PdfComponent.css';
 
 const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
-  const { getServiceLabel } = useServiceTypes();
+  const { getServiceLabel, getRoomLabel } = useServiceTypes();
 
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
@@ -24,7 +24,13 @@ const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
     doc.text(`${customer_info.customer_name}\n${customer_info.address}\n${customer_info.city}, ${customer_info.state} ${customer_info.zip}\n${customer_info.phone_number}`, margin, margin+logoHeight+10, { align: 'left' });
 
     // Table
-    const tableData = rooms.map((room) => [room.room_name, room.room_type, getServiceLabel(room.service_type), `$${room.cost?.toFixed(2)}`]);
+    const tableData = rooms.map((room) => [
+      room.room_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+      getRoomLabel(room.room_type).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+      getServiceLabel(room.service_type).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
+      `$${room.cost?.toFixed(2)}`,
+    ]);
+   
     doc.autoTable({
       head: [['Name Room', 'Room Type', 'Category', 'Cost']],
       body: tableData,

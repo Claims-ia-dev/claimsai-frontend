@@ -49,3 +49,7 @@
   border-color: red;
   background: #ffd1d1;
 }
+
+.select-control>* {
+  text-transform: capitalize;
+}

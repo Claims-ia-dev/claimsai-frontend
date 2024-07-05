@@ -53,8 +53,8 @@ const App = () => {
         <Route path="/claims/:estimateId/rooms/:roomId" element={<UpdateClaim />} />  
         <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
         <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
-        <Route path="/addroom" element={<AddRoom />} />  
-        <Route path="/addroom/EstimateCategoryClaims" element={<AddAnswerQuestions/>} />  
+        <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
+        <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

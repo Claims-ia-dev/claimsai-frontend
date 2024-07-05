@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState, useContext } from "react";
+import { createContext, useReducer, useState, useContext, useCallback } from "react";
 
 const initialState = {
   userId: "",
@@ -41,11 +41,12 @@ const ClaimProvider = ({ children }) => {
   const [claim, dispatch] = useReducer(claimReducer, initialState);
   const [claimId, setClaimId] = useState(null);
   const [estimate, setEstimate] = useState({});
-  const [roomIdCounter, setRoomIdCounter] = useState(0);
+  
+  
 
-  const updateClaim = (newClaim) => {
+  const updateClaim = useCallback((newClaim) => {
     dispatch({ type: "UPDATE_CLAIM", payload: newClaim });
-  };
+  }, [dispatch]);
 
   const addRoomDetail = (newRoomDetail) => {
     dispatch({ type: "ADD_ROOM_DETAIL", payload: newRoomDetail });

@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "./AnswerQuestions.css";
 //import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
-import Card from "../../../shared/components/UIElements/Card";
+
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
 import Button from "../../../shared/components/FormElements/Button";
@@ -134,7 +134,7 @@ const UpdateAnswers = () => {
     } catch (err) {
       console.error("Error updating claim:", err);
     }
-  },[Idclaim,claim.estimate_details, claimId]);
+  },[sendRequest, navigate,Idclaim,claim.estimate_details, claimId, auth.token]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

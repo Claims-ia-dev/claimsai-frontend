@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
+import { useParams } from "react-router-dom";
 import "./AnswerQuestions.css";
 //import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import { useNavigate } from "react-router-dom";
@@ -8,13 +9,16 @@ import Button from "../../../shared/components/FormElements/Button";
 import { useLocation } from "react-router-dom";
 import { useClaim } from "../../../shared/hooks/claim-hook";
 import LoadingSpinner from "../../../shared/components/UIElements/LoadingSpinner";
-import { Link } from "react-router-dom";
+
 
 const AddAnswerQuestions = () => {
   const location = useLocation();
   const roomData = location.state?.roomData;
   const auth = useContext(AuthContext);
-  const { claim, addRoomDetail,claimId, setClaimId } = useClaim();
+ 
+  const { claim, addRoomDetail,claimId} = useClaim(); 
+  const estimateId=useParams().estimateId;
+
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
@@ -81,14 +85,16 @@ const AddAnswerQuestions = () => {
     }));
 
     const newRoomDetail = {
-      estimate_id: claimId,
+      estimate_id: estimateId,
       room_name: roomData?.room_name.value,
       room_type: roomData?.room_type.value,
       service_type: roomData?.service_type.value,
       category_claims: CategoriesArrayToSend,
     };
     addRoomDetail(newRoomDetail);
-
+    console.log("claim seen from addanswers");
+    console.log(claim);
+    console.log(claimId);
     console.log ("room to add for update");
     console.log (newRoomDetail);
 
@@ -171,9 +177,7 @@ const AddAnswerQuestions = () => {
 
         </div>
         <div className="questions_actions">
-            <Link to="/claims/new"></Link>
             <Button onClick={handleSubmit} size="wide">Add room</Button>
-            {/* <Button onClick={handleSubmitProject} size="wide" inverse="true">Finish Project</Button> */}
           </div>
       </div>
 

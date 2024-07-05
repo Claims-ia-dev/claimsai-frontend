@@ -7,7 +7,6 @@ import "./ProjectReceipt.css";
 //import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PdfComponent from "../../shared/components/PdfComponent";
 import useServiceTypes from '../../shared/hooks/service-hook';
-import { useEstimateApi } from "../../shared/hooks/useEstimateApi";
 import Logo from "../../images/LogoClaimsIA.png";
 import EditImg from "../../images/edit.svg";
 import DeleteImg from "../../images/delete.svg";
@@ -17,12 +16,10 @@ import { AuthContext } from "../../shared/context/auth-context";
 
 const ProjectReceipt = () => {
   
-  const [isUpdated, setIsUpdated] = useState(false);
-  const { estimateData, setEstimateData } = useEstimateApi();
-  const { claim, claimId, setEstimate } = useClaim();
-  const { serviceTypeOptions, getServiceLabel } = useServiceTypes();
-  const [estimatebyidData, setEstimatebyidData] = useState(null); //claim
-  const [estimateDetails, setEstimateDetails] = useState(null); //rooms
+  const { claim, claimId, updateClaim, deleteRoomDetail } = useClaim();
+  const { getServiceLabel , getRoomLabel} = useServiceTypes();
+  
+  const [estimateid, setEstimateid] = useState(null); //rooms
   //const estimateId = claimId;
   // console.log('stored claim created');
   // console.log(claim);
@@ -31,13 +28,9 @@ const ProjectReceipt = () => {
   
   const auth = useContext(AuthContext);
   const { isLoading,  sendRequest  } = useHttpClient();
-
-  const [serviceTypes, setServiceTypes] = useState([]);
-
   const [rooms, setRooms] = useState(claim.estimate_details);
   const [roomCosts, setRoomCosts] = useState([]);
   const [mergedRooms, setMergedRooms] = useState([]);
-
   const [totalCost, setTotalCost] = useState(0);  
   
 
@@ -60,11 +53,9 @@ const ProjectReceipt = () => {
         
         console.log("response from get estimate by id");
         console.log(responseData);
-        setEstimate(responseData);
-        setEstimatebyidData(responseData);
-        setEstimateDetails(responseData.estimate_details);
+        updateClaim(responseData);
+        setEstimateid(responseData.id);
         setRooms(responseData.estimate_details);
-       
       
        
       } catch (error) {
@@ -78,6 +69,7 @@ const ProjectReceipt = () => {
       const formData = new URLSearchParams();
     formData.append('estimate_id', claimId);
     console.log(formData.toString());
+    
      
       try {
         const predictResponseData = await sendRequest(
@@ -110,7 +102,7 @@ const ProjectReceipt = () => {
       }
     };
     fetchEstimatePredict();
-  }, [sendRequest, claimId, auth.token]); 
+  }, [sendRequest, claimId, auth.token, updateClaim]); 
 
 
   
@@ -137,7 +129,7 @@ const ProjectReceipt = () => {
     
     if (rooms.length > 0 && roomCosts.length > 0) {
       const mergedRooms = rooms.map((room) => {
-        const costRoom = roomCosts.find((costRoom) => costRoom.room_key == room.id);
+        const costRoom = roomCosts.find((costRoom) => costRoom.room_key === room.id);
         console.log(`costRoom.roomKey: ${costRoom?.room_key}, room.id: ${room.id}`);
         if (costRoom) {
           console.log(costRoom);
@@ -164,30 +156,39 @@ const ProjectReceipt = () => {
 
   useEffect(() => {
     let total = 0;
-    roomCosts?.forEach((roomCost) => {
+    mergedRooms?.forEach((roomCost) => {
       total += roomCost.cost;
     });
     setTotalCost(total);
-  }, [roomCosts]);
+  }, [mergedRooms]);
 
 
 
   const handleDeleteRoom = async (roomId) => {
     try {
-      // const response = await sendRequest(
-      //   `${process.env.REACT_APP_BACKEND_URL}/api/estimates/deleteroom`,
-      //   "POST",
-      //   new URLSearchParams({ estimate_id: estimateId, id: roomId }),
-      //   {
-      //     "Content-Type": "application/x-www-form-urlencoded",
-      //   },
-      //   auth.token
-      // );
-      // if (response.ok) {
-        setRooms(rooms.filter((room) => room.id !== roomId));
-        setMergedRooms(mergedRooms.filter((room) => room.id !== roomId));
-    
-    //  }
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/estimates/deleteroom`,
+        "DELETE",
+        new URLSearchParams({ estimate_id: claimId, room_id: roomId }),
+        {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        auth.token
+      );
+      console.log(response);
+      const updatedMergedRooms = mergedRooms.filter((room) => room.id!== roomId);
+       
+      setMergedRooms(updatedMergedRooms);
+      deleteRoomDetail(roomId);
+      let total = 0;
+      updatedMergedRooms.forEach((roomCost) => {
+        total += roomCost.cost;
+      });
+      setTotalCost(total);
+       // setMergedRooms((prevMerged)=>prevMerged.filter((room) => room.id !== roomId)); 
+        
+       
+     
     } catch (error) {
       console.error(error);
     }
@@ -220,7 +221,7 @@ const ProjectReceipt = () => {
               {mergedRooms.map((r) => (                
                 <tr key={r.id}>
                   <td>{r.room_name}</td>
-                  <td>{r.room_type}</td>
+                  <td>{getRoomLabel(r.room_type)}</td>
                   <td>{getServiceLabel(r.service_type)}
                   </td>
                   {r.cost&& <td>${r.cost.toFixed(2)}</td> }
@@ -254,7 +255,7 @@ const ProjectReceipt = () => {
         </Card>
       </div>
 
-      <Link className="receipt-button filled-white" to="/addroom">
+      <Link className="receipt-button filled-white" to={`/claims/${estimateid?estimateid:claimId}/addroom`}>
         Add new room
       </Link>
     </Card>

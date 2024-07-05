@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext}from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 //import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Input from "../../shared/components/FormElements/Input";
@@ -8,7 +8,6 @@ import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import useServiceTypes from "../../shared/hooks/service-hook";
 import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "./ClaimForm.css";
 
@@ -16,29 +15,11 @@ const NewClaim = () => {
 
   const navigate = useNavigate(); //to go to a diferent route
 
-  const auth = useContext(AuthContext);
-  const { isLoading, sendRequest } = useHttpClient();
-  const { serviceTypeOptions} = useServiceTypes();
+  const { isLoading} = useHttpClient();
+  const { serviceTypeOptions, roomTypeOptions} = useServiceTypes();
 
   
- 
-
-  const roomTypes = [
-    { value: "Bathroom", label: "Bathroom" },
-    { value: "Bedroom", label: "Bedroom" },
-    { value: "Closet", label: "Closet" },
-    { value: "Dining room", label: "Dining room" },
-    { value: "Entry", label: "Entry" },
-    { value: "Family room", label: "Family room" },
-    { value: "Foyer", label: "Foyer" },
-    { value: "Garage", label: "Garage" },
-    { value: "General", label: "General" },
-    { value: "Hallway", label: "Hallway" },
-    { value: "Kitchen", label: "Kitchen" },
-    { value: "Laundry room", label: "Laundry room" },
-    // Add options from  backend API
-  ];      
-  
+   
 
   // Initialize the form state with room name, room type, and service type fields
   const [formState, inputHandler] = useForm(
@@ -110,7 +91,7 @@ const NewClaim = () => {
           label="Select the type of room"
           errorText="Please select the type of room"
           onChange={roomSelectHandler}
-          options={roomTypes}
+          options={roomTypeOptions}
         />
 
         <SelectComponent
