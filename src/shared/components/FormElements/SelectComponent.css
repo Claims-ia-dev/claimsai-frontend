@@ -9,9 +9,9 @@
   width: 100%;
   font: inherit;
   border: 2px solid #d9d9d9;
-  border-radius: 5px;
+  border-radius: 10px;
   background: #ffffff;
-  padding: .6rem 2.5rem .6rem 0.25rem ;
+  padding: .8rem 2.5rem .8rem 0.25rem ;
 
   display: block;
   color: #666666;
@@ -22,6 +22,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 24px;
+  font-family: inherit;
   color: #d9d9d9;
   pointer-events: none;
 }
@@ -29,6 +30,7 @@
 .select-control label {
   display: block;
   color: #666666;
+  font-family: inherit;
   font-weight: bold;
   margin-bottom: 0.5rem;
 }

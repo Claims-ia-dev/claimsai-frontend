@@ -1,8 +1,8 @@
 .claim-form {
   list-style: none;
   margin: 0 auto;
-  padding: 1rem;
-  width: 90%;
+  padding: 6rem 1rem;
+  width: 100%;
   max-width: 40rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 25px;
@@ -12,7 +12,7 @@
   align-items: center;
 }
 .claim-form > * {
-  width: 50%;
+  width: 80%;
 }
 
 .claim-form > p {

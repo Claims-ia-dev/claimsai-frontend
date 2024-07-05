@@ -195,19 +195,21 @@ const ProjectReceipt = () => {
   };
 
   return (
-    <div className="receipt-page">
-    <Card className="receipt">
+    <div className="receipt_page">
+      {isLoading && <LoadingSpinner asOverlay />}
+   {!isLoading && <Card className="receipt">
       {/* <ErrorModal error={error} onClear={clearError} /> */}
-       {isLoading && <LoadingSpinner asOverlay />}
+       
       <h3>The estimated amount for this project is:</h3>
-      <h1>${totalCost?.toFixed(2)}</h1>
+      {totalCost<=0&&<h1>...</h1>}
+      {totalCost>0&&<h1>${totalCost?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h1>}
 
       <div>
         <PdfComponent customer_info={claim?.customer_info} rooms={mergedRooms} totalCost={totalCost} logo={Logo} />
       </div>
 
       <div className="receipt-data">
-      {mergedRooms.length>0 && ( <Card className="receipt-table">
+      {mergedRooms.length>0 && ( <Card className="receipt_table">
           <table>
             <thead>
               <th>Room Name </th>
@@ -215,7 +217,7 @@ const ProjectReceipt = () => {
               <th>Category</th>
               <th>Cost</th>
               <th></th>
-              <th></th>
+              
             </thead>
             <tbody>
               {mergedRooms.map((r) => (                
@@ -224,7 +226,7 @@ const ProjectReceipt = () => {
                   <td>{getRoomLabel(r.room_type)}</td>
                   <td>{getServiceLabel(r.service_type)}
                   </td>
-                  {r.cost&& <td>${r.cost.toFixed(2)}</td> }
+                  <td>{r.cost && `$${r.cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
                   <td>
                     
                     <Link to={`/claims/${claimId}/rooms/${r.id}`}>
@@ -233,7 +235,6 @@ const ProjectReceipt = () => {
                     {/* delete button */}
                     <button
                       className="receipt-action__button"
-                      danger
                       onClick={() => handleDeleteRoom(r.id)}
                     >
                       
@@ -249,7 +250,7 @@ const ProjectReceipt = () => {
 
         <Card className="receipt-total">
           <div>
-            <p>Total</p> <h3>${totalCost?.toFixed(2)}</h3>
+          <p>Total</p> {totalCost<=0&&<h3>...</h3>}{totalCost>0&&<h3>${totalCost?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>}
 
           </div>
         </Card>
@@ -258,7 +259,7 @@ const ProjectReceipt = () => {
       <Link className="receipt-button filled-white" to={`/claims/${estimateid?estimateid:claimId}/addroom`}>
         Add new room
       </Link>
-    </Card>
+    </Card>}
     </div>
   );
 };

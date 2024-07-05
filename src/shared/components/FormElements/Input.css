@@ -25,7 +25,8 @@
 
 .form-control input::placeholder,
 .form-control textarea::placeholder {
-  color: #B2B2B2; /* Change this color to whatever you prefer */
+  color: #666; /* Change this color to whatever you prefer */
+  font-family: inherit;
 }
 
 .form-control input:focus,

@@ -30,7 +30,8 @@ const AnswerQuestions = () => {
         ? formData.toString()
         : null;
 
-      const allQuestionsData = await sendRequest( //gets all questions
+      const allQuestionsData = await sendRequest(
+        //gets all questions
         `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category`,
         "GET",
         null,
@@ -195,15 +196,17 @@ const AnswerQuestions = () => {
               ))}
             </tbody>
           </table>
-
         </div>
-        <div className="questions_actions">
-            <Link to="/claims/new"></Link>
-            <Button onClick={handleSubmitRoom} size="wide">Add room</Button>
-            <Button onClick={handleSubmitProject} size="wide" inverse="true">Finish Project</Button>
-          </div>
-      </div>
-
+     
+      <div className="questions_actions">
+        <Link to="/claims/new"></Link>
+        <Button onClick={handleSubmitRoom} size="wide">
+          Add room
+        </Button>
+        <Button onClick={handleSubmitProject} size="wide" inverse="true">
+          Finish Project
+        </Button>
+      </div> </div>
     </>
   );
 };

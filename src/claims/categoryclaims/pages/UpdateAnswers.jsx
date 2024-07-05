@@ -14,7 +14,7 @@ const UpdateAnswers = () => {
   const location = useLocation();
   const roomData = location.state?.roomData;
   const auth = useContext(AuthContext);
-  const { claim,claimId, updateRoomDetail } = useClaim();
+  const { claim, claimId, updateRoomDetail } = useClaim();
   const Idclaim = useParams().claimId;
   const roomId = useParams().roomId;
   const navigate = useNavigate();
@@ -22,26 +22,25 @@ const UpdateAnswers = () => {
   const [questions, setQuestions] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
-  const { isLoading,  sendRequest } = useHttpClient();
+  const { isLoading, sendRequest } = useHttpClient();
 
   const identifiedRoom = claim.estimate_details.find(
     (room) => room.id === roomId
   );
 
-
   const identifiedRoomData = identifiedRoom.category_claims; //asnwers array
 
+  const getData = useCallback(
+    async (questionsStored) => {
+      try {
+        const formData = new URLSearchParams();
+        formData.append("service", roomData?.service_type.value);
+        const requestBody = roomData?.service_type.value
+          ? formData.toString()
+          : null;
 
-
-  const getData = useCallback(async (questionsStored) => {  
-    try {
-      const formData = new URLSearchParams();
-      formData.append("service", roomData?.service_type.value);
-      const requestBody = roomData?.service_type.value
-        ? formData.toString()
-        : null;
-
-        const allQuestionsData = await sendRequest( //getting all questions in array
+        const allQuestionsData = await sendRequest(
+          //getting all questions in array
           `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category`,
           "GET",
           null,
@@ -50,38 +49,38 @@ const UpdateAnswers = () => {
         );
 
         setAllQuestions(allQuestionsData); //to store all questions and then compare with the ones answered
-      
-      const responseData = await sendRequest(//gets questions sorted by service
-        `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category?${requestBody}`,
-        // `/api/categoryclaims/categoryclaims`, // api endpoint
-        "GET",
-        null,
-        {},
-        auth.token
-      );
-      setQuestions(
-        responseData.map((item) => ({
-          description: item.claims_description,
-          full_description: item.full_description,
-          code: item.code,
-          answer: questionsStored.find(
-            (storedQuestion) => storedQuestion.code === item.code
-          )
-            ? questionsStored.find(
-                (storedQuestion) => storedQuestion.code === item.code
-              ).answer
-            : false,
-        }))
-      );
 
-      
-      // display the results here
-    } catch (err) {}
-  },[auth.token, roomData?.service_type.value, sendRequest]);
-      
+        const responseData = await sendRequest(
+          //gets questions sorted by service
+          `${process.env.REACT_APP_BACKEND_URL}/api/categoryclaims/category?${requestBody}`,
+          // `/api/categoryclaims/categoryclaims`, // api endpoint
+          "GET",
+          null,
+          {},
+          auth.token
+        );
+        setQuestions(
+          responseData.map((item) => ({
+            description: item.claims_description,
+            full_description: item.full_description,
+            code: item.code,
+            answer: questionsStored.find(
+              (storedQuestion) => storedQuestion.code === item.code
+            )
+              ? questionsStored.find(
+                  (storedQuestion) => storedQuestion.code === item.code
+                ).answer
+              : false,
+          }))
+        );
+
+        // display the results here
+      } catch (err) {}
+    },
+    [auth.token, roomData?.service_type.value, sendRequest]
+  );
 
   useEffect(() => {
-    
     if (!identifiedRoom) {
       console.log("unidentified room");
       return;
@@ -109,8 +108,7 @@ const UpdateAnswers = () => {
     });
   };
 
-  const updateClaim = useCallback( async () => {
-
+  const updateClaim = useCallback(async () => {
     try {
       console.log(claimId);
       console.log(claim.estimate_details);
@@ -124,17 +122,24 @@ const UpdateAnswers = () => {
         auth.token
       );
       console.log(response);
-      console.log("reques to backend done")
+      console.log("reques to backend done");
       if (response) {
         console.log("Claim updated successfully!");
-       navigate("/projectreceipt", { state: { Idclaim } });
+        navigate("/projectreceipt", { state: { Idclaim } });
       } else {
         console.error("Error updating claim:", response);
       }
     } catch (err) {
       console.error("Error updating claim:", err);
     }
-  },[sendRequest, navigate,Idclaim,claim.estimate_details, claimId, auth.token]);
+  }, [
+    sendRequest,
+    navigate,
+    Idclaim,
+    claim.estimate_details,
+    claimId,
+    auth.token,
+  ]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -169,49 +174,53 @@ const UpdateAnswers = () => {
 
   return (
     <>
-    <div className="questions-page">
-    <div className="table-container">
-    
-      {/* <ErrorModal error={error} onClear={clearError} /> */}
-       
-      <table className="questions-table">
-        {isLoading && <LoadingSpinner asOverlay />}
-        <thead>
-          <th className="question-column">Question</th>
-          <th className="toggle-column">Select</th>
-        </thead>
-        <tbody>
-          {questions.map((question, index) => (
-            <tr key={index}>
-              <td className="question-column">
-                {question.description}{" "}
-                <p className="full_description_text">
-                  {question.full_description}
-                </p>
-              </td>
-              <td className="toggle-column">
-                <label className="switch">
-                  <input
-                    type="checkbox"
-                    checked={question.answer}
-                    onChange={(event) =>
-                      handleAnswerChange(question.code, event.target.checked)
-                    }
-                  />
-                  <span className="slider round"></span>
-                </label>
-              </td>
-            </tr>
-          ))}
-        </tbody></table>
+      <div className="questions-page">
+        <div className="table-container">
+          {/* <ErrorModal error={error} onClear={clearError} /> */}
+        
+          <table className="questions-table">
+            {isLoading && <LoadingSpinner asOverlay />}
+            <thead>
+              <th className="question-column">Question</th>
+              <th className="toggle-column">Select</th>
+            </thead>
+            <tbody>
+              {questions.map((question, index) => (
+                <tr key={index}>
+                  <td className="question-column">
+                    {question.description}{" "}
+                    <p className="full_description_text">
+                      {question.full_description}
+                    </p>
+                  </td>
+                  <td className="toggle-column">
+                    <label className="switch">
+                      <input
+                        type="checkbox"
+                        checked={question.answer}
+                        onChange={(event) =>
+                          handleAnswerChange(
+                            question.code,
+                            event.target.checked
+                          )
+                        }
+                      />
+                      <span className="slider round"></span>
+                    </label>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          
         </div>
-     
+      
       <div>
         <Button className="center" onClick={handleSubmit}>
           Update Room
         </Button>
-      </div> 
-    </div></>
+      </div></div>
+    </>
   );
 };
 

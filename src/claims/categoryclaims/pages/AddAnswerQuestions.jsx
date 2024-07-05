@@ -138,6 +138,7 @@ const AddAnswerQuestions = () => {
       {/* <ErrorModal error={error} onClear={clearError} /> */}
       <div className="questions-page">
         <div className="table-container">
+        
           <table className="questions-table">
             {" "}
             {/* Display the received data */}

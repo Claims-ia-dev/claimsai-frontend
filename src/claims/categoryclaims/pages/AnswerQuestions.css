@@ -1,67 +1,65 @@
 .questions-page {
-  height: 100vh;
-  width: 100vw;
   flex-direction: column;
+ width: 100%;
   display: flex;
   justify-content: center;
+  height: 100vh;
+  max-height: 100vh;
+  padding-top: 2rem;
   align-items: center;
-  top: 0;
-  bottom: 0;
 }
 
-
 .questions-table {
-  margin: 0 auto;
+  margin: 4rem auto; 
   padding: 1rem;
-  width: 70%;
+  width: 100%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 10px;
   table-layout: auto;
   background: white;
   align-items: center;
   border-collapse: separate;
-
 }
 
 .table-container {
-  max-height: 80vh; /* Ajusta este valor según tus necesidades */
-  width: 100%;
+ /* Ajusta este valor según tus necesidades */
+  width: 80%;
+  height: 70%;
   overflow-y: auto;
   align-items: center;
-  margin-top: auto;
-  
+  margin-bottom: 2rem;
 }
 
 thead {
-    background-color: #156fff;
-    color: white;   
-    height: 30px;
+  background-color: #156fff;
+  color: white;
+  height: 30px;
 }
 
-
-th.question-column,td.question-column{
-    padding-left: 10px;
-    width: 90%;
+th.question-column,
+td.question-column {
+  padding-left: 10px;
+  width: 90%;
 }
-thead th.toggle-column, td.toggle-column{
-    width: 10%;
-    text-align: center;
-    
+thead th.toggle-column,
+td.toggle-column {
+  width: 10%;
+  text-align: center;
 }
 
-tr{
-    font-weight: bold;
-    width: 100%;
-    height: 70px;
+tr {
+  font-weight: bold;
+  width: 100%;
+  height: 70px;
 }
 
 tr:nth-child(2n) {
-    background-color: #EBF3FF; /* blue */
-  }
-  
-  tr:nth-child(2n+1) {
-    background-color: #FFFFFF; /* white */
-  }
+  background-color: #ebf3ff; /* blue */
+}
+
+tr:nth-child(2n + 1) {
+  background-color: #ffffff; /* white */
+}
 
 .switch {
   position: relative;
@@ -101,11 +99,11 @@ tr:nth-child(2n) {
 }
 
 input:checked + .slider {
-  background-color: #FF5715;
+  background-color: #ff5715;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #FF5715;
+  box-shadow: 0 0 1px #ff5715;
 }
 
 input:checked + .slider:before {
@@ -113,12 +111,13 @@ input:checked + .slider:before {
   -ms-transform: translateX(26px);
   transform: translateX(26px);
 }
-.full_description_text{
-font-weight: normal;
+.full_description_text {
+  font-weight: normal;
 }
 
 /* AnswerQuestions.css */
 .questions_actions {
+  bottom: 0;
   display: flex;
   justify-content: center; /* Centrar los elementos horizontalmente */
   align-items: center; /* Centrar los elementos verticalmente */
@@ -139,3 +138,4 @@ font-weight: normal;
 .slider.round:before {
   border-radius: 50%;
 }
+

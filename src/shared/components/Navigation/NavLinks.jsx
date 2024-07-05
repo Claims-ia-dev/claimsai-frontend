@@ -8,7 +8,7 @@ const NavLinks = () => {
 
   return (
     <ul className="nav-links"> 
-      <li>
+      {/* <li>
         <NavLink to="/manageSubscription" end >
           Manage my subscription
         </NavLink>
@@ -17,7 +17,7 @@ const NavLinks = () => {
         <NavLink to="/subscription" end >
           Subscription Plan
         </NavLink>
-      </li>
+      </li> */}
    
       
       {auth.isLoggedIn && (

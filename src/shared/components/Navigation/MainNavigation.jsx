@@ -53,6 +53,7 @@ const MainNavigation = () => {
        * Render the MainHeader component, which contains the logo, 
        * username, and menu button.
        */}
+       
       <MainHeader>
        
         <h1 className="main-navigation__title">

@@ -28,7 +28,7 @@ const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
       room.room_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
       getRoomLabel(room.room_type).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
       getServiceLabel(room.service_type).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-      `$${room.cost?.toFixed(2)}`,
+      `$${room.cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     ]);
    
     doc.autoTable({
@@ -55,7 +55,7 @@ const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
     });
 
     // Total Cost
-    doc.text(`The estimated amount for this project is: $${totalCost?.toFixed(2)}`, margin, doc.autoTable.previous.finalY + 20, { align: 'left' });
+    doc.text(`The estimated amount for this project is: $${totalCost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, margin, doc.autoTable.previous.finalY + 20, { align: 'left' });
 
     doc.save('project_receipt.pdf');
   };
