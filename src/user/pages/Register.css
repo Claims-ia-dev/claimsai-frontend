@@ -16,7 +16,10 @@
 }
 
 .registration {
+  display: flex;
+  flex-direction: column;
   width: 90%;
+  height: 75%;
   text-align: center;
   background-color: white;
   box-shadow: none;
@@ -27,6 +30,7 @@
 .registration form {
  
   display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
 }
 
