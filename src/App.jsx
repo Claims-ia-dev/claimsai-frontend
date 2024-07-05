@@ -26,6 +26,8 @@ import { ClaimProvider } from './shared/hooks/claim-hook';
 import ValidateEmailReminder from './user/pages/ValidateEmailReminder';
 import UpdateAnswers from './claims/categoryclaims/pages/UpdateAnswers';
 import { CardProvider } from './shared/context/CardContext';
+import AddRoom from './claims/pages/AddRoom';
+import AddAnswerQuestions from './claims/categoryclaims/pages/AddAnswerQuestions';
 
 const App = () => {
   const { token, login, logout, userId, userinfo } = useAuth();
@@ -51,6 +53,8 @@ const App = () => {
         <Route path="/claims/:estimateId/rooms/:roomId" element={<UpdateClaim />} />  
         <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
         <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
+        <Route path="/addroom" element={<AddRoom />} />  
+        <Route path="/addroom/EstimateCategoryClaims" element={<AddAnswerQuestions/>} />  
         
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

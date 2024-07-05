@@ -117,9 +117,7 @@ const UpdateAnswers = () => {
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
         "PATCH",
-        JSON.stringify({
-          estimate_details: claim.estimate_details,
-        }),
+        JSON.stringify(claim.estimate_details),
         {
           "Content-Type": "application/json",
         },
@@ -136,7 +134,7 @@ const UpdateAnswers = () => {
     } catch (err) {
       console.error("Error updating claim:", err);
     }
-  },[Idclaim,claim.estimate_details, claimId,navigate]);
+  },[Idclaim,claim.estimate_details, claimId]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();

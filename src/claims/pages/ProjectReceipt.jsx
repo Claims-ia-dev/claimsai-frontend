@@ -254,7 +254,7 @@ const ProjectReceipt = () => {
         </Card>
       </div>
 
-      <Link className="receipt-button filled-white" to="/claims/new">
+      <Link className="receipt-button filled-white" to="/addroom">
         Add new room
       </Link>
     </Card>
