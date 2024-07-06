@@ -58,23 +58,25 @@ const MainNavigation = () => {
        
         <h1 className="main-navigation__title">
           {/*Wraps logo*/}
+          {auth.isLoggedIn && ( 
           <Link to="/">
             <img className="main-navigation__logo" src={Logo} alt="ClaimsIA" />
-          </Link>
+          </Link>)}
         </h1>
         
         <div className='main-navigation__left'>
           {/*Displays username ( to make dynamic) */}
-          
-        <h3 >Hi, {auth.userinfo?.first_name}!</h3>
-        <button
+
+            <h3></h3>
+            {auth.isLoggedIn && ( <h3 >Hi, {auth.userinfo?.first_name}!</h3>)}
+        {auth.isLoggedIn && (  <button
           className="main-navigation__menu-btn"
           onClick={openDrawerHandler}
         > {/* 3 spans to create the menu icon */}
           <span />
           <span />
           <span />
-        </button>
+        </button>)}
         </div>
       </MainHeader>
     </React.Fragment>

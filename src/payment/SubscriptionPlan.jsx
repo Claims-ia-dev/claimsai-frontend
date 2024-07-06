@@ -30,7 +30,7 @@ function SubscriptionPlan() {
     },
   ];
 
-  const { sendRequest,  isLoading } = useHttpClient(); // Use the hook
+  const { sendRequest,  isLoading } = useHttpClient(); 
 
 
   const auth = useContext(AuthContext);

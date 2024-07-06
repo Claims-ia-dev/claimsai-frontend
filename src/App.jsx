@@ -45,8 +45,8 @@ const App = () => {
         <Route path="/subscription" element={<SubscriptionPlan />}/>     
             
       
-        {/* <Route path="/workteam" element = {<WorkTeam/>}/>            
-        <Route path="/manageSubscription" element = {<AutoRenewal/>}/>             */}
+        <Route path="/workteam" element = {<WorkTeam/>}/>            
+        <Route path="/manageSubscription" element = {<AutoRenewal/>}/>             
         <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
         <Route path="/claims/new" element={<NewClaim />} />
         <Route path="/claims/newCustomer" element={<NewCustomer />} />  
@@ -97,7 +97,7 @@ const App = () => {
     }}
   ><ClaimProvider><CardProvider>
     <Router>
-    {token && <MainNavigation />} {/* Only render MainNavigation if token is present */}
+    <MainNavigation /> {/* Only render MainNavigation if token is present */}
 
       <main>{routes}</main>
     </Router></CardProvider></ClaimProvider>
