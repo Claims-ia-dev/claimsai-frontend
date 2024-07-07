@@ -1,7 +1,9 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useContext} from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
+import { AuthContext } from "../../shared/context/auth-context";
+import { useHttpClient } from "../../shared/hooks/http-hook";
 import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_PASSWORD, VALIDATOR_EQUAL
@@ -12,7 +14,13 @@ import './Auth.css';
 
 const ChangePassword = () => { //handles user aauthentication
   
+  
 const navigate= useNavigate();
+const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+const auth = useContext(AuthContext);
+const token= useParams().tokenid;
+
   /**
    * Initialize the form state with email and password inputs
    * 
@@ -35,9 +43,32 @@ const navigate= useNavigate();
 
 
 
-  const SubmitHandler = event => {
+  const SubmitHandler = async event => {
     event.preventDefault(); //this should connect to the backend 
-    navigate('/auth');
+    try {
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/changepassword`,
+        "POST",
+        JSON.stringify(formState.newpassword),
+        {
+          "Content-Type": "application/json",
+        },
+        token
+      );
+      console.log(response);
+      console.log("sent to server");
+      if (response) {
+        console.log("Password updated successfully!");
+       
+            navigate('/auth');
+        
+      } else {
+        console.error("Error updating password:", response);
+      }
+    } catch (err) {
+      console.error("Error updating password:", err);
+    }
+  
     
   };
 
@@ -76,7 +107,7 @@ const navigate= useNavigate();
       </form>
      
      {/**if not a member yet to send to another link */}
-      <p className="center-text">Never mind! <a href='/auth'> Take me back to login</a></p> <br/>
+      {!auth.isLoggedIn&&<p className="center-text">Never mind! <a href='/auth'> Take me back to login</a></p>} <br/>
      
     </Card>
     </div>

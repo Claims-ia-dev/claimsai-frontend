@@ -55,7 +55,7 @@ const App = () => {
         <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
         <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
         <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
-        
+        <Route path="/change-password/:tokenid" element={<ChangePassword />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );
@@ -69,10 +69,7 @@ const App = () => {
        
         <Route path="/auth" element={<Auth />}/>
         <Route path="/register" element={<Register />}/>
-        <Route path="/verify" element={<ValidateEmailReminder />}/>   
-
-        <Route path="/subscription" element={<SubscriptionPlan />}/>
-
+        <Route path="/verify" element={<ValidateEmailReminder />}/>  
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />
         <Route path="/change-password/:tokenid" element={<ChangePassword />} />

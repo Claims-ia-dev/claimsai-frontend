@@ -25,6 +25,11 @@ const NavLinks = () => {
           <NavLink to="/claims/newCustomer">Add estimate</NavLink>
         </li>
       )}      
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to={`/change-password/${auth.token}`}>Change password</NavLink>
+        </li>
+      )}
     
       {auth.isLoggedIn && (
         <li>
