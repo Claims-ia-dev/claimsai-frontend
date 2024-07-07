@@ -12,12 +12,12 @@ const NavLinks = () => {
         <NavLink to="/manageSubscription" end >
           Manage my subscription
         </NavLink>
-      </li>      
+      </li>     */}  
       <li>
         <NavLink to="/subscription" end >
           Subscription Plan
         </NavLink>
-      </li>  */}
+      </li> 
    
       
       {auth.isLoggedIn && (

@@ -1,7 +1,8 @@
 /* subscription-plan.css */
 .subscriptions{
-    width: 90%;
-    max-width: 65rem;
+    max-width: 90%;
+    width: fit-content;
+    overflow: auto;
     margin: 7rem auto;
     text-align: left;
     display: flex;
@@ -32,7 +33,7 @@
 
 .subscriptions__cards{
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     align-content: center;
     
@@ -69,6 +70,9 @@
   margin-bottom: 0.5rem;
 }
 
+.name_description{
+  height: 50%;
+}
 
 
 

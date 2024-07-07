@@ -12,6 +12,29 @@ function SubscriptionPlan() {
   let [message, setMessage] = useState('');
   let [success, setSuccess] = useState(false);
   let [sessionId, setSessionId] = useState('');
+  const [products, setProducts] = useState([]); 
+  const { sendRequest,  isLoading } = useHttpClient(); 
+  const auth = useContext(AuthContext);
+  const [selectedPlan, setSelectedPlan] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await sendRequest(
+          'https://dashboard.xclaims.ai:3003/api/users/listproducts',
+          'GET',
+          null,
+          { 'Content-Type': 'application/json' },
+          auth.token
+        );
+        setProducts(response); // update products state with API response
+        console.log(response)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProducts();
+  }, [sendRequest, auth.token]);
 
   const dummySubscriptions = [
     {
@@ -30,11 +53,7 @@ function SubscriptionPlan() {
     },
   ];
 
-  const { sendRequest,  isLoading } = useHttpClient(); 
 
-
-  const auth = useContext(AuthContext);
-  const [selectedPlan, setSelectedPlan] = useState(null);
 
   const Message = ({ message }) => (
     <section>
@@ -46,14 +65,15 @@ function SubscriptionPlan() {
 
   const handlePlanSelect = async (plan) => {
     setSelectedPlan(plan);
-    auth.plan=plan.price;
     //const requestBody = { price, customerId: userId };
     try {
+      const formData = new URLSearchParams();
+    formData.append('plan_id', plan.default_price);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/create-checkout-session`,
         "POST",
-        null,
-            { "Content-Type": "application/json" },
+        formData.toString(),
+            { 'Content-Type': 'application/x-www-form-urlencoded' },
         auth.token
       );    
       window.open(response.url, '_blank');
@@ -86,16 +106,19 @@ function SubscriptionPlan() {
         <h4>Choose a plan that suits your business needs</h4>
         <h2>Ready to get started?</h2>
         <div className="subscriptions__cards">
-          {dummySubscriptions.map((plan) => (
+          {products.map((plan) => (
             <Card className="plan_card" key={plan.id}>
-              <h2>{plan.name}</h2>
-              <p>{plan.description}</p>
+              <div className="name_description">
+              <h2>{plan?.name}</h2> <br/>
+              <p>{plan?.description}</p> <br/>
+              </div>
               <span>
-                <h2>${plan.price}</h2>
+                <br/>
+                <h2>${plan.price? plan.price:"??"}</h2>
                 <p>/month</p>
               </span>
               <ul>
-                {plan.features.map((feature) => (
+                {plan.attributes.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
@@ -108,7 +131,6 @@ function SubscriptionPlan() {
         {selectedPlan && (
           <div>
             <h3>You have selected: {selectedPlan.name}</h3>
-            <p>Price: ${selectedPlan.price}/month</p>
           </div>
         )}
 

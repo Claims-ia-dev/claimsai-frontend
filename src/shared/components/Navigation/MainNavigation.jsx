@@ -67,7 +67,7 @@ const MainNavigation = () => {
         <div className='main-navigation__left'>
           {/*Displays username ( to make dynamic) */}
 
-            <h3></h3>
+          {!auth.isLoggedIn && (<h3 className='not_logged'>Claims.Ai</h3>)}
             {auth.isLoggedIn && ( <h3 >Hi, {auth.userinfo?.first_name}!</h3>)}
         {auth.isLoggedIn && (  <button
           className="main-navigation__menu-btn"

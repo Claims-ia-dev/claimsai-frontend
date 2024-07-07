@@ -50,3 +50,7 @@
 .main-navigation__drawer-nav {
   height: 100%;
 }
+
+.not_logged{
+  visibility: hidden;
+}

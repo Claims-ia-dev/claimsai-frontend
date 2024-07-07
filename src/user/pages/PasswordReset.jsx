@@ -2,13 +2,16 @@ import React from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import ResetInstructions from './ResetInstructions';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Button from '../../shared/components/FormElements/Button';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import { useNavigate } from 'react-router-dom';
 import {
   VALIDATOR_EMAIL
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import Logo from '../../images/LogoClaimsIA.svg';
+import { useHttpClient } from '../../shared/hooks/http-hook';
 import './Auth.css';
 
 const PasswordReset = () => {
@@ -16,6 +19,8 @@ const PasswordReset = () => {
   */
 
   const navigate = useNavigate();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
 
   const [formState, inputHandler] = useForm(
     {
@@ -30,11 +35,33 @@ const PasswordReset = () => {
 
  
 
-  const SubmitHandler = event => {
+  const SubmitHandler = async event => {
     <ResetInstructions items={formState.email}/>
     event.preventDefault();
      // To call the reset password function here
-     
+
+      try {
+    const formData = new URLSearchParams();
+    formData.append('email', formState.inputs.email.value);
+
+    const responseData = await sendRequest(
+      `${process.env.REACT_APP_BACKEND_URL}/api/users/changepassword`,
+      'POST',
+      formData.toString(),
+      {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+      );
+      console.log(responseData.token)
+      } catch (err) {
+      // // if (err.code === 'unverified_email') {
+      //   error.message = 'Please verify your email address. If you haven\'t received the verification email, you can resend it.';
+      //   //error.resendEmail = true;
+      // } else {
+      console.log(err);
+      // }
+    }
+  
      // navigate to the desired route
      navigate('/reset-instructions', { state: { email: formState.inputs.email.value } });
 
@@ -44,6 +71,8 @@ const PasswordReset = () => {
 
   return (
     <div className='auth-page'>
+       <ErrorModal error={error} onClear={clearError}></ErrorModal>
+      {isLoading && <LoadingSpinner asOverlay />}
     <Card className="authentication">
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
