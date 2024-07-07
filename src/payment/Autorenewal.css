@@ -1,5 +1,5 @@
 .autorenewal {
-  width: 90%;
+  max-width: 50%;
   height: fit-content;
   max-width: 80rem;
   margin: 7rem auto;
@@ -35,14 +35,21 @@
 .autorenewal .plan {
     min-height: 30rem;
     display: flex;
+    padding: 2rem;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.autorenewal .plan *{
+  padding: .5rem,0;
 }
 
 .autorenewal ul {
   list-style: url("../images/bulletpoint.svg");
   display: flex;
   flex-direction: column;
+  padding-left: 3rem;
+
   align-items: baseline;
   height: 35%;
 }

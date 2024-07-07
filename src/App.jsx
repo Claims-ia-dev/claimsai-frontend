@@ -39,26 +39,37 @@ const App = () => {
    */
 
   if (token) {
-    routes = (
+    if (userinfo.user_type=="user"){ //if the user is subscribed 
+      routes = (
+        <Routes>
+          <Route path="/" element = {<NewCustomer/>}/>    
+          <Route path="/subscription" element={<SubscriptionPlan />}/>               
+{/*         
+          <Route path="/workteam" element = {<WorkTeam/>}/>             */}
+          <Route path="/manageSubscription" element = {<AutoRenewal/>}/>             
+          <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
+          <Route path="/claims/new" element={<NewClaim />} />
+          <Route path="/claims/newCustomer" element={<NewCustomer />} />  
+          <Route path="/claims/:estimateId/rooms/:roomId" element={<UpdateClaim />} />  
+          <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
+          <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
+          <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
+          <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
+          <Route path="/change-password/:tokenid" element={<ChangePassword />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
+      );
+    }
+    else{ routes = ( //if the user hasn't been subscribed
       <Routes>
-        <Route path="/" element = {<NewCustomer/>}/>    
-        <Route path="/subscription" element={<SubscriptionPlan />}/>     
-            
-      
-        <Route path="/workteam" element = {<WorkTeam/>}/>            
-        <Route path="/manageSubscription" element = {<AutoRenewal/>}/>             
-        <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
-        <Route path="/claims/new" element={<NewClaim />} />
-        <Route path="/claims/newCustomer" element={<NewCustomer />} />  
-        <Route path="/claims/:estimateId/rooms/:roomId" element={<UpdateClaim />} />  
-        <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
-        <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
-        <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
-        <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
+        <Route path="/" element = {<SubscriptionPlan/>}/>    
+        <Route path="/subscription" element={<SubscriptionPlan />}/>        
         <Route path="/change-password/:tokenid" element={<ChangePassword />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );
+  }
+   
   } else {
      /**
      * If the user is not logged in, render the unauthenticated routes.

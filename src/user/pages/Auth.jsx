@@ -57,7 +57,8 @@ const Auth = () => { //handles user authentication
         'Content-Type': 'application/x-www-form-urlencoded'
       }
       );
-      console.log(responseData.token)
+      console.log(responseData.token);
+      console.log(responseData.user);
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {
       // // if (err.code === 'unverified_email') {

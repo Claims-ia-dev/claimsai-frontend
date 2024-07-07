@@ -21,14 +21,14 @@ function SubscriptionPlan() {
     const fetchProducts = async () => {
       try {
         const response = await sendRequest(
-          'https://dashboard.xclaims.ai:3003/api/users/listproducts',
+          `${process.env.REACT_APP_BACKEND_URL}/api/users/listproducts`,
           'GET',
           null,
           { 'Content-Type': 'application/json' },
           auth.token
         );
         setProducts(response); // update products state with API response
-        console.log(response)
+        
       } catch (err) {
         console.log(err);
       }
@@ -75,8 +75,9 @@ function SubscriptionPlan() {
         formData.toString(),
             { 'Content-Type': 'application/x-www-form-urlencoded' },
         auth.token
-      );    
-      window.open(response.url, '_blank');
+      );   
+      window.location =response.url; 
+     // window.open(response.url, '_blank');
      
     } catch (err) {
       console.log(err);
