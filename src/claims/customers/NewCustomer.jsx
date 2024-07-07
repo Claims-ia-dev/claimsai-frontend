@@ -1,6 +1,6 @@
 import React, {  useContext}from "react";
 import { useNavigate } from 'react-router-dom';
-
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
@@ -10,10 +10,13 @@ import {
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import { useClaim } from '../../shared/hooks/claim-hook';
 import './CustomerForm.css';
 
 const NewCustomer = () => {
+  const { isLoading, error,  clearError } = useHttpClient();
 
   const auth = useContext(AuthContext);
   
@@ -88,8 +91,11 @@ const NewCustomer = () => {
 
   
   return (
-  <>
+  <> 
+  <ErrorModal error={error} onClear={clearError}></ErrorModal>
   <div className="customer-form-page">
+ 
+  {isLoading && <LoadingSpinner asOverlay />}
     <form className="customer-form" onSubmit={claimSubmitHandler}>
       {/* instructions */}
       <p className=''>To begin creating an estimate, please enter customer information. </p> 

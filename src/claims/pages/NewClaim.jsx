@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -15,7 +15,7 @@ const NewClaim = () => {
 
   const navigate = useNavigate(); //to go to a diferent route
 
-  const { isLoading} = useHttpClient();
+  const { isLoading, error, clearError} = useHttpClient();
   const { serviceTypeOptions, roomTypeOptions} = useServiceTypes();
 
   
@@ -70,7 +70,7 @@ const NewClaim = () => {
   return (
     <>
     <div className='claim-form-page'>
-    {/* <ErrorModal error={error} onClear={clearError} /> */}
+    <ErrorModal error={error} onClear={clearError} />
     {isLoading && <LoadingSpinner asOverlay />}
       <form className="claim-form" onSubmit={claimSubmitHandler}>
         <p className="">

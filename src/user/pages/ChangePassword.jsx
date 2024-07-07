@@ -2,6 +2,8 @@ import React, {useContext} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Button from '../../shared/components/FormElements/Button';
@@ -74,7 +76,9 @@ const token= useParams().tokenid;
 
   return (
     <div className='auth-page'>
+    <ErrorModal error={error} onClear={clearError}></ErrorModal>
     <Card className="authentication">
+    {isLoading && <LoadingSpinner asOverlay />}
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
       <form onSubmit={SubmitHandler}> 

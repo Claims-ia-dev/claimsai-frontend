@@ -32,9 +32,7 @@ const AutoRenewal = () => {
           auth.token
         );
         setProducts(response); // update products state with API response
-        if(response.length>0){
-          setCharged(true);
-        }
+     
         console.log(response);
       } catch (err) {
         console.log(err);
@@ -60,7 +58,7 @@ const AutoRenewal = () => {
           setCurrentSubscription(subscriptionData[0]);
           setChangeAutorenewal(!subscriptionData[0].cancel_at_period_end);
           if (products.length > 0) {
-           
+            setCharged(true);
             // <--- Add this check
             const matchingProduct = products.find(
               (product) => product.default_price === subscriptionData[0].plan.id
@@ -70,7 +68,9 @@ const AutoRenewal = () => {
           }
           
         } else {
-        
+          if(products.length>0 ){
+            setCharged(true);
+          }
         }
       } catch (err) {
         console.log(err);
