@@ -15,7 +15,7 @@ import NewClaim from './claims/pages/NewClaim';
 import NewCustomer from './claims/customers/NewCustomer';
 import UpdateClaim from './claims/pages/UpdateClaim';
 import ChangePassword from './user/pages/ChangePassword';
-import WorkTeam from './user/pages/WorkTeam';
+//import WorkTeam from './user/pages/WorkTeam';
 import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
@@ -39,7 +39,7 @@ const App = () => {
    */
 
   if (token) {
-    if (userinfo.user_type=="user"){ //if the user is subscribed 
+    if (userinfo?.user_type==="user"){ //if the user is subscribed 
       routes = (
         <Routes>
           <Route path="/" element = {<NewCustomer/>}/>    

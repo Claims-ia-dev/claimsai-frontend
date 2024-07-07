@@ -1,7 +1,7 @@
 .autorenewal {
   max-width: 50%;
+  min-width: 40%;
   height: fit-content;
-  max-width: 80rem;
   margin: 7rem auto;
   text-align: center;
   display: flex;

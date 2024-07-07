@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-
+import ErrorModal from "../shared/components/UIElements/ErrorModal";
 import Card from "../shared/components/UIElements/Card";
 import Button from "../shared/components/FormElements/Button";
 import { AuthContext } from "../shared/context/auth-context";
@@ -13,7 +13,7 @@ function SubscriptionPlan() {
   let [success, setSuccess] = useState(false);
   let [sessionId, setSessionId] = useState('');
   const [products, setProducts] = useState([]); 
-  const { sendRequest,  isLoading } = useHttpClient(); 
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
   const [selectedPlan, setSelectedPlan] = useState(null);
 
@@ -102,6 +102,7 @@ function SubscriptionPlan() {
   }, [sessionId]);
   return (
     <>
+    <ErrorModal error={error} onClear={clearError}></ErrorModal>
       <Card className="subscriptions">
       {isLoading && <LoadingSpinner asOverlay />}
         <h4>Choose a plan that suits your business needs</h4>
@@ -115,7 +116,7 @@ function SubscriptionPlan() {
               </div>
               <span>
                 <br/>
-                <h2>${plan.price? plan.price:"??"}</h2>
+                <h2>${plan.metadata.price? plan.metadata.price:"??"}</h2>
                 <p>/month</p>
               </span>
               <ul>

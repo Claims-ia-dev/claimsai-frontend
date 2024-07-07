@@ -5,7 +5,7 @@ import './NavLinks.css';
 
 const NavLinks = () => {
   const auth = useContext(AuthContext); //to see if the user is logged in
-  const usuario=auth.userinfo.user_type?auth.userinfo.user_type:'guest';
+  const usuario=auth.userinfo?.user_type?auth.userinfo.user_type:'guest';
   let isUser=false;
   if (usuario==="user"){
     isUser=true;

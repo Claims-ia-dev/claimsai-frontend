@@ -22,7 +22,7 @@
   position: fixed; /* Cambiar a fixed para asegurar que cubra toda la ventana */
   top: 0;
   left: 0;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255);
   display: flex;
   justify-content: center;
   align-items: center;
