@@ -8,6 +8,9 @@
   box-shadow: none;
   padding: 2rem;  
   align-items: stretch;
+  align-content: center;
+  justify-content: center;
+
 }
 
 .autorenewal-page {
