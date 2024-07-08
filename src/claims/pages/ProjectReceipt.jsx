@@ -254,13 +254,7 @@ const ProjectReceipt = () => {
           </table>
         </Card>)}
 
-        <Card className="receipt-total">
-          <div>
-          <p>Total</p> {totalCost<=0&&<h3>...</h3>}{totalCost>0&&<h3>${totalCost?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>}
-
-          </div>
-          
-        </Card>
+       
       </div>
 
       <Link className="receipt-button filled-white" to={`/claims/${estimateid?estimateid:claimId}/addroom`}>
