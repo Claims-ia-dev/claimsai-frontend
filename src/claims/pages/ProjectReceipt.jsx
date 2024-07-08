@@ -51,8 +51,8 @@ const ProjectReceipt = () => {
           auth.token
         ); 
         
-        console.log("response from get estimate by id");
-        console.log(responseData);
+        // console.log("response from get estimate by id");
+        // console.log(responseData);
         updateClaim(responseData);
         setEstimateid(responseData.id);
         setRooms(responseData.estimate_details);
@@ -68,7 +68,7 @@ const ProjectReceipt = () => {
     const fetchEstimatePredict = async () => {
       const formData = new URLSearchParams();
     formData.append('estimate_id', claimId);
-    console.log(formData.toString());
+   // console.log(formData.toString());
     
      
       try {
@@ -81,8 +81,8 @@ const ProjectReceipt = () => {
           },
           auth.token
         );
-        console.log("room ids and cost")
-        console.log(predictResponseData);
+       // console.log("room ids and cost")
+        //console.log(predictResponseData);
      
         const roomsData = Object.entries(predictResponseData).map(([cost, roomKey]) => ({
           cost: parseFloat(cost),
@@ -90,8 +90,8 @@ const ProjectReceipt = () => {
         }));
         // process the response data here
         setRoomCosts(roomsData);
-        console.log("roomsData");
-        console.log(roomsData);
+       // console.log("roomsData");
+        //console.log(roomsData);
         
         // process the response data here
         setRoomCosts(roomsData);
@@ -122,28 +122,28 @@ const ProjectReceipt = () => {
   
 
   useEffect(() => {
-    console.log("rooms")
-    console.log(rooms);
-    console.log(roomCosts);  
+   // console.log("rooms")
+    //console.log(rooms);
+    //console.log(roomCosts);  
      
     
     if (rooms.length > 0 && roomCosts.length > 0) {
       const mergedRooms = rooms.map((room) => {
         const costRoom = roomCosts.find((costRoom) => costRoom.room_key === room.id);
-        console.log(`costRoom.roomKey: ${costRoom?.room_key}, room.id: ${room.id}`);
+       // console.log(`costRoom.roomKey: ${costRoom?.room_key}, room.id: ${room.id}`);
         if (costRoom) {
           console.log(costRoom);
           return {...room, cost: costRoom.cost, id: costRoom.room_key };
         } else {
           console.log("merge error");
-          console.log (costRoom);
-          console.log (room);
+         // console.log (costRoom);
+         // console.log (room);
           return room; // or some default value
         }
       });
       setMergedRooms(mergedRooms);    
       console.log("mergedRooms");
-      console.log(mergedRooms);
+      //console.log(mergedRooms);
     }else if (roomCosts.length > 0) {
       setMergedRooms(roomCosts);
       console.error("There are no costs generated");

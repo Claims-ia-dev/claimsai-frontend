@@ -36,22 +36,7 @@ function SubscriptionPlan() {
     fetchProducts();
   }, [sendRequest, auth.token]);
 
-  const dummySubscriptions = [
-    {
-      id: 1,
-      name: "Essentials Plan",
-      description: "Start with our first and most groundbreaking product",
-      price: 99,
-      features: ["Instant estimates", "Early features"],
-    },
-    {
-      id: 2,
-      name: "Annual plan",
-      description: "For those serious about supercharging their estimates",
-      price: 99,
-      features: ["CRM Access", "Priority Support", "Extra Features"],
-    },
-  ];
+ 
 
 
 

@@ -61,7 +61,7 @@ const token= useParams().tokenid;
         },
         token
       );
-      console.log(response);
+      //console.log(response);
       console.log("sent to server");
       if (response) {
         console.log("Password updated successfully!");

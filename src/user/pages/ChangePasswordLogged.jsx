@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -63,7 +63,7 @@ const ChangePasswordLogged = () => {
         },
         auth.token
       );
-      console.log(response);
+      //console.log(response);
       console.log("sent to server");
       if (response) {
         console.log("Password updated successfully!");

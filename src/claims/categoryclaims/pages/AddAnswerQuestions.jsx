@@ -16,7 +16,7 @@ const AddAnswerQuestions = () => {
   const roomData = location.state?.roomData;
   const auth = useContext(AuthContext);
  
-  const { claim, addRoomDetail,claimId} = useClaim(); 
+  const { addRoomDetail} = useClaim(); 
   const estimateId=useParams().estimateId;
 
   const navigate = useNavigate();
@@ -92,11 +92,11 @@ const AddAnswerQuestions = () => {
       category_claims: CategoriesArrayToSend,
     };
     addRoomDetail(newRoomDetail);
-    console.log("claim seen from addanswers");
-    console.log(claim);
-    console.log(claimId);
-    console.log ("room to add for update");
-    console.log (newRoomDetail);
+    // console.log("claim seen from addanswers");
+    // console.log(claim);
+    // console.log(claimId);
+    // console.log ("room to add for update");
+    // console.log (newRoomDetail);
 
     try {    
         const response = await sendRequest(
@@ -110,8 +110,8 @@ const AddAnswerQuestions = () => {
         );
   
         if (response != null) {
-          console.log("Estimate updated with new room");
-          console.log(response);
+          // console.log("Estimate updated with new room");
+          // console.log(response);
          
           navigate("/projectreceipt"); // pass the id as a separate prop
         } else {

@@ -53,7 +53,7 @@ const AutoRenewal = () => {
           auth.token
         );
         const subscriptionData = await response;
-        console.log(subscriptionData);
+       // console.log(subscriptionData);
         if (subscriptionData.length > 0) {
           setSubscriptionId(subscriptionData[0].id);
           setCurrentSubscription(subscriptionData[0]);
@@ -72,7 +72,7 @@ const AutoRenewal = () => {
             const matchingProduct = products.find(
               (product) => product.default_price === subscriptionData[0].plan.id
             );
-            console.log(matchingProduct);
+         //   console.log(matchingProduct);
             setCurrentProduct(matchingProduct);
           }
           
@@ -89,7 +89,7 @@ const AutoRenewal = () => {
   }, [auth.token, sendRequest,products]);
 
   const handleCancel = async () => {
-    console.log(currentSubscription);
+    //console.log(currentSubscription);
     try {
       const formData = new URLSearchParams();
       formData.append("subscription_id", subscriptionId);

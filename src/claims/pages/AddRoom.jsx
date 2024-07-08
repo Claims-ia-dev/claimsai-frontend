@@ -47,9 +47,9 @@ const AddRoom = () => {
   //handler for form submission (to add post api )
   const claimSubmitHandler = (event) => {
     event.preventDefault();
-    console.log(estimateId);
+   // console.log(estimateId);
    // console.log(claim);
-    console.log(formState.inputs);
+  //  console.log(formState.inputs);
     let id;
     if(estimateId){
       id=estimateId;}

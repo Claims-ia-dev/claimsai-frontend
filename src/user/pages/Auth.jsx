@@ -1,11 +1,10 @@
-import React, {  useContext, useState } from 'react';
+import React, {  useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_PASSWORD,
+  VALIDATOR_EMAIL  
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
@@ -23,9 +22,6 @@ import './Auth.css';
 const Auth = () => { //handles user authentication
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  
-  const [errorDisplay, setErrorDisplay]=useState(null);
-  const [showVerificationButton, setShowVerificationButton]=useState(false);
   /**
    * Initialize the form state with email and password inputs
    * 
@@ -71,7 +67,7 @@ const Auth = () => { //handles user authentication
   };
 
   const clearErrorDisplay = () => {
-    setErrorDisplay(null);
+    
     clearError()
   };
 

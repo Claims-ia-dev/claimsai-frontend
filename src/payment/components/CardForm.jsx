@@ -44,10 +44,10 @@ const CardForm = () => {
 
      // Send the payment method to the backend
      try {
-      console.log(auth.userinfo);
-      console.log(email);
-      console.log(payload.paymentMethod);
-      console.log(payload.paymentMethod.id);
+      // console.log(auth.userinfo);
+      // console.log(email);
+      // console.log(payload.paymentMethod);
+      // console.log(payload.paymentMethod.id);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/addcard`,
         "POST",
@@ -61,12 +61,12 @@ const CardForm = () => {
     
       if (response.ok) {
         addCard(payload.paymentMethod);
-        console.log("Card added successfully!");
+        //console.log("Card added successfully!");
       } else {
-        console.error("Error adding card:", response.statusText);
+       // console.error("Error adding card:", response.statusText);
       }
     } catch (error) {
-      console.error("Error adding card:", error);
+      //console.error("Error adding card:", error);
     }
 
   };

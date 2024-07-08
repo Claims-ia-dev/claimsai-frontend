@@ -120,7 +120,7 @@ const AnswerQuestions = () => {
 
     try {
       console.log("estimate sent for creation");
-      console.log(updatedClaim);
+      //console.log(updatedClaim);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/estimates/create`,
         "POST",
@@ -133,10 +133,10 @@ const AnswerQuestions = () => {
 
       if (response != null) {
         console.log("Estimate created");
-        console.log(response);
+      //  console.log(response);
         const id = response[0].id; // access the id property of the first element in the response array
         console.log("claim id");
-        console.log(id);
+       // console.log(id);
         setClaimId(id);
         navigate("/projectreceipt", { state: { response, id } }); // pass the id as a separate prop
       } else {

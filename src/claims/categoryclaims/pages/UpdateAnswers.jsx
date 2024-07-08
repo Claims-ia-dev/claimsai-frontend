@@ -14,7 +14,7 @@ const UpdateAnswers = () => {
   const location = useLocation();
   const roomData = location.state?.roomData;
   const auth = useContext(AuthContext);
-  const { claim, claimId, updateRoomDetail } = useClaim();
+  const { claim, updateRoomDetail } = useClaim();
   const Idclaim = useParams().claimId;
   const roomId = useParams().roomId;
   const navigate = useNavigate();
@@ -110,8 +110,8 @@ const UpdateAnswers = () => {
 
   const updateClaim = useCallback(async () => {
     try {
-      console.log(claimId);
-      console.log(claim.estimate_details);
+     // console.log(claimId);
+     // console.log(claim.estimate_details);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
         "PATCH",
@@ -121,10 +121,10 @@ const UpdateAnswers = () => {
         },
         auth.token
       );
-      console.log(response);
-      console.log("reques to backend done");
+      //console.log(response);
+     // console.log("reques to backend done");
       if (response) {
-        console.log("Claim updated successfully!");
+       // console.log("Claim updated successfully!");
         navigate("/projectreceipt", { state: { Idclaim } });
       } else {
         console.error("Error updating claim:", response);
@@ -137,7 +137,7 @@ const UpdateAnswers = () => {
     navigate,
     Idclaim,
     claim.estimate_details,
-    claimId,
+   // claimId,
     auth.token,
   ]);
 
