@@ -24,6 +24,7 @@ const Auth = () => { //handles user authentication
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest } = useHttpClient();
   const [errorDisplay, setErrorDisplay]=useState(null);
+  const [showVerificationButton, setShowVerificationButton]=useState(false);
   /**
    * Initialize the form state with email and password inputs
    * 
@@ -64,10 +65,13 @@ const Auth = () => { //handles user authentication
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {
       if (error === 'Unverified email') {
+        setShowVerificationButton(true);
         setErrorDisplay('Please check your email inbox and verify your email address.');
         err.resendEmail = true;
-      } else {
-      console.log(err);
+      } else if (error==="User not found"){
+        setErrorDisplay('You have entered an invalid email or password');
+      }else {
+      setErrorDisplay(error);
       }
     }
   };
@@ -98,9 +102,9 @@ const Auth = () => { //handles user authentication
       footer={
         <React.Fragment>
        
-      <Button inverse onClick={resendVerificationEmail}>
+      {showVerificationButton&&(<Button inverse onClick={resendVerificationEmail}>
         Resend verification email
-      </Button> 
+      </Button> )}
       <Button  onClick={clearErrorDisplay}>
         Okey 
       </Button>
@@ -132,7 +136,7 @@ const Auth = () => { //handles user authentication
           id="password"
           type= 'password'
           placeholder="Enter password"
-          validators={[VALIDATOR_PASSWORD()]} 
+          validators={[]} 
           errorText=""
           onInput={inputHandler}
           />
