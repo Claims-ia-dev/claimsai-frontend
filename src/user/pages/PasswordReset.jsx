@@ -95,7 +95,7 @@ const PasswordReset = () => {
         </Button>
       </form>
      
-      <p className="center-text">Never mind!<a href='/'> Take me back to login</a></p> <br/>
+      <p className="center-text">Never mind!<Link to='/'> Take me back to login</Link></p> <br/>
      
     </Card>
     </div>

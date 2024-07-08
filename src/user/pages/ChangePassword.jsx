@@ -131,7 +131,7 @@ const token= useParams().tokenid;
      
      {/**if not a member yet to send to another link */}
          {!confirmed &&<p className='error'>Make sure the new password and confirm password fields match</p>}
-         {!auth.isLoggedIn&&<p className="center-text">Never mind! <Link href='/auth'> Take me back to login</Link></p>} <br/>
+         {!auth.isLoggedIn&&<p className="center-text">Never mind! <Link to='/auth'> Take me back to login</Link></p>} <br/>
    
     </Card>
     </div>
