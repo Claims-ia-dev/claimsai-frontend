@@ -1,9 +1,21 @@
 /* subscription-plan.css */
+.subscription_page {
+  width: 100vw;
+  height: 100%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+}
 .subscriptions{
-    max-width: 90%;
+    max-width: 95%;
+    max-height: 95%;
+   
     width: fit-content;
     overflow: auto;
-    margin: 7rem auto;
+    margin: auto;
     text-align: left;
     display: flex;
     flex-direction: column;

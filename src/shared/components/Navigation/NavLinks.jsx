@@ -32,7 +32,7 @@ const NavLinks = () => {
       )}      
       {auth.isLoggedIn && (
         <li>
-          <NavLink to={`/change-password/${auth.token}`}>Change password</NavLink>
+          <NavLink to="/change-password">Change password</NavLink>
         </li>
       )}
     

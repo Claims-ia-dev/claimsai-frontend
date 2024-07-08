@@ -1,4 +1,5 @@
-import React, {  useContext } from 'react';
+import React, {  useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
@@ -10,7 +11,7 @@ import { useForm } from '../../shared/hooks/form-hook';
 import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import Logo from '../../images/LogoClaimsIA.svg';
-import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import Modal from '../../shared/components/UIElements/Modal';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import './Auth.css';
 // import { https } from 'https-proxy-agent';
@@ -21,7 +22,8 @@ import './Auth.css';
 
 const Auth = () => { //handles user authentication
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const { isLoading, error, sendRequest } = useHttpClient();
+  const [errorDisplay, setErrorDisplay]=useState(null);
   /**
    * Initialize the form state with email and password inputs
    * 
@@ -61,34 +63,54 @@ const Auth = () => { //handles user authentication
       console.log(responseData.user);
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {
-      // // if (err.code === 'unverified_email') {
-      //   error.message = 'Please verify your email address. If you haven\'t received the verification email, you can resend it.';
-      //   //error.resendEmail = true;
-      // } else {
+      if (error === 'Unverified email') {
+        setErrorDisplay('Please check your email inbox and verify your email address.');
+        err.resendEmail = true;
+      } else {
       console.log(err);
-      // }
+      }
     }
   };
 
-  // const resendVerificationEmail = async () => {
-  //   try {
+  const clearErrorDisplay = () => {
+    setErrorDisplay(null);
+  };
+
+  const resendVerificationEmail = async () => {
+    try {
      
-      // const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/auth/resend-verification-email`, 'POST');
-  // console.log(responseData);
-  //      console("Email sent");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //};
+      const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/auth/resend-verification-email`, 'POST');
+  console.log(responseData);
+       console("Email sent");
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
   <>
-    <ErrorModal error={error} onClear={clearError}>
-    {/* resendEmail={error.resendEmail}  */}
-      {/* {error.resendEmail && (
-          <Button onClick={resendVerificationEmail}>Resend Verification Email</Button>
-        )} */}
-    </ErrorModal>
+    
+    <Modal
+      onCancel={clearErrorDisplay}
+      header="An Error Occurred!"
+      show={!!errorDisplay}
+      footerClass="error_modal-actions"
+      footer={
+        <React.Fragment>
+       
+      <Button inverse onClick={resendVerificationEmail}>
+        Resend verification email
+      </Button> 
+      <Button  onClick={clearErrorDisplay}>
+        Okey 
+      </Button>
+    </React.Fragment>   
+      }
+    >
+      <p>{errorDisplay}</p>
+    
+
+    </Modal>
     <div className="auth-page">
     <Card className="authentication">
     {isLoading && <LoadingSpinner asOverlay />}
@@ -125,7 +147,7 @@ const Auth = () => { //handles user authentication
       </form>
      
      {/**if not a member yet to send to another link */}
-      <p className="center-text">Not a member yet?<a href='/register' > Register</a> and get started now!</p> <br/>
+      <p className="center-text">Not a member yet?<Link to='/register' > Register</Link> and get started now!</p> <br/>
       
     </Card>
     </div>

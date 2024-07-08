@@ -202,7 +202,7 @@ const ProjectReceipt = () => {
        
       <h3>The estimated amount for this project is:</h3>
       {totalCost<=0&&<h1>...</h1>}
-      {totalCost>0&&<h2>${totalCost?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>}
+      {totalCost>0&&<h1>${totalCost?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h1>}
 
       <div>
         <PdfComponent customer_info={claim?.customer_info} rooms={mergedRooms} totalCost={totalCost} logo={Logo} />
@@ -250,7 +250,7 @@ const ProjectReceipt = () => {
 
         <Card className="receipt-total">
           <div>
-          <p>Total</p> {totalCost<=0&&<h3>...</h3>}{totalCost>0&&<h3>${totalCost?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>}
+          <p>Total</p> {totalCost<=0&&<h3>...</h3>}{totalCost>0&&<h3>${totalCost?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>}
 
           </div>
           

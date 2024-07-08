@@ -20,6 +20,7 @@ import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
 import Register from './user/pages/Register';
+import ChangePasswordLogged from './user/pages/ChangePasswordLogged';
 import { useAuth } from './shared/hooks/auth-hook';
 import SubscriptionPlan from './payment/SubscriptionPlan';
 import { ClaimProvider } from './shared/hooks/claim-hook';
@@ -55,7 +56,7 @@ const App = () => {
           <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
           <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
           <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
-          <Route path="/change-password/:tokenid" element={<ChangePassword />} />
+          <Route path="/change-password/" element={<ChangePasswordLogged />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       );
@@ -64,7 +65,7 @@ const App = () => {
       <Routes>
         <Route path="/" element = {<SubscriptionPlan/>}/>    
         <Route path="/subscription" element={<SubscriptionPlan />}/>        
-        <Route path="/change-password/:tokenid" element={<ChangePassword />} />
+        <Route path="/change-password/" element={<ChangePasswordLogged />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );
@@ -83,6 +84,7 @@ const App = () => {
         <Route path="/verify" element={<ValidateEmailReminder />}/>  
         <Route path="/password-reset" element= {<PasswordReset />}/>
         <Route path="/reset-instructions" element={<ResetInstructions />} />
+      
         <Route path="/change-password/:tokenid" element={<ChangePassword />} />
         
         <Route path="*" element={<Navigate to="/" />} />

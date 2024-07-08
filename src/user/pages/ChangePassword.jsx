@@ -47,11 +47,15 @@ const token= useParams().tokenid;
 
   const SubmitHandler = async event => {
     event.preventDefault(); //this should connect to the backend 
+    const data = {
+      new_password: formState.inputs.newpassword.value,
+      new_password_confirm: formState.inputs.confirmpassword.value,
+    };
     try {
       const response = await sendRequest(
-        `${process.env.REACT_APP_BACKEND_URL}/api/users/changepassword`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/updaterecoverypassword`,
         "POST",
-        JSON.stringify(formState.newpassword),
+        JSON.stringify(data),
         {
           "Content-Type": "application/json",
         },
@@ -62,7 +66,7 @@ const token= useParams().tokenid;
       if (response) {
         console.log("Password updated successfully!");
        
-            navigate('/auth');
+        navigate('/auth');
         
       } else {
         console.error("Error updating password:", response);

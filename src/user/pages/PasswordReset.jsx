@@ -1,7 +1,7 @@
 import React from 'react';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
-import ResetInstructions from './ResetInstructions';
+//import ResetInstructions from './ResetInstructions';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -36,7 +36,7 @@ const PasswordReset = () => {
  
 
   const SubmitHandler = async event => {
-    <ResetInstructions items={formState.email}/>
+    // <ResetInstructions items={formState.email}/>
     event.preventDefault();
      // To call the reset password function here
 
@@ -45,7 +45,7 @@ const PasswordReset = () => {
     formData.append('email', formState.inputs.email.value);
 
     const responseData = await sendRequest(
-      `${process.env.REACT_APP_BACKEND_URL}/api/users/changepassword`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/users/recoverypassword`,
       'POST',
       formData.toString(),
       {
@@ -54,12 +54,9 @@ const PasswordReset = () => {
       );
       console.log(responseData.token)
       } catch (err) {
-      // // if (err.code === 'unverified_email') {
-      //   error.message = 'Please verify your email address. If you haven\'t received the verification email, you can resend it.';
-      //   //error.resendEmail = true;
-      // } else {
+      
       console.log(err);
-      // }
+    
     }
   
      // navigate to the desired route

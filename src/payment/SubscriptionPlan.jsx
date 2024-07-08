@@ -102,6 +102,7 @@ function SubscriptionPlan() {
   }, [sessionId]);
   return (
     <>
+    <div className="subscription_page">
     <ErrorModal error={error} onClear={clearError}></ErrorModal>
       <Card className="subscriptions">
       {isLoading && <LoadingSpinner asOverlay />}
@@ -142,7 +143,7 @@ function SubscriptionPlan() {
       <Message message={message} />
     )}
       </Card>
-      
+      </div>
     </>
   );
 }

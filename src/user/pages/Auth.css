@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: -4rem;
 }
 
 
@@ -25,7 +26,7 @@
 
 .auth-page {
   background-color: white;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -37,6 +38,15 @@
 .center-text {
   text-align: center;
   width: 90%;
+}
+
+.error_modal-actions {
+  text-align: right;
+ 
+}
+.error_modal-actions *{
+  margin: 0 1rem;
+ 
 }
 
 

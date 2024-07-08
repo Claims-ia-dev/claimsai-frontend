@@ -20,6 +20,7 @@ const AutoRenewal = () => {
   const [cancelSubscription, setCancelSubscription] = useState(false);
   const [charged, setCharged] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [currentPeriodEnd, setCurrentPeriodEnd]=useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -57,6 +58,14 @@ const AutoRenewal = () => {
           setSubscriptionId(subscriptionData[0].id);
           setCurrentSubscription(subscriptionData[0]);
           setChangeAutorenewal(!subscriptionData[0].cancel_at_period_end);
+          const timestamp = subscriptionData[0].current_period_end;
+          const date = new Date(timestamp * 1000); // convert seconds to milliseconds
+          const formattedDate = date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          }); // format the date
+          setCurrentPeriodEnd(formattedDate);
           if (products.length > 0) {
             setCharged(true);
             // <--- Add this check
@@ -128,6 +137,10 @@ const AutoRenewal = () => {
         {currentProduct && (
           <div className="plan">
             {currentProduct && <h1>Plan: {currentProduct.name} </h1>}
+            <h3>
+              The  current period of your subscription  ends: {currentPeriodEnd} 
+              
+            </h3>
             {currentProduct && <p>{currentProduct.description}</p>}
             <section>
               <ul>
