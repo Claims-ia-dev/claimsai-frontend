@@ -48,7 +48,9 @@
   margin: 0 1rem;
  
 }
-
+.error {
+  color: red;
+}
 
 
 

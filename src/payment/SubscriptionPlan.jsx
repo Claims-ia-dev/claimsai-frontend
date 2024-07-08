@@ -82,7 +82,7 @@ function SubscriptionPlan() {
     if (query.get('canceled')) {
       setSuccess(false);
       setMessage(
-        "Order canceled -- continue to shop around and checkout when you're ready."
+        "Order canceled -- try to checkout again when you're ready."
       );
     }
   }, [sessionId]);

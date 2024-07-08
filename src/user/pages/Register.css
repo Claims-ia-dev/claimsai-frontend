@@ -89,3 +89,7 @@ p {
 .titleContainer {
   width: 90%;
 }
+
+.error {
+  color: red;
+}

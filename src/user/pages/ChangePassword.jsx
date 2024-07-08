@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
@@ -19,6 +19,7 @@ const ChangePassword = () => { //handles user aauthentication
   
 const navigate= useNavigate();
 const { isLoading, error, sendRequest, clearError } = useHttpClient();
+const [confirmed, setConfirmed]=useState(false);
 
 const auth = useContext(AuthContext);
 const token= useParams().tokenid;
@@ -28,7 +29,21 @@ const token= useParams().tokenid;
    * 
    * The useForm hook returns an array with three elements: formState, inputHandler, and setFormData.
    */
+ 
+  useEffect(() => {
+    if (
+      formState.inputs.newpassword.value === formState.inputs.confirmpassword.value
+    ) {
+      formState.isValid = true;
+      setConfirmed(true);
+    } else {
+      formState.isValid = false;
+      setConfirmed(false);
+    }
+  }, [formState.inputs.newpassword, formState.inputs.confirmpassword]);
+
   const [formState, inputHandler] = useForm(
+ 
     {
       
       newpassword: {
@@ -102,21 +117,22 @@ const token= useParams().tokenid;
           id="confirmpassword"
           type="password"
           placeholder="Confirm New Password"
-          validators={[VALIDATOR_PASSWORD(), VALIDATOR_EQUAL(formState.inputs.newpassword.value)]}
+          validators={[VALIDATOR_PASSWORD()]}
           errorText="Make sure passwords match and are strong enough"
           onInput={inputHandler}
         /> 
         {/* goes to another route if the password is forgotten */}
 
-        <Button type="submit" disabled={!formState.isValid} size="wide">
+        <Button type="submit" disabled={!formState.isValid || !confirmed} size="wide">
           Reset Password
         </Button>
        
       </form>
      
      {/**if not a member yet to send to another link */}
-      {!auth.isLoggedIn&&<p className="center-text">Never mind! <a href='/auth'> Take me back to login</a></p>} <br/>
-     
+         {!confirmed &&<p className='error'>Make sure the new password and confirm password fields match</p>}
+         {!auth.isLoggedIn&&<p className="center-text">Never mind! <a href='/auth'> Take me back to login</a></p>} <br/>
+   
     </Card>
     </div>
   );

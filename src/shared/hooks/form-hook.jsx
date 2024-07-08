@@ -80,6 +80,7 @@ export const useForm = (initialInputs, initialFormValidity) => {
    * The inputHandler function dispatches an 'INPUT_CHANGE' action with the given ID, value, and isValid.
    */
   const inputHandler = useCallback((id, value, isValid) => {
+    
     dispatch({
       type: 'INPUT_CHANGE',
       value: value,

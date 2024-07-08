@@ -83,10 +83,8 @@ const App = () => {
         <Route path="/register" element={<Register />}/>
         <Route path="/verify" element={<ValidateEmailReminder />}/>  
         <Route path="/password-reset" element= {<PasswordReset />}/>
-        <Route path="/reset-instructions" element={<ResetInstructions />} />
-      
-        <Route path="/change-password/:tokenid" element={<ChangePassword />} />
-        
+        <Route path="/reset-instructions" element={<ResetInstructions />} />      
+        <Route path="/change-password/:tokenid" element={<ChangePassword />} />        
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     );

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate} from "react-router-dom";
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
@@ -19,6 +19,8 @@ const ChangePasswordLogged = () => {
   //handles user aauthentication
 
   const navigate = useNavigate();
+  
+  const [confirmed, setConfirmed]=useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const auth = useContext(AuthContext);
@@ -45,6 +47,17 @@ const ChangePasswordLogged = () => {
     },
     false
   );
+  useEffect(() => {
+    if (
+      formState.inputs.newpassword.value === formState.inputs.confirmpassword.value
+    ) {
+      formState.isValid = true;
+      setConfirmed(true);
+    } else {
+      formState.isValid = false;
+      setConfirmed(false);
+    }
+  }, [formState.inputs.newpassword, formState.inputs.confirmpassword]);
 
   const SubmitHandler = async (event) => {
     event.preventDefault(); //this should connect to the backend
@@ -108,14 +121,16 @@ const ChangePasswordLogged = () => {
             id="confirmpassword"
             type="password"
             placeholder="Confirm Password"
-            validators={[VALIDATOR_EQUAL(formState.inputs.newpassword.value)]}
-            errorText="Passwords do not match."
+            validators={[VALIDATOR_PASSWORD()]}
+            errorText="Please enter a valid password."
             onInput={inputHandler}
           />
-          <Button type="submit" disabled={!formState.isValid}>
+          <Button type="submit" disabled={!formState.isValid || !confirmed}>
             Change Password
           </Button>
         </form>
+        {!confirmed &&<p className='error'>Make sure the new password and confirm password fields match</p>}
+  
       </Card>
     </div>
   );

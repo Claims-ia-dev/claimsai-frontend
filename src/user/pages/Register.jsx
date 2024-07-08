@@ -1,11 +1,11 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
+
 import Button from '../../shared/components/FormElements/Button';
 import {
   VALIDATOR_EMAIL,
-  VALIDATOR_EQUAL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_PASSWORD,
   VALIDATOR_REQUIRE,
@@ -17,7 +17,9 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import './Register.css';
 
 const Register = () => {
-  const navigate = useNavigate();; 
+  const navigate = useNavigate();
+  const [confirmed, setConfirmed]=useState(false);
+  
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const [formState, inputHandler] = useForm(
@@ -77,6 +79,19 @@ const Register = () => {
     },
     false
   );
+
+  useEffect(() => {
+    if (
+      formState.inputs.email.value === formState.inputs.confirm_email.value &&
+      formState.inputs.password.value === formState.inputs.confirm_password.value
+    ) {
+      formState.isValid = true;
+      setConfirmed(true);
+    } else {
+      formState.isValid = false;
+      setConfirmed(false);
+    }
+  }, [formState, formState.inputs.email, formState.inputs.confirm_email, formState.inputs.password, formState.inputs.confirm_password]);
 
   const registerSubmitHandler = async event => {
     event.preventDefault();
@@ -228,7 +243,7 @@ const Register = () => {
           id="confirm_email"
           type="email"
           placeholder="Confirm E-Mail Address"
-          validators={[VALIDATOR_EMAIL(), VALIDATOR_EQUAL(formState.inputs.email.value)]}
+          validators={[VALIDATOR_EMAIL()]}
           errorText="Please make sure the email matches and it is valid email address."
           onInput={inputHandler}
         />
@@ -246,18 +261,22 @@ const Register = () => {
           id="confirm_password"
           type="password"
           placeholder="Confirm Password"
-          validators={[VALIDATOR_PASSWORD(), VALIDATOR_EQUAL(formState.inputs.password.value)]}
+          validators={[VALIDATOR_PASSWORD()]}
           errorText="Make sure passwords match and are strong enough"
           onInput={inputHandler}
         />
-        <div>
-        <Button type="submit" disabled={!formState.isValid} size="wide" >
+            <div>
+        <Button type="submit" disabled={!formState.isValid || !confirmed} size="wide" >
           Create Account
         </Button>
-        </div>
-        </div>
-      </form>
-      <p>Already a member?<a href='/auth'> Login</a> instead!</p>
+        </div> 
+      
+        </div> 
+        
+      </form> 
+       {!confirmed &&<p className='error'>Make sure the emails and password fields match</p>}
+  
+      <p>Already a member?<Link to='/auth'> Login</Link> instead!</p>
     </Card>
     </div> 
     </>
