@@ -37,7 +37,9 @@ const ResetInstructions = () => {
        'Content-Type': 'application/x-www-form-urlencoded'
      }
      );
-     //console.log(responseData.token)
+     if(responseData.token){
+      console.log("success");
+     }
      setMessage('Email sent successfully');
      } catch (err) {
       setMessage('Error sending email');

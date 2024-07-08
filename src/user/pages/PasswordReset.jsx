@@ -52,6 +52,9 @@ const PasswordReset = () => {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
       );
+      if(responseData){
+        console.log("success");
+      }
      // console.log(responseData.token)
       } catch (err) {
       
