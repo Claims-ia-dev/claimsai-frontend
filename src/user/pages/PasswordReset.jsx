@@ -5,11 +5,12 @@ import Input from '../../shared/components/FormElements/Input';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import Button from '../../shared/components/FormElements/Button';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   VALIDATOR_EMAIL
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
+
 import Logo from '../../images/LogoClaimsIA.svg';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import './Auth.css';
