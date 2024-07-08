@@ -121,11 +121,11 @@ function SubscriptionPlan() {
                 <p>/month</p>
               </span>
               <ul>
-                {plan.attributes.map((feature) => (
-                  <li key={feature}>{feature}</li>
-                ))}
+                  <li>{plan.metadata.users? plan.metadata.users:"up to ?? users"} </li>
+                  <li>{plan.metadata.estimates? plan.metadata.estimates:"up to ?? estimates"} </li>
+             
               </ul>
-              <Button onClick={() => handlePlanSelect(plan)}>
+              <Button className="center" onClick={() => handlePlanSelect(plan)}>
                 Select Plan
               </Button>
             </Card>

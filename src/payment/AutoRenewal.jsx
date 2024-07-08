@@ -138,14 +138,15 @@ const AutoRenewal = () => {
           <div className="plan">
             {currentProduct && <h1>Plan: {currentProduct.name} </h1>}
             <h3>
-              The  current period of your subscription  ends: {currentPeriodEnd} 
+              The  current period of your subscription  ends:<br/> {currentPeriodEnd} 
               
             </h3>
             {currentProduct && <p>{currentProduct.description}</p>}
             <section>
-              <ul>
-                <li>feature 1</li>
-                <li>feature 2</li>
+            <ul>
+                  <li>{currentProduct.metadata.users? currentProduct.metadata.users:"up to ?? users"} </li>
+                  <li>{currentProduct.metadata.estimates? currentProduct.metadata.estimates:"up to ?? estimates"} </li>
+             
               </ul>
             </section>
             <div className="check">

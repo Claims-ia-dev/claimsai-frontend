@@ -22,7 +22,8 @@ import './Auth.css';
 
 const Auth = () => { //handles user authentication
   const auth = useContext(AuthContext);
-  const { isLoading, error, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  
   const [errorDisplay, setErrorDisplay]=useState(null);
   const [showVerificationButton, setShowVerificationButton]=useState(false);
   /**
@@ -64,45 +65,47 @@ const Auth = () => { //handles user authentication
       console.log(responseData.user);
       auth.login(responseData.user.id, responseData.token, responseData.user);
     } catch (err) {
-      if (error === 'Unverified email') {
-        setShowVerificationButton(true);
-        setErrorDisplay('Please check your email inbox and verify your email address.');
-        err.resendEmail = true;
-      } else if (error==="User not found"){
-        setErrorDisplay('You have entered an invalid email or password');
-      }else {
-      setErrorDisplay(error);
-      }
+    
+
     }
   };
 
   const clearErrorDisplay = () => {
     setErrorDisplay(null);
+    clearError()
   };
 
   const resendVerificationEmail = async () => {
     try {
-     
-      const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/auth/resend-verification-email`, 'POST');
-  console.log(responseData);
+      const formData = new URLSearchParams();
+    formData.append('email', formState.inputs.email.value);     
+      const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/api/auth/resendvalidationemail`, 
+      'POST',
+      formData.toString(),
+      {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+      );
+      console.log(responseData);
        console("Email sent");
     } catch (err) {
       console.log(err);
     }
+    clearError();
   };
 
   return (
   <>
-    
-    <Modal
+    {isLoading && <LoadingSpinner asOverlay />}
+   <Modal
       onCancel={clearErrorDisplay}
       header="An Error Occurred!"
-      show={!!errorDisplay}
+      show={!!error}
       footerClass="error_modal-actions"
       footer={
         <React.Fragment>
-       
-      {showVerificationButton&&(<Button inverse onClick={resendVerificationEmail}>
+        {error === 'Unverified email'&&(
+      <Button inverse onClick={resendVerificationEmail}>
         Resend verification email
       </Button> )}
       <Button  onClick={clearErrorDisplay}>
@@ -111,13 +114,17 @@ const Auth = () => { //handles user authentication
     </React.Fragment>   
       }
     >
-      <p>{errorDisplay}</p>
-    
+     {error === 'Unverified email'&& <p>Please check your email inbox and verify your email address.</p> }
+     {error === 'User not found'&& <p>You have entered an invalid email or password</p> }
+     {error === 'Failed to fetch'&& <p>Error 503: </p> }
+     {error !== 'Unverified email'&& error !== 'User not found'&& <p>{error}</p> }
 
     </Modal>
+    
+
     <div className="auth-page">
     <Card className="authentication">
-    {isLoading && <LoadingSpinner asOverlay />}
+    
       <img className="authentication__logo" src={Logo} alt="ClaimsIA" />
       <br />
       <form onSubmit={authSubmitHandler}> 

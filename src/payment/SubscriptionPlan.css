@@ -38,6 +38,8 @@
   height: 30rem;
   margin: 1rem;
   padding:2rem;
+  display: flex;
+  flex-direction: column;
   border: 2px solid #156fff; /* Blue border */
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -73,8 +75,8 @@
     display: flex; 
     flex-direction: column;
     align-items: baseline;
+    margin: 2rem;
  
-  height: 35%;
 }
 
 .plan_card
@@ -82,6 +84,10 @@
   margin-bottom: 0.5rem;
 }
 
+.plan_card button{
+  align-items: center;
+  text-align: center;
+}
 .name_description{
   height: 50%;
 }
