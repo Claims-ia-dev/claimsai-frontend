@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Input from '../../shared/components/FormElements/Input';
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
@@ -8,7 +8,7 @@ import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Button from '../../shared/components/FormElements/Button';
 import {
-  VALIDATOR_PASSWORD, VALIDATOR_EQUAL
+  VALIDATOR_PASSWORD
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
 import Logo from '../../images/LogoClaimsIA.svg';
@@ -58,7 +58,7 @@ const token= useParams().tokenid;
       formState.isValid = false;
       setConfirmed(false);
     }
-  }, [formState.inputs.newpassword, formState.inputs.confirmpassword]);
+  }, [formState,formState.inputs.newpassword, formState.inputs.confirmpassword]);
 
   const SubmitHandler = async event => {
     event.preventDefault(); //this should connect to the backend 
@@ -131,7 +131,7 @@ const token= useParams().tokenid;
      
      {/**if not a member yet to send to another link */}
          {!confirmed &&<p className='error'>Make sure the new password and confirm password fields match</p>}
-         {!auth.isLoggedIn&&<p className="center-text">Never mind! <a href='/auth'> Take me back to login</a></p>} <br/>
+         {!auth.isLoggedIn&&<p className="center-text">Never mind! <Link href='/auth'> Take me back to login</Link></p>} <br/>
    
     </Card>
     </div>

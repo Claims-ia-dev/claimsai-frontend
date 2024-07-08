@@ -9,7 +9,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import Button from "../../shared/components/FormElements/Button";
 import {
   VALIDATOR_PASSWORD,
-  VALIDATOR_EQUAL,
+  
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import Logo from "../../images/LogoClaimsIA.svg";
@@ -57,7 +57,7 @@ const ChangePasswordLogged = () => {
       formState.isValid = false;
       setConfirmed(false);
     }
-  }, [formState.inputs.newpassword, formState.inputs.confirmpassword]);
+  }, [formState,formState.inputs.newpassword, formState.inputs.confirmpassword]);
 
   const SubmitHandler = async (event) => {
     event.preventDefault(); //this should connect to the backend
