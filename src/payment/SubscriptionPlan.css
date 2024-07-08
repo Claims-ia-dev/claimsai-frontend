@@ -4,17 +4,16 @@
   height: 100%;
   flex-direction: column;
   display: flex;
+  overflow:auto;
   justify-content: center;
   align-items: center;
   top: 0;
   bottom: 0;
 }
 .subscriptions{
-    max-width: 95%;
-    max-height: 95%;
-   
-    width: fit-content;
-    overflow: auto;
+    
+  
+    width: fit-content;    
     margin: auto;
     text-align: left;
     display: flex;
@@ -70,18 +69,24 @@
 }
 .plan_card
  ul {
-    list-style:url('../images/bulletpoint.svg') ; 
+    list-style:none ; 
      
     display: flex; 
     flex-direction: column;
     align-items: baseline;
-    margin: 2rem;
+    margin: 2rem 0;
  
 }
 
 .plan_card
  li {
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.plan_card
+ li img {
+  margin-right: 3px;
 }
 
 .plan_card button{
@@ -92,5 +97,8 @@
   height: 50%;
 }
 
+.feature-list{
+  text-align: left;
+}
 
 

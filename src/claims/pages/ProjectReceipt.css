@@ -18,8 +18,8 @@ overflow: auto;
  
     width: 90%;
    /* height: 70%; */
-    max-height: 80%;
-    overflow-y: auto;
+    /* //max-height: 80%; */
+    /* overflow-y: auto; */
     display: flex;
     flex-direction: column;
     max-width: 75rem;

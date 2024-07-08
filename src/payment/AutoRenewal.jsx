@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import bullet from "../images/bulletpoint.svg"
 import SadFace from "../images/sadface.svg";
 import Card from "../shared/components/UIElements/Card";
 import ErrorModal from "../shared/components/UIElements/ErrorModal";
@@ -142,13 +143,14 @@ const AutoRenewal = () => {
               
             </h3>
             {currentProduct && <p>{currentProduct.description}</p>}
-            <section>
-            <ul>
-                  <li>{currentProduct.metadata.users? currentProduct.metadata.users:"up to ?? users"} </li>
-                  <li>{currentProduct.metadata.estimates? currentProduct.metadata.estimates:"up to ?? estimates"} </li>
+           <div className="renewal_container">
+            
+            <ul className="feature_list">
+                  <li><img src={bullet} alt="bullet"/>{currentProduct.metadata.users? currentProduct.metadata.users:"up to ?? users"} </li>
+                  <li><img src={bullet} alt="bullet"/>{currentProduct.metadata.estimates? currentProduct.metadata.estimates:"up to ?? estimates"} </li>
              
               </ul>
-            </section>
+          
             <div className="check">
               <label className="switch">
                 <input
@@ -164,7 +166,7 @@ const AutoRenewal = () => {
                 <span className="slider round"></span>
               </label>
               <p>Automatic renewal</p>
-            </div>
+            </div></div>
 
             <Button inverse onClick={() => handleCancel()}>
               Cancel subscription

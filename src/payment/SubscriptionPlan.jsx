@@ -4,6 +4,7 @@ import Card from "../shared/components/UIElements/Card";
 import Button from "../shared/components/FormElements/Button";
 import { AuthContext } from "../shared/context/auth-context";
 import { useHttpClient } from "../shared/hooks/http-hook";
+import bullet from "../images/bulletpoint.svg";
 import Success from "./Success";
 import "./SubscriptionPlan.css";
 import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
@@ -105,9 +106,9 @@ function SubscriptionPlan() {
                 <h2>${plan.metadata.price? plan.metadata.price:"??"}</h2>
                 <p>/month</p>
               </span>
-              <ul>
-                  <li>{plan.metadata.users? plan.metadata.users:"up to ?? users"} </li>
-                  <li>{plan.metadata.estimates? plan.metadata.estimates:"up to ?? estimates"} </li>
+              <ul className="feature_list">
+                  <li><img src={bullet} alt="bullet"/>{plan.metadata.users? plan.metadata.users:"up to ?? users"} </li>
+                  <li><img src={bullet} alt="bullet"/>{plan.metadata.estimates? plan.metadata.estimates:"up to ?? estimates"} </li>
              
               </ul>
               <Button className="center" onClick={() => handlePlanSelect(plan)}>

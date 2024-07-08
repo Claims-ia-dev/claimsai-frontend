@@ -28,7 +28,7 @@ const PdfComponent = ({customer_info,rooms, totalCost, logo }) => {
       room.room_name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
       getRoomLabel(room.room_type).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
       getServiceLabel(room.service_type).split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' '),
-      `$${room.cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+      `$${room.cost?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
     ]);
    
     doc.autoTable({

@@ -104,9 +104,14 @@ const Register = () => {
       );
       if(responseData){
         console.log("success");
+        console.log(responseData)
+        navigate('/verify', { state: { email: formState.inputs.email.value } });
+      }
+        else {
+          console.error("Error :", responseData);
       }
       //console.log(responseData); 
-       navigate('/verify', { state: { email: formState.inputs.email.value } });
+       
       } catch (err) {}
   };
 

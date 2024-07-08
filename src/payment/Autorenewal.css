@@ -52,10 +52,9 @@
 }
 
 .autorenewal ul {
-  list-style: url("../images/bulletpoint.svg");
+  list-style: none;
   display: flex;
   flex-direction: column;
-  padding-left: 3rem;
 
   align-items: baseline;
   height: 35%;
@@ -63,11 +62,27 @@
 
 li{
   align-items: center;
+  display: flex;
+}
+
+li img {
+  margin-right: 3px;
+}
+
+.feature-list{
+  text-align: left;
+  margin-left: 0;
+  display:flex;
 }
 
 .autorenewal .plan p{
 font-weight: normal;
 
+}
+
+.renewal_container{
+  display: flex;
+  justify-content: space-between;
 }
 
 .autorenewal .plan .check{
@@ -138,5 +153,6 @@ font-weight: normal;
   .slider.round:before {
     border-radius: 50%;
   }
+  
   
 
