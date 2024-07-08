@@ -30,17 +30,7 @@ const token= useParams().tokenid;
    * The useForm hook returns an array with three elements: formState, inputHandler, and setFormData.
    */
  
-  useEffect(() => {
-    if (
-      formState.inputs.newpassword.value === formState.inputs.confirmpassword.value
-    ) {
-      formState.isValid = true;
-      setConfirmed(true);
-    } else {
-      formState.isValid = false;
-      setConfirmed(false);
-    }
-  }, [formState.inputs.newpassword, formState.inputs.confirmpassword]);
+
 
   const [formState, inputHandler] = useForm(
  
@@ -58,7 +48,17 @@ const token= useParams().tokenid;
     false
   );
 
-
+  useEffect(() => {
+    if (
+      formState.inputs.newpassword.value === formState.inputs.confirmpassword.value
+    ) {
+      formState.isValid = true;
+      setConfirmed(true);
+    } else {
+      formState.isValid = false;
+      setConfirmed(false);
+    }
+  }, [formState.inputs.newpassword, formState.inputs.confirmpassword]);
 
   const SubmitHandler = async event => {
     event.preventDefault(); //this should connect to the backend 
