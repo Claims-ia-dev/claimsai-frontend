@@ -154,19 +154,20 @@ const ProjectReceipt = () => {
     }
   }, [rooms, roomCosts]);
 
-  // useEffect(() => {
-  //   let total = 0;
-  //   mergedRooms?.forEach((roomCost) => {
-  //     total += roomCost.cost;
-  //   });
-  //   setTotalCost(total);
-  // }, [mergedRooms]);
-
   useEffect(() => {
-    const totalCost = mergedRooms.reduce((acc, room) => acc + room.cost? room.cost : 0, 0);
+    let total = 0;
+    mergedRooms?.forEach((roomCost) => {
+      total += roomCost.cost? roomCost.cost : 0;
 
-    setTotalCost(totalCost);
+    });
+    setTotalCost(total);
   }, [mergedRooms]);
+
+  // useEffect(() => {
+  //   const totalCost = mergedRooms.reduce((acc, room) => acc + room.cost? room.cost : 0, 0);
+
+  //   setTotalCost(totalCost);
+  // }, [mergedRooms]);
 
 
   const handleDeleteRoom = async (roomId) => {
