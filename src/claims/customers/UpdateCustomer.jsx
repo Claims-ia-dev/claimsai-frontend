@@ -6,8 +6,7 @@ import Button from "../../shared/components/FormElements/Button";
 import Card from "../../shared/components/UIElements/Card";
 import {
   VALIDATOR_REQUIRE,
-  VALIDATOR_MINLENGTH,
-  VALIDATOR_EMAIL,
+ VALIDATOR_OPTIONAL
 } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import UpdateClaim from "../pages/UpdateClaim";
@@ -31,31 +30,31 @@ const UpdateCustomer = () => {
       },
       phonenumber: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
       address: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
       city: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
       state: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
       zip: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
       insurance: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
       email: {
         value: "",
-        isValid: false,
+        isValid: true,
       },
     },
     false
@@ -154,7 +153,7 @@ const UpdateCustomer = () => {
             id="phonenumber"
             element="textarea"
             label="Description"
-            validators={[VALIDATOR_MINLENGTH(10)]}
+            validators={[VALIDATOR_OPTIONAL()]}
             errorText="Please enter a phone number (min. 10 numnbers)."
             onInput={inputHandler}
             initialValue={formState.inputs.phonenumber.value}
@@ -166,7 +165,7 @@ const UpdateCustomer = () => {
           element="input"
           type="text"
           placeholder="Address"
-          validators={[VALIDATOR_REQUIRE()]}
+          validators={[VALIDATOR_OPTIONAL()]}
           errorText="Please enter a valid address."
           onInput={inputHandler}
           initialValue={formState.inputs.address.value}
@@ -178,7 +177,7 @@ const UpdateCustomer = () => {
             id="city"
             element="textarea"
             label="Description"
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_OPTIONAL()]}
             errorText="Please enter a valid city (min. 5 characters)."
             onInput={inputHandler}
             initialValue={formState.inputs.city.value}
@@ -189,7 +188,7 @@ const UpdateCustomer = () => {
             element="input"
             type="text"
             placeholder="State/province"
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_OPTIONAL()]}
             errorText="Please enter a valid state or province."
             onInput={inputHandler}
             initialValue={formState.inputs.state.value}
@@ -201,7 +200,7 @@ const UpdateCustomer = () => {
             id="zip"
             element="textarea"
             placeholder="zip"
-            validators={[VALIDATOR_MINLENGTH(5)]}
+            validators={[VALIDATOR_OPTIONAL()]}
             errorText="Please enter a valid zip or postal code (min. 5 characters)."
             onInput={inputHandler}
             initialValue={formState.inputs.zip.value}
@@ -212,7 +211,7 @@ const UpdateCustomer = () => {
             element="input"
             type="text"
             placeholder="insurance"
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_OPTIONAL()]}
             errorText="Please enter a valid insurance."
             onInput={inputHandler}
             initialValue={formState.inputs.insurance.value}
@@ -224,7 +223,7 @@ const UpdateCustomer = () => {
           id="email"
           element="textarea"
           label="Description"
-          validators={[VALIDATOR_EMAIL()]}
+          validators={[VALIDATOR_OPTIONAL()]}
           errorText="Please enter a valid email (min. 5 characters)."
           onInput={inputHandler}
           initialValue={formState.inputs.email.value}
@@ -235,7 +234,7 @@ const UpdateCustomer = () => {
             element="input"
             type="text"
             placeholder="Claim number"
-            validators={[VALIDATOR_REQUIRE()]}
+            validators={[VALIDATOR_OPTIONAL()]}
             errorText="Please enter a valid claim number."
             onInput={inputHandler}
             initialValue={formState.inputs.claimnumber.value}

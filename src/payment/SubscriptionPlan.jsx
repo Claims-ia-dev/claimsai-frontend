@@ -105,7 +105,7 @@ function SubscriptionPlan() {
     <ErrorModal error={error} onClear={clearError}></ErrorModal>
       <Card className="subscriptions">
       {isLoading && <LoadingSpinner asOverlay />}
-        <h4>Choose a plan that suits your business needs</h4>
+        <h4>Choose a plan that suits your business needs</h4> <br/>
         <h2>Ready to get started?</h2>
         <div className="subscriptions__cards">
           {products.map((plan) => (

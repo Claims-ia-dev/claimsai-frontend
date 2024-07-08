@@ -4,8 +4,7 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import {
-  VALIDATOR_EMAIL,
-  VALIDATOR_MINLENGTH,
+  VALIDATOR_OPTIONAL,
   VALIDATOR_REQUIRE
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
@@ -30,38 +29,38 @@ const NewCustomer = () => {
       },
       phone_number: {
         value: '',
-        isValid: false
+        isValid: true
       },
       address: {
         value: '',
-        isValid: false
+        isValid: true
       },   
       city: {
         value: '',
-        isValid: false
+        isValid: true
       },
       state: {
         value: '',
-        isValid: false
+        isValid: true
       },
       zip: {
         value: '',
-        isValid: false
+        isValid: true
       },   
       insurance: {
         value: '',
-        isValid: false
+        isValid: true
       },
       email: {
         value: '',
-        isValid: false
+        isValid: true
       },
       claim_number: {
         value: "",
         isValid: true,
       },
     },
-    false
+    true
   );
   const { updateClaim } = useClaim(); //claim context to see or modify a claim
 
@@ -106,7 +105,7 @@ const NewCustomer = () => {
         element="input"
         type="text"
         placeholder="Customer name"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_REQUIRE()]}        
         errorText="Please enter a valid customer name."
         onInput={inputHandler}
       />
@@ -115,7 +114,8 @@ const NewCustomer = () => {
         id="phone_number"
         element="input"
         placeholder="Phone Number"
-        validators={[VALIDATOR_MINLENGTH(10)]}
+        validators={[VALIDATOR_OPTIONAL()]}
+        initialValid={formState.inputs.phone_number.isValid}
         errorText="Please enter a valid phone number."
         onInput={inputHandler}
       /> </div>
@@ -126,9 +126,10 @@ const NewCustomer = () => {
         element="input"
         type="text"
         placeholder="Address"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a valid address."
         onInput={inputHandler}
+        initialValid={formState.inputs.address.isValid}
       />
 
       <div className='split'> 
@@ -137,9 +138,10 @@ const NewCustomer = () => {
         id="city"
         element="input"
         placeholder="City"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a City."
         onInput={inputHandler}
+        initialValid={formState.inputs.city.isValid}
       />
       
       <Input
@@ -147,9 +149,10 @@ const NewCustomer = () => {
         element="input"
         type="text"
         placeholder="State/Province"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a valid State/Province."
         onInput={inputHandler}
+        initialValid={formState.inputs.state.isValid}
       /></div>
 
       <div className='split'> 
@@ -158,9 +161,10 @@ const NewCustomer = () => {
         id="zip"
         element="input"
         placeholder="Zip/Postal Code"
-        validators={[VALIDATOR_MINLENGTH(5)]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a zip or postal code."
         onInput={inputHandler}
+        initialValid={formState.inputs.zip.isValid}
       />
       
       <Input
@@ -168,9 +172,10 @@ const NewCustomer = () => {
         element="input"
         type="text"
         placeholder="Insurance"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a valid insurance."
         onInput={inputHandler}
+        initialValid={formState.inputs.insurance.isValid}
       /></div>
 
       <div className='split'>
@@ -178,9 +183,10 @@ const NewCustomer = () => {
         id="email"
         element="input"
         placeholder="Email"
-        validators={[VALIDATOR_EMAIL()]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a valid email."
         onInput={inputHandler}
+        initialValid={formState.inputs.email.isValid}
       />
 
       <Input
@@ -188,9 +194,10 @@ const NewCustomer = () => {
         element="input"
         type="text"
         placeholder="Claim number"
-        validators={[VALIDATOR_REQUIRE()]}
+        validators={[VALIDATOR_OPTIONAL()]}
         errorText="Please enter a valid claim number."
         onInput={inputHandler}
+        initialValid={formState.inputs.claim_number.isValid}
       />
       </div>
       </div>

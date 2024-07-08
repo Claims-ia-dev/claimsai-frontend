@@ -7,6 +7,7 @@ const VALIDATOR_TYPE_EMAIL = "EMAIL";
 const VALIDATOR_TYPE_FILE = "FILE";
 const VALIDATOR_TYPE_PASSWORD = "PASSWORD";
 const VALIDATOR_TYPE_EQUAL = "EQUAL";
+const VALIDATOR_TYPE_OPTIONAL = "OPTIONAL";
 
 /**
  * The VALIDATOR_REQUIRE function returns a validator object with type 'REQUIRE'.
@@ -14,6 +15,10 @@ const VALIDATOR_TYPE_EQUAL = "EQUAL";
  * This validator checks if the input value is not empty.
  */
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
+
+/*Validator for optional fields*/
+export const VALIDATOR_OPTIONAL = () => ({ type: VALIDATOR_TYPE_OPTIONAL });
+
 
 /**
  * The VALIDATOR_FILE function returns a validator object with type 'FILE'.
@@ -108,6 +113,19 @@ export const validate = (value, validators) => {
      */
     if (validator.type === VALIDATOR_TYPE_REQUIRE) {
       isValid = isValid && value.trim().length > 0;
+    }
+
+    //makes the field valid even if empty
+
+    if (validator.type === VALIDATOR_TYPE_OPTIONAL) {
+      isValid = true; // always valid for optional fields
+    }
+    if (validator.type === VALIDATOR_REQUIRE && value.trim().length === 0) {
+      isValid = false;
+    } else if (value.trim().length === 0) {
+      isValid = true; // ignore validation for optional fields if value is empty
+    } else {
+      // perform validation for non-empty values
     }
     /**
      * Check if the validator type is 'MINLENGTH'.
