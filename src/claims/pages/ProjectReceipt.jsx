@@ -109,11 +109,7 @@ const ProjectReceipt = () => {
 
 
 
-  /*Retieving costs from backend*/
-
-  useEffect(() => { 
-    
-  }, [sendRequest, auth.token, claimId]);
+ 
   
   // useEffect(() => {
   //   updateEstimateData(estimatebyidData);

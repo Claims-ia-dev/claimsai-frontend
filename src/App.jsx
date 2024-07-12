@@ -15,7 +15,7 @@ import NewClaim from './claims/pages/NewClaim';
 import NewCustomer from './claims/customers/NewCustomer';
 import UpdateClaim from './claims/pages/UpdateClaim';
 import ChangePassword from './user/pages/ChangePassword';
-//import WorkTeam from './user/pages/WorkTeam';
+import WorkTeam from './user/pages/WorkTeam';
 import AnswerQuestions from './claims/categoryclaims/pages/AnswerQuestions';
 import ProjectReceipt from './claims/pages/ProjectReceipt';
 import AutoRenewal from './payment/AutoRenewal';
@@ -31,7 +31,8 @@ import AddRoom from './claims/pages/AddRoom';
 import AddAnswerQuestions from './claims/categoryclaims/pages/AddAnswerQuestions';
 
 const App = () => {
-  const { token, login, logout, userId, userinfo } = useAuth();
+  const { token, login, logout, userId, userinfo, role, changeRole } = useAuth();
+  console.log(token);
     
   let routes;
 
@@ -40,13 +41,13 @@ const App = () => {
    */
 
   if (token) {
-    if (userinfo?.user_type==="user"){ //if the user is subscribed 
+    if (role==="user"){ //if the user is subscribed 
       routes = (
         <Routes>
           <Route path="/" element = {<NewCustomer/>}/>    
           <Route path="/subscription" element={<SubscriptionPlan />}/>               
-{/*         
-          <Route path="/workteam" element = {<WorkTeam/>}/>             */}
+        
+          <Route path="/workteam" element = {<WorkTeam/>}/>            
           <Route path="/manageSubscription" element = {<AutoRenewal/>}/>             
           <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
           <Route path="/claims/new" element={<NewClaim />} />
@@ -101,11 +102,12 @@ const App = () => {
       userinfo: userinfo,
       login: login,
       logout: logout,
-      plan: 99.0
+      changeRole: changeRole,
+      role: role
     }}
   ><ClaimProvider><CardProvider>
     <Router>
-    <MainNavigation /> {/* Only render MainNavigation if token is present */}
+    <MainNavigation /> 
 
       <main>{routes}</main>
     </Router></CardProvider></ClaimProvider>

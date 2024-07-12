@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useForm } from "../../shared/hooks/form-hook";
 import {
-  VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
+  VALIDATOR_PASSWORD,
 } from "../../shared/util/validators";
 import Button from "../../shared/components/FormElements/Button";
 import Input from "../../shared/components/FormElements/Input";
 import "./WorkTeam.css";
 
 const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
+  
   const [formState, inputHandler, setFormData] = useForm(
     {
       first_name: {
@@ -24,7 +25,7 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
         value: "",
         isValid: false,
       },
-      phone: {
+      password: {
         value: "",
         isValid: false,
       },
@@ -48,7 +49,7 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
             value: member.email,
             isValid: true,
           },
-          phone: {
+          password: {
             value: member.phone,
             isValid: true,
           },
@@ -59,10 +60,14 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
   }, [member, setFormData]);
 
   console.log(member);
+
   const submitHandler = (event) => {
     event.preventDefault();
+
     onSubmit(member, formState.inputs);
   };
+
+  
 
   const cancelHandler = () => {
     setFormData(
@@ -79,7 +84,7 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
           value: "",
           isValid: false,
         },
-        phone: {
+        password: {
           value: "",
           isValid: false,
         },
@@ -90,10 +95,62 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <div className="workteam-form__inputs">
-        <div className="split">
-          {isEditing && (
+    <>
+      {/* form in case the user is adding a member to the team */}
+      {!isEditing && (
+        <form onSubmit={submitHandler}>
+          <div className="workteam-form__inputs">
+            <div className="split">
+              <Input
+                element="input"
+                id="first_name"
+                type="text"
+                placeholder="First Name"
+                validators={[VALIDATOR_REQUIRE()]}
+                errorText="Please enter a valid name"
+                onInput={inputHandler}
+              />
+
+              <Input
+                element="input"
+                id="last_name"
+                type="text"
+                placeholder="Last Name"
+                validators={[VALIDATOR_REQUIRE()]}
+                errorText="Please enter a valid last name"
+                onInput={inputHandler}
+              />
+            </div>
+
+            <Input
+              element="input"
+              id="email"
+              type="email"
+              placeholder="E-Mail"
+              validators={[VALIDATOR_EMAIL()]}
+              errorText="Please enter a valid email address."
+              onInput={inputHandler}
+            />
+
+            <Input
+              element="input"
+              id="password"
+              type="password"
+              placeholder="Password"
+              validators={[VALIDATOR_PASSWORD()]}
+              errorText="Please enter a stronger password."
+              onInput={inputHandler}
+            />
+          </div>
+          <Button type="submit" disabled={!formState.isValid}>
+            Add new user
+          </Button>
+        </form>
+      )}
+      {/* form for when an edit is being made on a member of the team */}
+      {isEditing && (
+        <form onSubmit={submitHandler}>
+          <div className="workteam-form__inputs">
             <Input
               element="input"
               id="first_name"
@@ -105,19 +162,7 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               initialValue={member.first_name}
               initialValid={true}
             />
-          )}
-          {!isEditing && (
-            <Input
-              element="input"
-              id="first_name"
-              type="text"
-              placeholder="First Name"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a valid name"
-              onInput={inputHandler}
-            />
-          )}
-          {isEditing && (
+
             <Input
               element="input"
               id="last_name"
@@ -129,81 +174,36 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               initialValue={member.last_name}
               initialValid={true}
             />
-          )}
-          {!isEditing && (
+
             <Input
               element="input"
-              id="last_name"
-              type="text"
-              placeholder="Last Name"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a valid last name"
+              id="email"
+              type="email"
+              placeholder="E-Mail"
+              validators={[VALIDATOR_EMAIL()]}
+              errorText="Please enter a valid email address."
               onInput={inputHandler}
+              initialValue={member.email}
+              initialValid={true}
             />
-          )}
-        </div>
+          </div>
+          <Button type="submit" disabled={!formState.isValid}>
+            Edit member
+          </Button>
 
-        {isEditing && (
-          <Input
-            element="input"
-            id="email"
-            type="email"
-            placeholder="E-Mail"
-            validators={[VALIDATOR_EMAIL()]}
-            errorText="Please enter a valid email address."
-            onInput={inputHandler}
-            initialValue={member.email}
-            initialValid={true}
-          />
-        )}
-        {!isEditing && (
-          <Input
-            element="input"
-            id="email"
-            type="email"
-            placeholder="E-Mail"
-            validators={[VALIDATOR_EMAIL()]}
-            errorText="Please enter a valid email address."
-            onInput={inputHandler}
-          />
-        )}
-
-        {isEditing && (
-          <Input
-            element="input"
-            id="phone"
-            type="text"
-            placeholder="Phone"
-            validators={[VALIDATOR_MINLENGTH(10)]}
-            errorText="Please enter a valid phone number."
-            onInput={inputHandler}
-            initialValue={member.phone}
-            initialValid={true}
-          />
-        )}
-
-        {!isEditing && (
-          <Input
-            element="input"
-            id="phone"
-            type="text"
-            placeholder="Phone"
-            validators={[VALIDATOR_MINLENGTH(10)]}
-            errorText="Please enter a valid phone number."
-            onInput={inputHandler}
-          />
-        )}
-      </div>
-      <Button type="submit" disabled={!formState.isValid}>
-        {isEditing ? "Edit member" : "Add new user"}
-      </Button>
-
-      {isEditing && (
-        <Button onClick={cancelHandler} inverse disabled={!formState.isValid}>
-          Cancel
-        </Button>
+      
+            <Button
+            className="workteam_cancel_button"
+              onClick={cancelHandler}
+              inverse
+              disabled={!formState.isValid}
+            >
+              Cancel
+            </Button>
+          
+        </form>
       )}
-    </form>
+    </>
   );
 };
 

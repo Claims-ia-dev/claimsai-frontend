@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ErrorModal from "../shared/components/UIElements/ErrorModal";
 import Card from "../shared/components/UIElements/Card";
 import Button from "../shared/components/FormElements/Button";
@@ -11,11 +12,13 @@ import LoadingSpinner from "../shared/components/UIElements/LoadingSpinner";
 
 function SubscriptionPlan() {
   let [message, setMessage] = useState('');
+
   let [success, setSuccess] = useState(false);
   let [sessionId, setSessionId] = useState('');
   const [products, setProducts] = useState([]); 
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const [selectedPlan, setSelectedPlan] = useState(null);
 
   useEffect(() => {
@@ -47,6 +50,8 @@ function SubscriptionPlan() {
     </section>
   );
 
+
+
  
 
   const handlePlanSelect = async (plan) => {
@@ -76,6 +81,7 @@ function SubscriptionPlan() {
 
     if (query.get('success')) {
       setSuccess(true);
+      auth.changeRole("user");    
       setSessionId(query.get('session_id'));
     }
 
@@ -114,6 +120,7 @@ function SubscriptionPlan() {
               <Button className="center" onClick={() => handlePlanSelect(plan)}>
                 Select Plan
               </Button>
+              
             </Card>
           ))}
         </div>

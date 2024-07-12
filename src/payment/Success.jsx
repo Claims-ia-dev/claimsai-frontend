@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../shared/components/FormElements/Button'
 
 function Success({sessionId}) {
   return (
@@ -17,9 +18,10 @@ function Success({sessionId}) {
           name="session_id"
           value={sessionId}
         />
-        <button id="checkout-and-portal-button" type="submit">
-          Manage your billing information
-        </button>
+
+        <Button to="/manageSubscription" id="checkout-and-portal-button" type="submit">
+          Manage your subscription
+        </Button>
       </form>
     </div>
   )

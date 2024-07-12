@@ -7,11 +7,13 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
   const [userId, setUserId] = useState(false);
   const [userinfo, setuserinfo] = useState(false);
+  const [role, setRole] = useState(null);
 
   const login = useCallback((uid, token, user, expirationDate) => {
     setToken(token);
     setUserId(uid);
     setuserinfo(user);
+    setRole(user.user_type?user.user_type:'guest');
     const tokenExpirationDate =
       expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
     setTokenExpirationDate(tokenExpirationDate);
@@ -21,6 +23,7 @@ export const useAuth = () => {
         userId: uid,       
         token: token, 
         userinfo: user,
+        role: user.user_type?user.user_type:'guest',
         expiration: tokenExpirationDate.toISOString(),
        
       })
@@ -32,7 +35,25 @@ export const useAuth = () => {
     setTokenExpirationDate(null);
     setUserId(null);
     setuserinfo(null);
+    setRole(null);
     localStorage.removeItem('userData');
+  }, []);
+
+  const changeRole = useCallback((newrole, expirationDate) => {    
+    setRole(newrole);
+    const tokenExpirationDate =
+    expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({
+        userId: userId,       
+        token: token, 
+        userinfo: userinfo,
+        role: newrole,
+        expiration: tokenExpirationDate.toISOString(),
+       
+      })
+    );
   }, []);
 
   useEffect(() => {
@@ -54,5 +75,5 @@ export const useAuth = () => {
       login(storedData.userId, storedData.token, storedData.userinfo, new Date(storedData.expiration));
     }
   }, [login]);
-  return { token, login, logout, userId, userinfo };
+  return { token, login, logout, userId, userinfo, role, changeRole };
 };

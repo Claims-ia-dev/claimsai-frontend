@@ -1,9 +1,11 @@
 import React, {
   useState,
   useCallback,
+  useContext
 } from "react";
 import Card from "../../shared/components/UIElements/Card";
-
+import { useHttpClient } from "../../shared/hooks/http-hook";
+import { AuthContext } from "../../shared/context/auth-context";
 import EditImg from "../../images/edit.svg";
 import WorkTeamMember from "./WorkTeamMember";
 
@@ -39,6 +41,10 @@ const DUMMY_MEMBERS = [
 
 function WorkTeam() {
   
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  
+  const auth = useContext(AuthContext);
+  
   const membershipId = "m1";
   const loadedMembers = DUMMY_MEMBERS.filter(
     (member) => member.membership === membershipId
@@ -55,9 +61,34 @@ const startEditHandler = useCallback(
    }, [setEditingMember, setIsEditing] );
 
 
-   const addSubmitHandler = (member, formData) => {
-    // handle adding a new member
-    console.log(formData);
+   const addSubmitHandler = async(member, formInfo) => {
+    console.log(formInfo);
+    try {    
+      const formData = new URLSearchParams();
+        formData.append('first_name', formInfo.first_name.value);
+        formData.append('last_name', formInfo.last_name.value);
+        formData.append('email', formInfo.email.value);
+        formData.append('password', formInfo.password.value);        
+        
+        const responseData = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/api/users/adduserpartner`,
+          'POST',
+          formData.toString(),
+          {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          auth.token
+      );
+      if(responseData){
+        console.log("success");
+        console.log(responseData)
+      }
+        else {
+          console.error("Error :", responseData);
+      }
+      //console.log(responseData); 
+       
+      } catch (err) {}
   };
 
   const updateSubmitHandler = (member, formData) => {
@@ -71,11 +102,13 @@ const startEditHandler = useCallback(
 
   return (
     <Card className="workteam">
-      <div className="workteam-member">
-        <p>
+        <p className="workteam_description">
           The following shows the number of users who are part of your work team
         </p>
+        <div className="workteam_container">
 
+      <div className="workteam-member">
+      
         <div className="member-list-display">
           <ul className="member-list-items">
             {/* maps items array and renders members one by one */}
@@ -111,7 +144,7 @@ const startEditHandler = useCallback(
         onCancel={cancelEditHandler}
       />;     
       </div>
-        
+      </div>
     </Card>
   );
 }
