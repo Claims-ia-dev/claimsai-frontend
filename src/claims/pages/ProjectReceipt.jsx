@@ -232,7 +232,7 @@ const ProjectReceipt = () => {
                   <td>{getRoomLabel(r.room_type)}</td>
                   <td>{getServiceLabel(r.service_type)}
                   </td>
-                  <td>{r.cost && `$${r.cost.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
+                  <td>{r.cost && `$${r.cost.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}</td>
                   <td>
                     
                     <Link to={`/claims/${claimId}/rooms/${r.id}`}>
