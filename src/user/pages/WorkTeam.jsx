@@ -1,63 +1,56 @@
 import React, {
   useState,
   useCallback,
-  useContext
+  useContext, 
+  useEffect
 } from "react";
 import Card from "../../shared/components/UIElements/Card";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import EditImg from "../../images/edit.svg";
+import DeleteImg from "../../images/delete.svg";
 import WorkTeamMember from "./WorkTeamMember";
 
 import "./WorkTeam.css";
 
-const DUMMY_MEMBERS = [
-  //data the claim has
-  {
-    memberid: 1,
-    first_name: "Rodrigo",
-    last_name: "Perez",
-    email: "rodrigo@gmail.com",
-    membership: "m1",
-    phone: "66111067755",
-  },
-  {
-    memberid: 2,
-    first_name: "Arturo",
-    last_name: "Rodriguez",
-    email: "arturo@gmail.com",
-    membership: "m1",
-    phone: "6633333333",
-  },
-  {
-    memberid: 3,
-    first_name: "Gerardo",
-    last_name: "Lopez",
-    email: "gerardo@gmail.com",
-    membership: "m1",
-    phone: "6633333333",
-  },
-];
+
 
 function WorkTeam() {
   
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   
   const auth = useContext(AuthContext);
-  
-  const membershipId = "m1";
-  const loadedMembers = DUMMY_MEMBERS.filter(
-    (member) => member.membership === membershipId
-  ); //to change for a get api from backend
+  const [loadedMembers, setLoadedMembers] = useState([]);
   const [editingMember, setEditingMember] = useState(); // add this state to store the member being edited
   
   const [isEditing, setIsEditing] = useState(false);
 
+  const fetchMembers = useCallback(async () => {
+    try {
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/listuserpartner`,
+        "GET",
+        null,
+        {},
+        auth.token
+      );
+      setLoadedMembers(responseData);
+    } catch (err) {
+      console.error(err);
+    }
+  }, [sendRequest, auth.token]);
+
+  useEffect(() => {
+    fetchMembers();
+  }, [fetchMembers]);
+
    
 const startEditHandler = useCallback(
-  (member) => {
+  async (member) => {
+    await cancelEditHandler();
     setEditingMember(member);   
     setIsEditing(true);
+
    }, [setEditingMember, setIsEditing] );
 
 
@@ -68,6 +61,7 @@ const startEditHandler = useCallback(
         formData.append('first_name', formInfo.first_name.value);
         formData.append('last_name', formInfo.last_name.value);
         formData.append('email', formInfo.email.value);
+        formData.append('phone', formInfo.phone.value);
         formData.append('password', formInfo.password.value);        
         
         const responseData = await sendRequest(
@@ -81,7 +75,9 @@ const startEditHandler = useCallback(
       );
       if(responseData){
         console.log("success");
-        console.log(responseData)
+        console.log(responseData);
+        fetchMembers();        
+        cancelEditHandler();
       }
         else {
           console.error("Error :", responseData);
@@ -91,16 +87,70 @@ const startEditHandler = useCallback(
       } catch (err) {}
   };
 
-  const updateSubmitHandler = (member, formData) => {
+  const updateSubmitHandler = async (member, formInfo) => {
     // handle updating an existing member
-    console.log(formData);
+    try {
+      const formData = new URLSearchParams();
+      formData.append('user_id', member.id);
+      formData.append('first_name', formInfo.first_name.value? formInfo.first_name.value : member.first_name);
+
+      formData.append('last_name', formInfo.last_name.value? formInfo.last_name.value : member.last_name);
+
+      formData.append('email', formInfo.email.value? formInfo.email.value : member.email);
+
+      formData.append('phone', formInfo.phone.value? formInfo.phone.value : member.phone);
+
+      
+  
+      const responseData = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/updateuserpartner`,
+        'PUT',
+        formData.toString(),
+        {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth.token
+      );
+      if (responseData) {
+        console.log('User updated successfully');
+        console.log(responseData);
+        fetchMembers();
+        cancelEditHandler();
+      } else {
+        console.error('Error updating user');
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
   const cancelEditHandler = () => {
     setEditingMember(null);
     setIsEditing(false);
   };
 
+  const handleDelete = async (memberid) => {
+    try {
+      const response = await sendRequest(
+        `${process.env.REACT_APP_BACKEND_URL}/api/users/deleteuserpartner`,
+        "DELETE",
+        new URLSearchParams({ user_id: memberid }),
+        {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        auth.token
+      );
+      console.log(response);      
+        
+       
+     fetchMembers();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
   return (
+    <div className="workteam_page">
     <Card className="workteam">
         <p className="workteam_description">
           The following shows the number of users who are part of your work team
@@ -113,10 +163,10 @@ const startEditHandler = useCallback(
           <ul className="member-list-items">
             {/* maps items array and renders members one by one */}
             {loadedMembers.map((member) => (
-              <li key={member.memberid} className="member-item">
+              <li key={member.id} className="member-item">
                 <Card className="member-item__content">
                   <div className="member-item__info">
-                    <h4>{member.first_name}</h4>
+                    <h4>{member.first_name} {member.last_name}</h4>
                   </div>
 
                   <div className="member-item__actions">
@@ -126,6 +176,14 @@ const startEditHandler = useCallback(
                     >                      
                         {" "}
                         <img src={EditImg} alt="Edit button" />
+                      
+                    </button>
+                    <button
+                      className="member-item__button"
+                      onClick={() => handleDelete(member.id)}
+                    >
+                      
+                        <img src={DeleteImg} alt="Delete button" />
                       
                     </button>
                   </div>
@@ -145,7 +203,7 @@ const startEditHandler = useCallback(
       />;     
       </div>
       </div>
-    </Card>
+    </Card></div>
   );
 }
 

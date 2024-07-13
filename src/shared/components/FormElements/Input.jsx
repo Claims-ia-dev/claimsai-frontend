@@ -98,6 +98,8 @@ const Input = (props) => {
           onChange={changeHandler}
           onBlur={touchHandler}
           value={inputState.value}
+          disabled={props.disabled}
+          readOnly={props.readOnly}
         />
         {props.type === "password" && (
           <span className="showPass" onClick={togglePasswordVisibility}>
@@ -112,6 +114,8 @@ const Input = (props) => {
         onChange={changeHandler}
         onBlur={touchHandler}
         value={inputState.value}
+        disabled={props.disabled}
+        readOnly={props.readOnly}
       />
     );
 
