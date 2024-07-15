@@ -16,6 +16,7 @@ import WorkTeamMember from "./WorkTeamMember";
 
 import "./WorkTeam.css";
 import Button from "../../shared/components/FormElements/Button";
+import { Link } from "react-router-dom";
 
 
 
@@ -174,13 +175,13 @@ const startEditHandler = useCallback(
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
     <Card className="workteam">
-        <p className="workteam_description">
-          The following shows the number of users who are part of your work team
-        </p>
+        
         <div className="workteam_container">
 
       <div className="workteam-member">
-      
+      <p className="workteam_description">
+          The following shows the number of users who are part of your work team
+        </p>
         <div className="member-list-display">
           <ul className="member-list-items">
             {/* maps items array and renders members one by one */}
@@ -215,8 +216,14 @@ const startEditHandler = useCallback(
           </ul>
         </div>
       </div>
-      <hr />
+      <hr/>
+     
       <div className="workteam-form">    
+      <p className="workteam_limit_description">
+          Currently, <span className="highlight">you can add XX </span>more users to your subscription. 
+          <Link to="/subscription"> After the XX user your subscription plan 
+          would need to be upgraded</Link>
+        </p>
       <WorkTeamMember
         member={editingMember? editingMember:""}
         onSubmit={isEditing ? updateSubmitHandler : addSubmitHandler}
