@@ -34,8 +34,8 @@
 }
 
 .button--danger {
-  background: #830000;
-  border-color: #830000;
+  background: red;
+  border-color: red;
 }
 
 .button--danger:hover,

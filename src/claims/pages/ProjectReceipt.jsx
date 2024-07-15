@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import Button from "../../shared/components/FormElements/Button";
+import Modal from "../../shared/components/UIElements/Modal";
 import Card from "../../shared/components/UIElements/Card";
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
@@ -32,6 +34,8 @@ const ProjectReceipt = () => {
   const [roomCosts, setRoomCosts] = useState([]);
   const [mergedRooms, setMergedRooms] = useState([]);
   const [totalCost, setTotalCost] = useState(0);  
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [roomToDelete, setRoomToDelete] = useState(null);
   
 
   /*Getting claim by id*/
@@ -165,23 +169,27 @@ const ProjectReceipt = () => {
   //   setTotalCost(totalCost);
   // }, [mergedRooms]);
 
-
   const handleDeleteRoom = async (roomId) => {
+    setRoomToDelete(roomId );
+    setShowDeleteModal(true);
+  };
+
+  const confirmDeleteHandler = async () => {
     try {
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/estimates/deleteroom`,
         "DELETE",
-        new URLSearchParams({ estimate_id: claimId, room_id: roomId }),
+        new URLSearchParams({ estimate_id: claimId, room_id: roomToDelete }),
         {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         auth.token
       );
       console.log(response);
-      const updatedMergedRooms = mergedRooms.filter((room) => room.id!== roomId);
+      const updatedMergedRooms = mergedRooms.filter((room) => room.id!== roomToDelete);
        
       setMergedRooms(updatedMergedRooms);
-      deleteRoomDetail(roomId);
+      deleteRoomDetail(roomToDelete);
       let total = 0;
       updatedMergedRooms.forEach((roomCost) => {
         total += roomCost.cost;
@@ -194,11 +202,34 @@ const ProjectReceipt = () => {
     } catch (error) {
       console.error(error);
     }
+    setShowDeleteModal(false);
+  };
+
+  const cancelDeleteHandler = () => {
+    setShowDeleteModal(false);
   };
 
   return (
     <div className="receipt_page">
       {isLoading && <LoadingSpinner asOverlay />}
+      {showDeleteModal && (
+        <Modal
+          onCancel={cancelDeleteHandler}
+          header="Are you sure?"
+          show={showDeleteModal}
+        > 
+         <p>Do you want to proceed and delete this room from your estimate project? Please note that it
+         can't be undone thereafter.</p>
+          
+          <Button inverse className="btn" onClick={cancelDeleteHandler}>
+            Cancel
+          </Button>         
+          <Button danger className="btn btn-danger" onClick={confirmDeleteHandler}>
+            Delete
+          </Button>
+         
+        </Modal>
+      )}
    {!isLoading && <Card className="receipt">
       {/* <ErrorModal error={error} onClear={clearError} /> */}
        
