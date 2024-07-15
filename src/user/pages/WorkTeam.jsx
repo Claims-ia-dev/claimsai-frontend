@@ -7,11 +7,15 @@ import React, {
 import Card from "../../shared/components/UIElements/Card";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
+import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Modal from "../../shared/components/UIElements/Modal";
 import EditImg from "../../images/edit.svg";
 import DeleteImg from "../../images/delete.svg";
 import WorkTeamMember from "./WorkTeamMember";
 
 import "./WorkTeam.css";
+import Button from "../../shared/components/FormElements/Button";
 
 
 
@@ -24,6 +28,8 @@ function WorkTeam() {
   const [editingMember, setEditingMember] = useState(); // add this state to store the member being edited
   
   const [isEditing, setIsEditing] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [memberToDelete, setMemberToDelete] = useState(null);
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -128,12 +134,22 @@ const startEditHandler = useCallback(
     setIsEditing(false);
   };
 
+  
+
   const handleDelete = async (memberid) => {
+    setMemberToDelete(memberid);
+    setShowDeleteModal(true);
+   
+  };
+
+  const confirmDeleteHandler = async () => {
+    console.log("memberToDelete");
+    console.log(memberToDelete);
     try {
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/deleteuserpartner`,
         "DELETE",
-        new URLSearchParams({ user_id: memberid }),
+        new URLSearchParams({ user_id: memberToDelete }),
         {
           "Content-Type": "application/x-www-form-urlencoded",
         },
@@ -146,11 +162,17 @@ const startEditHandler = useCallback(
     } catch (error) {
       console.error(error);
     }
+    setShowDeleteModal(false);
   };
 
+  const cancelDeleteHandler = () => {
+    setShowDeleteModal(false);
+  };
 
   return (
     <div className="workteam_page">
+      <ErrorModal error={error} onClear={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
     <Card className="workteam">
         <p className="workteam_description">
           The following shows the number of users who are part of your work team
@@ -203,6 +225,24 @@ const startEditHandler = useCallback(
       />;     
       </div>
       </div>
+      {showDeleteModal && (
+        <Modal
+          onCancel={cancelDeleteHandler}
+          header="Are you sure?"
+          show={showDeleteModal}
+        > 
+         <p>Do you want to proceed and delete this member of your workteam? Please note that it
+         can't be undone thereafter.</p>
+          
+          <Button inverse className="btn" onClick={cancelDeleteHandler}>
+            Cancel
+          </Button>         
+          <Button danger className="btn btn-danger" onClick={confirmDeleteHandler}>
+            Delete
+          </Button>
+         
+        </Modal>
+      )}
     </Card></div>
   );
 }

@@ -6,14 +6,24 @@ import './NavLinks.css';
 const NavLinks = () => {
   const auth = useContext(AuthContext); //to see if the user is logged in
   const [isUser, setIsUser] = useState(false);
+  const [isUserGuest, setIsUserGuest] = useState(false);
 
   useEffect(() => {
     if (auth.userinfo && auth.role === 'user') {
       setIsUser(true);
-    } else {
+    } 
+    else if(auth.userinfo && auth.role === 'user-guest')
+    {
       setIsUser(false);
+      setIsUserGuest(true);
+    }
+    else {
+      setIsUser(false);
+      setIsUserGuest(false);
     }
   }, [auth.userinfo, auth.role]);
+ 
+
  
 
   return (
@@ -35,7 +45,7 @@ const NavLinks = () => {
       </li> )}
    
       
-      {auth.isLoggedIn && isUser && (
+      {auth.isLoggedIn && (isUser || isUserGuest) && (
         <li>
           <NavLink to="/claims/newCustomer">Add estimate</NavLink>
         </li>

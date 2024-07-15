@@ -60,6 +60,22 @@ const App = () => {
           <Route path="/change-password/" element={<ChangePasswordLogged />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+      );}
+    else if (role==="user-guest"){ //if the user is a team member from another's subscription
+      routes = (
+        <Routes>
+          <Route path="/" element = {<NewCustomer/>}/>               
+          <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
+          <Route path="/claims/new" element={<NewClaim />} />
+          <Route path="/claims/newCustomer" element={<NewCustomer />} />  
+          <Route path="/claims/:estimateId/rooms/:roomId" element={<UpdateClaim />} />  
+          <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
+          <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
+          <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
+          <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
+          <Route path="/change-password/" element={<ChangePasswordLogged />} />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       );
     }
     else{ routes = ( //if the user hasn't been subscribed
