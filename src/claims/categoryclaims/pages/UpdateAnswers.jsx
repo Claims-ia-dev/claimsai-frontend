@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "./AnswerQuestions.css";
-//import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -22,7 +22,7 @@ const UpdateAnswers = () => {
   const [questions, setQuestions] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
-  const { isLoading, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   const identifiedRoom = claim.estimate_details.find(
     (room) => room.id === roomId
@@ -111,7 +111,7 @@ const UpdateAnswers = () => {
   const updateClaim = useCallback(async () => {
     try {
      // console.log(claimId);
-     // console.log(claim.estimate_details);
+      console.log(claim.estimate_details);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/estimates/updaterooms`,
         "PATCH",
@@ -176,7 +176,7 @@ const UpdateAnswers = () => {
     <>
       <div className="questions-page">
         <div className="table-container">
-          {/* <ErrorModal error={error} onClear={clearError} /> */}
+          <ErrorModal error={error} onClear={clearError} />
         
           <table className="questions-table">
             {isLoading && <LoadingSpinner asOverlay />}

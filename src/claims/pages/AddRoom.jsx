@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import Input from "../../shared/components/FormElements/Input";
 import SelectComponent from "../../shared/components/FormElements/SelectComponent";
 import Button from "../../shared/components/FormElements/Button";
@@ -17,7 +17,7 @@ const AddRoom = () => {
   const estimateId=useParams().estimateId;
   //const {claimId, claim} = useClaim(); 
 
-  const { isLoading } = useHttpClient();
+  const { error, isLoading, clearError} = useHttpClient();
   const { serviceTypeOptions, roomTypeOptions} = useServiceTypes();
 
   
@@ -82,7 +82,7 @@ const AddRoom = () => {
   return (
     <>
     <div className='claim-form-page'>
-    {/* <ErrorModal error={error} onClear={clearError} /> */}
+    <ErrorModal error={error} onClear={clearError} />
     {isLoading && <LoadingSpinner asOverlay />}
       <form className="claim-form" onSubmit={claimSubmitHandler}>
         <p className="">

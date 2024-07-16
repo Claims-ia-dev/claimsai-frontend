@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import "jspdf-autotable";
 import "./ProjectReceipt.css";
-//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import PdfComponent from "../../shared/components/PdfComponent";
 import useServiceTypes from '../../shared/hooks/service-hook';
 import Logo from "../../images/LogoClaimsIA.png";
@@ -29,7 +29,7 @@ const ProjectReceipt = () => {
   // console.log(claimId);
   
   const auth = useContext(AuthContext);
-  const { isLoading,  sendRequest  } = useHttpClient();
+  const { isLoading, error, sendRequest , clearError } = useHttpClient();
   const [rooms, setRooms] = useState(claim.estimate_details);
   const [roomCosts, setRoomCosts] = useState([]);
   const [mergedRooms, setMergedRooms] = useState([]);
@@ -211,6 +211,7 @@ const ProjectReceipt = () => {
 
   return (
     <div className="receipt_page">
+       <ErrorModal error={error} onClear={clearError}></ErrorModal>
       {isLoading && <LoadingSpinner asOverlay />}
       {showDeleteModal && (
         <Modal

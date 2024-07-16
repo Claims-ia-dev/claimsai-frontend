@@ -10,7 +10,7 @@ import Card from "../../shared/components/UIElements/Card";
 import { useClaim } from "../../shared/hooks/claim-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import useServiceTypes from "../../shared/hooks/service-hook";
-//import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import "./ClaimForm.css";
 
 //Called to edit claim
@@ -20,7 +20,7 @@ const UpdateClaim = () => {
   const Idclaim=claimId;
   const navigate = useNavigate();
   
-  const { isLoading } = useHttpClient();
+  const {error,  isLoading, clearError } = useHttpClient();
 
 //gets the claimid and room id  from the url parameters
 
@@ -133,9 +133,9 @@ const UpdateClaim = () => {
   return (
     <>
     <div className='claim-form-page'>
-    {/* <ErrorModal error={error} onClear={clearError} /> */}
+    <ErrorModal error={error} onClear={clearError} />
     <form className="claim-form" onSubmit={claimUpdateSubmitHandler}>
-      {/* <ErrorModal error={error} onClear={clearError} /> */}
+
       {isLoading && <LoadingSpinner asOverlay />}
       <Input
         id="room_name"

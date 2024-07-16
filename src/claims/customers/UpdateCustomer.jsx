@@ -134,6 +134,7 @@ const UpdateCustomer = () => {
 
   return (
     <form className="customer-form" onSubmit={claimUpdateSubmitHandler}>
+       <ErrorModal error={error} onClear={clearError}></ErrorModal>
        {isLoading && <LoadingSpinner asOverlay />}
       <div className="customer-form__inputs">
         <div className="split">

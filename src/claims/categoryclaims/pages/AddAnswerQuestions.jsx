@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import "./AnswerQuestions.css";
-//import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -22,7 +22,7 @@ const AddAnswerQuestions = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
-  const { isLoading, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // Call getData when the component mounts
 
@@ -99,6 +99,7 @@ const AddAnswerQuestions = () => {
     // console.log (newRoomDetail);
 
     try {    
+      console.log(newRoomDetail);
         const response = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/api/estimates/addroom`,
           "POST",
@@ -135,7 +136,7 @@ const AddAnswerQuestions = () => {
 
   return (
     <>
-      {/* <ErrorModal error={error} onClear={clearError} /> */}
+      <ErrorModal error={error} onClear={clearError} />
       <div className="questions-page">
         <div className="table-container">
         

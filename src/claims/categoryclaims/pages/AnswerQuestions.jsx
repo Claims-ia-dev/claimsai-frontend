@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import "./AnswerQuestions.css";
-//import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
+import ErrorModal from "../../../shared/components/UIElements/ErrorModal";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../shared/context/auth-context";
 import { useHttpClient } from "../../../shared/hooks/http-hook";
@@ -18,7 +18,7 @@ const AnswerQuestions = () => {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [allQuestions, setAllQuestions] = useState([]);
-  const { isLoading, sendRequest } = useHttpClient();
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
   // Call getData when the component mounts
 
@@ -157,7 +157,7 @@ const AnswerQuestions = () => {
 
   return (
     <>
-      {/* <ErrorModal error={error} onClear={clearError} /> */}
+      <ErrorModal error={error} onClear={clearError} />
       <div className="questions-page">
         <div className="table-container">
           <table className="questions-table">

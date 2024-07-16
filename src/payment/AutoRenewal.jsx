@@ -87,6 +87,7 @@ const AutoRenewal = () => {
       }
     };
     fetchSubscriptionId();
+    
   }, [auth.token, sendRequest,products]);
 
   const handleCancel = async () => {
