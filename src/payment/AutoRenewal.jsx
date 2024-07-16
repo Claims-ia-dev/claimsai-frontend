@@ -146,8 +146,8 @@ const AutoRenewal = () => {
            <div className="renewal_container">
             
             <ul className="feature_list">
-                  <li><img src={bullet} alt="bullet"/>{currentProduct.metadata.users? currentProduct.metadata.users:"up to ?? users"} </li>
-                  <li><img src={bullet} alt="bullet"/>{currentProduct.metadata.estimates? currentProduct.metadata.estimates:"up to ?? estimates"} </li>
+                  <li><img src={bullet} alt="bullet"/>{currentProduct.metadata?.users? currentProduct.metadata.users:"up to ?? users"} </li>
+                  <li><img src={bullet} alt="bullet"/>{currentProduct.metadata?.estimates? currentProduct.metadata.estimates:"up to ?? estimates"} </li>
              
               </ul>
           

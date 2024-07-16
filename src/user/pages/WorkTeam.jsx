@@ -41,6 +41,7 @@ function WorkTeam() {
         {},
         auth.token
       );
+      //console.log(responseData);
       setLoadedMembers(responseData);
     } catch (err) {
       console.error(err);
@@ -61,15 +62,15 @@ const startEditHandler = useCallback(
    }, [setEditingMember, setIsEditing] );
 
 
-   const addSubmitHandler = async(member, formInfo) => {
+   const addSubmitHandler = async( formInfo) => {
     console.log(formInfo);
     try {    
       const formData = new URLSearchParams();
-        formData.append('first_name', formInfo.first_name.value);
-        formData.append('last_name', formInfo.last_name.value);
-        formData.append('email', formInfo.email.value);
-        formData.append('phone', formInfo.phone.value);
-        formData.append('password', formInfo.password.value);        
+        formData.append('first_name', formInfo?.first_name.value);
+        formData.append('last_name', formInfo?.last_name.value);
+        formData.append('email', formInfo?.email.value);
+        formData.append('phone', formInfo?.phone.value);
+        formData.append('password', formInfo?.password.value);        
         
         const responseData = await sendRequest(
           `${process.env.REACT_APP_BACKEND_URL}/api/users/adduserpartner`,
@@ -91,7 +92,9 @@ const startEditHandler = useCallback(
       }
       //console.log(responseData); 
        
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
   };
 
   const updateSubmitHandler = async (member, formInfo) => {
@@ -99,13 +102,17 @@ const startEditHandler = useCallback(
     try {
       const formData = new URLSearchParams();
       formData.append('user_id', member.id);
-      formData.append('first_name', formInfo.first_name.value? formInfo.first_name.value : member.first_name);
+      formData.append('first_name', formInfo.first_name.value? formInfo.first_name.value : member.first_name? member.first_name : "");
 
-      formData.append('last_name', formInfo.last_name.value? formInfo.last_name.value : member.last_name);
 
-      formData.append('email', formInfo.email.value? formInfo.email.value : member.email);
+      formData.append('last_name', formInfo.last_name.value? formInfo.last_name.value : member.last_name? member.last_name : "");
 
-      formData.append('phone', formInfo.phone.value? formInfo.phone.value : member.phone);
+
+      formData.append('email', formInfo.email.value? formInfo.email.value : member.email? member.email : "");
+
+
+      formData.append('phone', formInfo.phone.value? formInfo.phone.value : member.phone? member.phone : "");
+
 
       
   

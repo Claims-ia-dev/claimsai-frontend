@@ -29,6 +29,7 @@ import UpdateAnswers from './claims/categoryclaims/pages/UpdateAnswers';
 import { CardProvider } from './shared/context/CardContext';
 import AddRoom from './claims/pages/AddRoom';
 import AddAnswerQuestions from './claims/categoryclaims/pages/AddAnswerQuestions';
+import MyProfile from './user/pages/My Profile';
 
 const App = () => {
   const { token, login, logout, userId, userinfo, role, changeRole } = useAuth();
@@ -46,7 +47,6 @@ const App = () => {
         <Routes>
           <Route path="/" element = {<NewCustomer/>}/>    
           <Route path="/subscription" element={<SubscriptionPlan />}/>               
-        
           <Route path="/workteam" element = {<WorkTeam/>}/>            
           <Route path="/manageSubscription" element = {<AutoRenewal/>}/>             
           <Route path="/projectreceipt/" element={<ProjectReceipt />} /> 
@@ -57,6 +57,7 @@ const App = () => {
           <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
           <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
           <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
+          <Route path="/myprofile" element={<MyProfile />}/>
           <Route path="/change-password/" element={<ChangePasswordLogged />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
@@ -72,7 +73,8 @@ const App = () => {
           <Route path="/claims/:estimateId/answers/:roomId" element={<UpdateAnswers/>} />  
           <Route path="/claims/EstimateCategoryClaims" element={<AnswerQuestions />} />  
           <Route path="/claims/:estimateId/addroom" element={<AddRoom />} />  
-          <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} />  
+          <Route path="/claims/:estimateId/addroom/CategoryClaims" element={<AddAnswerQuestions/>} /> 
+          <Route path="/myprofile" element={<MyProfile />}/> 
           <Route path="/change-password/" element={<ChangePasswordLogged />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
@@ -81,7 +83,8 @@ const App = () => {
     else{ routes = ( //if the user hasn't been subscribed
       <Routes>
         <Route path="/" element = {<SubscriptionPlan/>}/>    
-        <Route path="/subscription" element={<SubscriptionPlan />}/>        
+        <Route path="/subscription" element={<SubscriptionPlan />}/>  
+        <Route path="/myprofile" element={<MyProfile />}/>      
         <Route path="/change-password/" element={<ChangePasswordLogged />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

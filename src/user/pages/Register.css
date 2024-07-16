@@ -15,6 +15,14 @@
   align-items: center;
   background-color: white;
 }
+.myprofile-page {
+  height: 100%; /* Asegúrate de que ocupe toda la altura de la pantalla */
+  width: 100vw; /* Asegúrate de que ocupe toda la anchura de la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+}
 
 .registration {
   display: flex;

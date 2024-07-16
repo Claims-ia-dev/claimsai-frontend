@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate} from "react-router-dom";
 import Card from "../../shared/components/UIElements/Card";
 import Input from "../../shared/components/FormElements/Input";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import Modal from "../../shared/components/UIElements/Modal";
 import { AuthContext } from "../../shared/context/auth-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Button from "../../shared/components/FormElements/Button";
@@ -18,8 +18,9 @@ import "./Auth.css";
 const ChangePasswordLogged = () => {
   //handles user aauthentication
 
-  const navigate = useNavigate();
-  
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+const [successMessage, setSuccessMessage] = useState('');
+
   const [confirmed, setConfirmed]=useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
@@ -79,9 +80,12 @@ const ChangePasswordLogged = () => {
       //console.log(response);
       console.log("sent to server");
       if (response) {
+        const message = response.message === "passwordd updated" ? "Password updated successfully!" : response.message;
+  
         console.log("Password updated successfully!");
+        setShowSuccessPopup(true);
+      setSuccessMessage(message);
 
-        navigate("/auth");
       } else {
         console.error("Error updating password:", response);
       }
@@ -89,6 +93,17 @@ const ChangePasswordLogged = () => {
       console.error("Error updating password:", err);
     }
   };
+
+  const successModal = (
+    <Modal
+      show={showSuccessPopup}
+      onCancel={() => setShowSuccessPopup(false)}
+      header="Update Successful"
+      footer={<Button  onClick={() => setShowSuccessPopup(false)} to="/">Close</Button>}
+    >
+      <p>{successMessage}</p>
+    </Modal>
+  );
 
   return (
     <div className="auth-page">
@@ -130,7 +145,7 @@ const ChangePasswordLogged = () => {
           </Button>
         </form>
         {!confirmed &&<p className='error'>Make sure the new password and confirm password fields match</p>}
-  
+        {successModal}
       </Card>
     </div>
   );

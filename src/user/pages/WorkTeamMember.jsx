@@ -59,11 +59,11 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
             isValid: true,
           },
           phone: {
-            value: "",
+            value: member.phone,
             isValid: true,
           },
           password: {
-            value: member.phone,
+            value: "",
             isValid: true,
           },
         },
@@ -77,7 +77,7 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
   const submitHandler = async(event) => {
     event.preventDefault();   
 
-    await onSubmit(member, formState.inputs);
+    await onSubmit( formState.inputs);
     setFormData(
       {
         first_name: {
