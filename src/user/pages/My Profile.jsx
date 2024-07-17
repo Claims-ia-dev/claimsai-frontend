@@ -12,7 +12,7 @@ import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
-import "./Register.css";
+import "./MyProfile.css";
 import Modal from "../../shared/components/UIElements/Modal";
 
 const MyProfile = () => {
@@ -201,9 +201,9 @@ const [successMessage, setSuccessMessage] = useState('');
   if (!loadedProfile && !error) {
     return (
       <div className="center">
-        <Card>
+       {!loadedProfile  &&<Card>
           <h2>User info not found</h2>
-        </Card>
+        </Card>}
       </div>
     );
   }
@@ -213,13 +213,13 @@ const [successMessage, setSuccessMessage] = useState('');
       {" "}
       <ErrorModal error={error} onClear={clearError} />
       <div className="myprofile-page">
-        <Card className="registration">
+        <Card className="profile">
           {isLoading && <LoadingSpinner asOverlay />}
-          <div className="titleContainer">
+          
+          <form className="profile" onSubmit={updateSubmitHandler}>
+            <div className="titleContainer">
             <h2 className="intro">Personal information</h2>
           </div>
-          <br />
-          <form className="registration" onSubmit={updateSubmitHandler}>
             <div className="section">
               <div className="split">
                 <Input

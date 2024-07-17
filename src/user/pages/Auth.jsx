@@ -148,7 +148,7 @@ const Auth = () => { //handles user authentication
         {/* goes to another route if the password is forgotten */}
         <Link className="black-link" to='/password-reset'>Forgot you password?</Link> <br/><br/> 
 
-        <Button type="submit" disabled={!formState.isValid} size="wide">
+        <Button  type="submit" disabled={!formState.isValid} size="wide">
           Sign in
         </Button>
       </form>

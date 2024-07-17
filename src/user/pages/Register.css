@@ -15,14 +15,6 @@
   align-items: center;
   background-color: white;
 }
-.myprofile-page {
-  height: 100%; /* Asegúrate de que ocupe toda la altura de la pantalla */
-  width: 100vw; /* Asegúrate de que ocupe toda la anchura de la pantalla */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f2f2f2;
-}
 
 .registration {
   display: flex;
@@ -37,8 +29,8 @@
   align-items: center;
 }
 
+
 .registration form {
- 
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -63,24 +55,21 @@
   padding: 0;
 }
 
-.registration div{
+.registration div {
   width: 100%;
   margin: 0;
   padding: 0;
 }
 
-
-
 .split > *:first-child {
   margin-right: 1rem;
-} 
+}
 
-.button{
+.button {
   margin-top: 0.5rem;
 }
 
 a {
-  
   text-decoration: none;
   color: #ff5715;
 }
@@ -101,4 +90,9 @@ p {
 
 .error {
   color: red;
+}
+
+.button {
+  margin-left: 0;
+  margin-right: 0;
 }
