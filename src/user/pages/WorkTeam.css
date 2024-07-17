@@ -8,7 +8,6 @@
   .workteam {
     width: 90%;
     max-width: 70rem;
-    height: fit-content;
     justify-content: center;
     max-height: 35rem;  
     height: 95%;
@@ -38,6 +37,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    margin: 3rem 0;
     align-items: stretch;
   }
 
@@ -76,7 +76,8 @@
   .workteam-form__inputs{
     padding: 1rem 0;
     width: 100%;
-    max-height: 50vh;
+    height: fit-content;
+    max-height: 40vh;
     overflow-y: auto;
 
   }
@@ -121,7 +122,8 @@
     justify-content: space-between;
     flex-wrap: nowrap;
     flex-direction: column;
-    max-height: 50vh;
+    height: fit-content;
+    max-height: 40vh;
     overflow-y: auto;
   }
   .member-list-items {
