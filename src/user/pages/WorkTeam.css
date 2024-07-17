@@ -161,6 +161,8 @@
   .member-item__actions {
     padding: 0;
     text-align: center;
+    display: flex;
+    flex-wrap: nowrap;
   }
   
   .member-item__modal-content {
