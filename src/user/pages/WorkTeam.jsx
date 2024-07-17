@@ -236,7 +236,7 @@ const startEditHandler = useCallback(
         onSubmit={isEditing ? updateSubmitHandler : addSubmitHandler}
         isEditing={isEditing}
         onCancel={cancelEditHandler}
-      />;     
+      />
       </div>
       </div>
       {showDeleteModal && (
