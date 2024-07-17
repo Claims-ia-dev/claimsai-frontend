@@ -27,6 +27,7 @@
 .registration {
   display: flex;
   flex-direction: column;
+  max-width: 60rem;
   width: 90%;
   height: 75%;
   text-align: center;

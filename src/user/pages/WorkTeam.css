@@ -7,8 +7,9 @@
   }
   .workteam {
     width: 90%;
+    max-width: 80rem;
     height: fit-content;
-    max-width: 95%;
+    
     max-height: 95%;  
     margin: 5% auto;
     text-align: center;

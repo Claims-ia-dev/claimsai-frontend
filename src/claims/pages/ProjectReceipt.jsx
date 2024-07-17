@@ -22,11 +22,6 @@ const ProjectReceipt = () => {
   const { getServiceLabel , getRoomLabel} = useServiceTypes();
   
   const [estimateid, setEstimateid] = useState(null); //rooms
-  //const estimateId = claimId;
-  // console.log('stored claim created');
-  // console.log(claim);
-  // console.log('stored claim id');
-  // console.log(claimId);
   
   const auth = useContext(AuthContext);
   const { isLoading, error, sendRequest , clearError } = useHttpClient();
