@@ -218,8 +218,8 @@ const startEditHandler = useCallback(
   };
 
   const confirmDeleteHandler = async () => {
-    console.log("memberToDelete");
-    console.log(memberToDelete);
+   // console.log("memberToDelete");
+   // console.log(memberToDelete);
     try {
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/users/deleteuserpartner`,

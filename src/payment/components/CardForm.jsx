@@ -39,7 +39,7 @@ const CardForm = () => {
       card: cardElement
     });
 
-    console.log("[PaymentMethod]", payload);
+    //console.log("[PaymentMethod]", payload);
    
 
      // Send the payment method to the backend

@@ -73,7 +73,7 @@ const WorkTeamMember = ({
     }
   }, [member, setFormData]);
 
-  console.log(member);
+  //console.log(member);
 
   const submitHandler = async (event) => {
     event.preventDefault();

@@ -33,7 +33,7 @@ import MyProfile from './user/pages/My Profile';
 
 const App = () => {
   const { token, login, logout, userId, userinfo, role, changeRole } = useAuth();
-  console.log(token);
+ // console.log(token);
     
   let routes;
 

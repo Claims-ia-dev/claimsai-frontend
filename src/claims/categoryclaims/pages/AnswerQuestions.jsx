@@ -119,7 +119,7 @@ const AnswerQuestions = () => {
     };
 
     try {
-      console.log("estimate sent for creation");
+      //console.log("estimate sent for creation");
       //console.log(updatedClaim);
       const response = await sendRequest(
         `${process.env.REACT_APP_BACKEND_URL}/api/estimates/create`,
