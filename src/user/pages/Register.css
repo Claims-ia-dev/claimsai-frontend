@@ -8,7 +8,7 @@
 }
 
 .registration-page {
-  height: 100vh; /* Asegúrate de que ocupe toda la altura de la pantalla */
+  height: 100%; /* Asegúrate de que ocupe toda la altura de la pantalla */
   width: 100vw; /* Asegúrate de que ocupe toda la anchura de la pantalla */
   display: flex;
   justify-content: center;
