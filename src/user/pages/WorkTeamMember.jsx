@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import { useForm } from "../../shared/hooks/form-hook";
 import {
   VALIDATOR_REQUIRE,
   VALIDATOR_EMAIL,
   VALIDATOR_PASSWORD,
-  
   VALIDATOR_MINLENGTH,
 } from "../../shared/util/validators";
 import Button from "../../shared/components/FormElements/Button";
 import Input from "../../shared/components/FormElements/Input";
 import "./WorkTeam.css";
 
-const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
-  const navigate = useNavigate();
-
-  
+const WorkTeamMember = ({
+  member,
+  onSubmit,
+  isEditing,
+  onCancel,
+  usersAvailable,
+}) => {
   const [formState, inputHandler, setFormData] = useForm(
     {
       first_name: {
@@ -74,42 +75,41 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
 
   console.log(member);
 
-  const submitHandler = async(event) => {
-    event.preventDefault();   
+  const submitHandler = async (event) => {
+    event.preventDefault();
 
-    await onSubmit( formState.inputs);
-    setFormData(
-      {
-        first_name: {
-          value: "",
-          isValid: false,
-        },
-        last_name: {
-          value: "",
-          isValid: false,
-        },
-        email: {
-          value: "",
-          isValid: false,
-        },
-        phone: {
-          value: "",
-          isValid: false,
-        },
-        password: {
-          value: "",
-          isValid: false,
-        },
-      },
-      false
-    );
-     
-    navigate('/');
-    navigate(-1);
+    try {
+      await onSubmit(formState.inputs);
 
+      setFormData(
+        {
+          first_name: {
+            value: "",
+            isValid: false,
+          },
+          last_name: {
+            value: "",
+            isValid: false,
+          },
+          email: {
+            value: "",
+            isValid: false,
+          },
+          phone: {
+            value: "",
+            isValid: false,
+          },
+          password: {
+            value: "",
+            isValid: false,
+          },
+        },
+        false
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  
 
   const cancelHandler = () => {
     setFormData(
@@ -138,8 +138,6 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
       false
     );
     onCancel(); // Call the onCancel function to set isEditing to false
-  
-
   };
 
   return (
@@ -178,9 +176,8 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               validators={[VALIDATOR_EMAIL()]}
               errorText="Please enter a valid email address."
               onInput={inputHandler}
-              
             />
-             <Input
+            <Input
               element="input"
               id="phone"
               type="text"
@@ -188,8 +185,6 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               validators={[VALIDATOR_MINLENGTH(10)]}
               errorText="Please enter a valid phone number."
               onInput={inputHandler}
-             
-
             />
 
             <Input
@@ -202,8 +197,12 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               onInput={inputHandler}
             />
           </div>
-          <Button type="submit" disabled={!formState.isValid}>
-            Add new user
+
+          <Button
+            type="submit"
+            disabled={!formState.isValid || usersAvailable < 1}
+          >
+            {usersAvailable < 1 ? "Workteam full" : "Add new user"}
           </Button>
         </form>
       )}
@@ -212,29 +211,29 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
         <form onSubmit={submitHandler}>
           <div className="workteam-form__inputs">
             <div className="split">
-            <Input
-              element="input"
-              id="first_name"
-              type="text"
-              placeholder="First Name"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a valid name"
-              onInput={inputHandler}
-              initialValue={member.first_name}
-              initialValid={true}
-            />
+              <Input
+                element="input"
+                id="first_name"
+                type="text"
+                placeholder="First Name"
+                validators={[VALIDATOR_REQUIRE()]}
+                errorText="Please enter a valid name"
+                onInput={inputHandler}
+                initialValue={member.first_name}
+                initialValid={true}
+              />
 
-            <Input
-              element="input"
-              id="last_name"
-              type="text"
-              placeholder="Last Name"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please enter a valid last name"
-              onInput={inputHandler}
-              initialValue={member.last_name}
-              initialValid={true}
-            />
+              <Input
+                element="input"
+                id="last_name"
+                type="text"
+                placeholder="Last Name"
+                validators={[VALIDATOR_REQUIRE()]}
+                errorText="Please enter a valid last name"
+                onInput={inputHandler}
+                initialValue={member.last_name}
+                initialValid={true}
+              />
             </div>
 
             <Input
@@ -247,9 +246,9 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               onInput={inputHandler}
               initialValue={member.email}
               initialValid={true}
-              disabled={true} 
+              disabled={true}
             />
-             <Input
+            <Input
               element="input"
               id="phone"
               type="text"
@@ -259,23 +258,20 @@ const WorkTeamMember = ({ member, onSubmit, isEditing, onCancel }) => {
               onInput={inputHandler}
               initialValue={member.phone}
               initialValid={true}
-              
             />
           </div>
           <Button type="submit" disabled={!formState.isValid}>
             Edit member
           </Button>
 
-      
-            <Button
+          <Button
             className="workteam_cancel_button"
-              onClick={cancelHandler}
-              inverse
-              disabled={!formState.isValid}
-            >
-              Cancel
-            </Button>
-          
+            onClick={cancelHandler}
+            inverse
+            disabled={!formState.isValid}
+          >
+            Cancel
+          </Button>
         </form>
       )}
     </>

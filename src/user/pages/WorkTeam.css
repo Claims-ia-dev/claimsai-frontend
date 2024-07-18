@@ -198,6 +198,6 @@
     cursor: pointer;
   }
 
-  .button{
-    margin: 0 1rem;
-  }
+ .workteam-error{
+  color: red;
+ }

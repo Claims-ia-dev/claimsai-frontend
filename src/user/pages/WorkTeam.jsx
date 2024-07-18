@@ -4,6 +4,7 @@ import React, {
   useContext, 
   useEffect
 } from "react";
+import { useNavigate } from 'react-router-dom';
 import Card from "../../shared/components/UIElements/Card";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/auth-context";
@@ -23,6 +24,10 @@ import { Link } from "react-router-dom";
 function WorkTeam() {
   
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [unidentifiedError, setUnidentifiedError]=useState(null)
+  const [products, setProducts] = useState([]);
+  const [currentProduct, setCurrentProduct] = useState(null);
+  const [usersAvailable, setUsersAvailable]=useState(null);
   
   const auth = useContext(AuthContext);
   const [loadedMembers, setLoadedMembers] = useState([]);
@@ -31,6 +36,64 @@ function WorkTeam() {
   const [isEditing, setIsEditing] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [memberToDelete, setMemberToDelete] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/api/users/listproducts`,
+          "GET",
+          null,
+          { "Content-Type": "application/json" },
+          auth.token
+        );
+        setProducts(response); // update products state with API response
+     
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProducts();
+  }, [sendRequest, auth.token]);
+
+  useEffect(() => {
+    const fetchSubscriptionId = async () => {
+      try {
+        const response = await sendRequest(
+          `${process.env.REACT_APP_BACKEND_URL}/api/users/mysubscriptions`,
+          "GET",
+          null,
+          { "Content-Type": "application/json" },
+          auth.token
+        );
+        const subscriptionData = await response;
+       // console.log(subscriptionData);
+        if (subscriptionData.length > 0) {
+          
+        
+          
+        
+          if (products.length > 0) {
+          
+            // <--- Add this check
+            const matchingProduct = products.find(
+              (product) => product.default_price === subscriptionData[0].plan.id
+            );
+         //   console.log(matchingProduct);
+            setCurrentProduct(matchingProduct);
+            setUsersAvailable(matchingProduct.metadata?.users_n? matchingProduct.metadata?.users_n - loadedMembers.length: 0);
+
+          }
+          
+        } 
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchSubscriptionId();
+    
+  }, [auth.token, sendRequest,products,loadedMembers]);
 
   const fetchMembers = useCallback(async () => {
     try {
@@ -84,10 +147,14 @@ const startEditHandler = useCallback(
       if(responseData){
         console.log("success");
         console.log(responseData);
+        navigate('/');
+        navigate(-1);
         fetchMembers();        
         cancelEditHandler();
       }
         else {
+          setUnidentifiedError(responseData);
+       
           console.error("Error :", responseData);
       }
       //console.log(responseData); 
@@ -180,6 +247,7 @@ const startEditHandler = useCallback(
   return (
     <div className="workteam_page">
       <ErrorModal error={error} onClear={clearError} />
+      {unidentifiedError && <ErrorModal error={unidentifiedError} onClear={clearError} />}
       {isLoading && <LoadingSpinner asOverlay />}
     <Card className="workteam">
         
@@ -227,8 +295,8 @@ const startEditHandler = useCallback(
      
       <div className="workteam-form">    
       <p className="workteam_limit_description">
-          Currently, <span className="highlight">you can add XX </span>more users to your subscription. 
-          <Link to="/subscription"> After the XX user your subscription plan 
+          Currently, <span className="highlight">you can add {usersAvailable} </span>more users to your subscription. 
+          <Link to="/subscription"> After the {currentProduct?.metadata?.users_n? currentProduct.metadata.users_n:0} user your subscription plan 
           would need to be upgraded</Link>
         </p>
       <WorkTeamMember
@@ -236,6 +304,7 @@ const startEditHandler = useCallback(
         onSubmit={isEditing ? updateSubmitHandler : addSubmitHandler}
         isEditing={isEditing}
         onCancel={cancelEditHandler}
+        usersAvailable={usersAvailable}
       />
       </div>
       </div>
