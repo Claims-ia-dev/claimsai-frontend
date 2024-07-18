@@ -12,6 +12,10 @@
     color: white;
     text-align: center;
   }
+
+  .instructions__body p{
+    text-align: center;
+  }
   
   .instructions__image{
     width: 30%;

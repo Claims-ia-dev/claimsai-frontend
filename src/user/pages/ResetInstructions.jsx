@@ -57,13 +57,14 @@ const ResetInstructions = () => {
     <div className='instructions__header'>
       <img className='instructions__image' src={EmailVector} alt="Email icon"/>
     </div>
+    <div className='instructions__body'>
     {email ? (<>
       <p>Check your email: {email} <br/>for instructions from us on how to reset your password.</p>
       <Button onClick={handleSendEmail}>Resend email</Button></>
     ) : (
       <p>No email provided. Please go back and enter your email address.</p>
     )}
-    {message && <p>{message}</p>}
+    {message && <p>{message}</p>}</div>
   </Card></div>
   );
 };
